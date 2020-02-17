@@ -1,0 +1,39 @@
+package com.jakubeeee.masterthesis.core.data.metadata.processmetadata;
+
+import com.jakubeeee.masterthesis.core.data.metadata.MetadataEntity;
+import com.jakubeeee.masterthesis.core.data.metadata.pluginmetadata.PluginMetadata;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
+import javax.persistence.*;
+
+/**
+ * Represents information about processes specified by registered plugins. Every process metadata entity is associated
+ * with it's parent {@link PluginMetadata plugin metadata} object.
+ */
+@Getter
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Entity
+@Table(name = "PROCESSES_METADATA")
+public final class ProcessMetadata extends MetadataEntity {
+
+    @Column(name = "FETCH_URL", nullable = false, updatable = false)
+    private String fetchUrl;
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "PLUGIN_METADATA_ID", nullable = false, updatable = false)
+    private PluginMetadata pluginMetadata;
+
+    @SuppressWarnings("unused") ProcessMetadata() {
+    }
+
+    public ProcessMetadata(String identifier, String fetchUrl, PluginMetadata pluginMetadata) {
+        super(identifier);
+        this.fetchUrl = fetchUrl;
+        this.pluginMetadata = pluginMetadata;
+    }
+
+}

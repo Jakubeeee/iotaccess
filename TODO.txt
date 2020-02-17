@@ -1,0 +1,21 @@
+Priority queue:
+1. Improve meteo plugin by adding xml and txt support and add some test processes
+2. Add support for meteo-related data in the plugin api eg. constants etc.
+3. Write integration tests for saving various entries
+4. Create versions of random-number-plugin for spi,db and fs testing
+5. Add support for database and filesystem plugins
+6. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
+7. Add unit tests for meteo converters (and maybe improve a bit the one in random number converter after last changes)
+8. Converters in plugins can be singletons. You don't need to create a new object every time. Add implNote that this class is a target for asynchronyus execution and should be thread safe
+9. Expand MandatoryEntityNotFound exceptions description - they have no message in service classes
+10. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
+11. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
+
+Drafts:
+1. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.
+    Validator type - structural and logical(?). If the first doesn't pass do not launch the second one. Always collect all the errors.
+2. Add versioning for plugins. If there is plugin available for deployer with non-unique identifier, check it's version. If it higher then replace existing one.
+3. Add new "SweepConfig" to plugin. It would be a configuration of removing old unnecessary data using a scheduled job.
+4. Add testutils module used by all other modules for plain java test utilities - I can move the container class and base class for integration tests
+5. Add common module used by all other modules for plain java utilities (don't have lots of common code for now, though)
+6. Add java 9 module system. It's cool but there are issues with testcontainers library
