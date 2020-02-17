@@ -8,7 +8,11 @@ import com.jakubeeee.masterthesis.pluginapi.converter.DataType;
 import com.jakubeeee.masterthesis.pluginapi.property.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 import static com.jakubeeee.masterthesis.pluginapi.converter.DataType.METEO;
+import static com.jakubeeee.masterthesis.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 import static java.text.MessageFormat.format;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
@@ -26,62 +30,49 @@ public class MeteoDataPersistStrategy extends BaseDataPersistStrategy<MeteoEntry
     @Override
     protected MeteoEntry generateEntry(FetchedRecord record, ProcessMetadata processMetadata) {
         var newEntry = new MeteoEntry(processMetadata);
-
-        var identifier = findByKey(record, "identifier", FetchedText.class);
-        newEntry.setIdentifier(identifier.getValue());
-
-        var temperature = findByKey(record, "temperature", FetchedNumber.class);
-        newEntry.setTemperature(temperature.getValue());
-
-        var humidity = findByKey(record, "humidity", FetchedNumber.class);
-        newEntry.setHumidity(humidity.getValue());
-
-        var pressure = findByKey(record, "pressure", FetchedNumber.class);
-        newEntry.setPressure(pressure.getValue());
-
-        var luminance = findByKey(record, "luminance", FetchedNumber.class);
-        newEntry.setLuminance(luminance.getValue());
-
-        var rainDigital = findByKey(record, "rainDigital", FetchedNumber.class);
-        newEntry.setRainDigital(rainDigital.getValue());
-
-        var rainAnalog = findByKey(record, "rainAnalog", FetchedNumber.class);
-        newEntry.setRainAnalog(rainAnalog.getValue());
-
-        var windPower = findByKey(record, "windPower", FetchedNumber.class);
-        newEntry.setWindPower(windPower.getValue());
-
-        var windDirection = findByKey(record, "windDirection", FetchedText.class);
-        newEntry.setWindDirection(windDirection.getValue());
-
-        var gpsAltitude = findByKey(record, "gpsAltitude", FetchedNumber.class);
-        newEntry.setGpsAltitude(gpsAltitude.getValue());
-
-        var gpsLongitude = findByKey(record, "gpsLongitude", FetchedNumber.class);
-        newEntry.setGpsLongitude(gpsLongitude.getValue());
-
-        var gpsLatitude = findByKey(record, "gpsLatitude", FetchedNumber.class);
-        newEntry.setGpsLatitude(gpsLatitude.getValue());
-
-        var dateTime = findByKey(record, "dateTime", FetchedDate.class);
-        newEntry.setDateTime(dateTime.getValue());
-
+        setEntryField(newEntry::setIdentifier, record, IDENTIFIER, FetchedText.class);
+        setEntryField(newEntry::setTemperature, record, TEMPERATURE, FetchedNumber.class);
+        setEntryField(newEntry::setHumidity, record, HUMIDITY, FetchedNumber.class);
+        setEntryField(newEntry::setPressure, record, PRESSURE, FetchedNumber.class);
+        setEntryField(newEntry::setLuminance, record, LUMINANCE, FetchedNumber.class);
+        setEntryField(newEntry::setRainDigital, record, RAIN_DIGITAL, FetchedNumber.class);
+        setEntryField(newEntry::setRainAnalog, record, RAIN_ANALOG, FetchedNumber.class);
+        setEntryField(newEntry::setWindPower, record, WIND_POWER, FetchedNumber.class);
+        setEntryField(newEntry::setWindDirection, record, WIND_DIRECTION, FetchedText.class);
+        setEntryField(newEntry::setGpsAltitude, record, GPS_ALTITUDE, FetchedNumber.class);
+        setEntryField(newEntry::setGpsLongitude, record, GPS_LONGITUDE, FetchedNumber.class);
+        setEntryField(newEntry::setGpsLatitude, record, GPS_LATITUDE, FetchedNumber.class);
+        setEntryField(newEntry::setDateTime, record, DATE_TIME, FetchedDate.class);
         return newEntry;
     }
 
-    private <T extends FetchedProperty> T findByKey(FetchedRecord record, String filteredKey, Class<T> type) {
-        var matchingProperties = record.getFetchedProperties()
+    private <T> void setEntryField(Consumer<T> entrySetter,
+                                   FetchedRecord record,
+                                   String propertyKey,
+                                   Class<? extends FetchedProperty<T>> propertyType) {
+        var property = findByKey(record, propertyKey, propertyType);
+        entrySetter.accept(property.getValue());
+    }
+
+    private <T extends FetchedProperty<?>> T findByKey(FetchedRecord record, String filteredKey, Class<T> type) {
+        List<T> matchingProperties = record.getFetchedProperties()
                 .stream()
                 .filter(type::isInstance)
                 .map(type::cast)
                 .filter(property -> property.getKey().equals(filteredKey))
                 .collect(toUnmodifiableList());
+        validateExactlyOnePropertyFound(matchingProperties, filteredKey, type);
+        return matchingProperties.get(0);
+    }
+
+    private <T extends FetchedProperty<?>> void validateExactlyOnePropertyFound(List<T> matchingProperties,
+                                                                                String filteredKey,
+                                                                                Class<T> type) {
         int matchingPropertiesSize = matchingProperties.size();
         if (matchingPropertiesSize != 1)
             throw new IllegalStateException(
                     format("There must be exactly one property for key \"{0}\" and type \"{1}\". Instead found: \"{2}\"",
                             filteredKey, type.getSimpleName(), matchingPropertiesSize));
-        return matchingProperties.get(0);
     }
 
     @Override

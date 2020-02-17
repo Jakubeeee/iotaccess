@@ -11,6 +11,8 @@ import lombok.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jakubeeee.masterthesis.pluginapi.meteo.MeteoPropertyKeyConstants.*;
+
 public class MeteoJsonConverter implements DataConverter {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -29,19 +31,19 @@ public class MeteoJsonConverter implements DataConverter {
         }
         for (var container : containers) {
             var properties = List.of(
-                    new FetchedText("identifier", container.getIdentifier()),
-                    new FetchedNumber("temperature", container.getTemperature()),
-                    new FetchedNumber("humidity", container.getHumidity()),
-                    new FetchedNumber("pressure", container.getPressure()),
-                    new FetchedNumber("luminance", container.getLuminance()),
-                    new FetchedNumber("rainDigital", container.getRainDigital()),
-                    new FetchedNumber("rainAnalog", container.getRainAnalog()),
-                    new FetchedNumber("windPower", container.getWindPower()),
-                    new FetchedText("windDirection", container.getWindDirection()),
-                    new FetchedNumber("gpsAltitude", container.getGpsAltitude()),
-                    new FetchedNumber("gpsLongitude", container.getGpsLongitude()),
-                    new FetchedNumber("gpsLatitude", container.getGpsLatitude()),
-                    new FetchedDate("dateTime", container.getDateTime())
+                    new FetchedText(IDENTIFIER, container.getIdentifier()),
+                    new FetchedNumber(TEMPERATURE, container.getTemperature()),
+                    new FetchedNumber(HUMIDITY, container.getHumidity()),
+                    new FetchedNumber(PRESSURE, container.getPressure()),
+                    new FetchedNumber(LUMINANCE, container.getLuminance()),
+                    new FetchedNumber(RAIN_DIGITAL, container.getRainDigital()),
+                    new FetchedNumber(RAIN_ANALOG, container.getRainAnalog()),
+                    new FetchedNumber(WIND_POWER, container.getWindPower()),
+                    new FetchedText(WIND_DIRECTION, container.getWindDirection()),
+                    new FetchedNumber(GPS_ALTITUDE, container.getGpsAltitude()),
+                    new FetchedNumber(GPS_LONGITUDE, container.getGpsLongitude()),
+                    new FetchedNumber(GPS_LATITUDE, container.getGpsLatitude()),
+                    new FetchedDate(DATE_TIME, container.getDateTime())
             );
             records.add(FetchedRecord.of(properties));
         }
