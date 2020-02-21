@@ -25,31 +25,89 @@ public class MeteoPluginConnector implements PluginConnector {
     @Override
     public PluginConfig getConfig() {
 
-        var testSumMeteoConfig = ProcessConfig.of(
-                "Test meteo process (SUM)",
+        var testJsonSumMeteoConfig = ProcessConfig.of(
+                "Test json meteo process (SUM)",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.JSON),
                         DataFormat.JSON, DataType.METEO
                 ),
                 ScheduleConfig.of(180_000, 15_000));
 
-        var testGetMeteoConfig = ProcessConfig.of(
-                "Test meteo process (GET)",
+        var testJsonGetMeteoConfig = ProcessConfig.of(
+                "Test json meteo process (GET)",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.GET, ResultUrlParameter.JSON),
                         DataFormat.JSON, DataType.METEO
                 ),
                 ScheduleConfig.of(720_000, 30_000));
 
-        var testStandardSumMeteoConfig = ProcessConfig.of(
-                "Test meteo process (SUM) standard data",
+        var testJsonStandardSumMeteoConfig = ProcessConfig.of(
+                "Test json meteo process (SUM) standard data",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.JSON),
                         DataFormat.JSON, DataType.STANDARD
                 ),
                 ScheduleConfig.of(900_000, 60_000));
 
-        var processConfigs = Set.of(testSumMeteoConfig, testGetMeteoConfig, testStandardSumMeteoConfig);
+        var testXmlSumMeteoConfig = ProcessConfig.of(
+                "Test xml meteo process (SUM)",
+                FetchConfig.of(
+                        getUrl(CommandUrlParameter.SUM, ResultUrlParameter.XML),
+                        DataFormat.XML, DataType.METEO
+                ),
+                ScheduleConfig.of(180_000, 15_000));
+
+        var testXmlGetMeteoConfig = ProcessConfig.of(
+                "Test xml meteo process (GET)",
+                FetchConfig.of(
+                        getUrl(CommandUrlParameter.GET, ResultUrlParameter.XML),
+                        DataFormat.XML, DataType.METEO
+                ),
+                ScheduleConfig.of(720_000, 30_000));
+
+        var testXmlStandardSumMeteoConfig = ProcessConfig.of(
+                "Test xml meteo process (SUM) standard data",
+                FetchConfig.of(
+                        getUrl(CommandUrlParameter.SUM, ResultUrlParameter.XML),
+                        DataFormat.XML, DataType.STANDARD
+                ),
+                ScheduleConfig.of(900_000, 60_000));
+
+        var testTxtSumMeteoConfig = ProcessConfig.of(
+                "Test txt meteo process (SUM)",
+                FetchConfig.of(
+                        getUrl(CommandUrlParameter.SUM, ResultUrlParameter.TXT),
+                        DataFormat.TXT, DataType.METEO
+                ),
+                ScheduleConfig.of(180_000, 15_000));
+
+        var testTxtGetMeteoConfig = ProcessConfig.of(
+                "Test txt meteo process (GET)",
+                FetchConfig.of(
+                        getUrl(CommandUrlParameter.GET, ResultUrlParameter.TXT),
+                        DataFormat.TXT, DataType.METEO
+                ),
+                ScheduleConfig.of(720_000, 30_000));
+
+        var testTxtStandardSumMeteoConfig = ProcessConfig.of(
+                "Test xml meteo process (SUM) standard data",
+                FetchConfig.of(
+                        getUrl(CommandUrlParameter.SUM, ResultUrlParameter.TXT),
+                        DataFormat.TXT, DataType.STANDARD
+                ),
+                ScheduleConfig.of(900_000, 60_000));
+
+        var processConfigs = Set.of(
+                testJsonSumMeteoConfig,
+                testJsonGetMeteoConfig,
+                testJsonStandardSumMeteoConfig,
+                testXmlGetMeteoConfig,
+                testXmlSumMeteoConfig,
+                testXmlStandardSumMeteoConfig,
+                testTxtSumMeteoConfig,
+                testTxtGetMeteoConfig,
+                testTxtStandardSumMeteoConfig
+        );
 
         return PluginConfig.of(IDENTIFIER, processConfigs);
     }

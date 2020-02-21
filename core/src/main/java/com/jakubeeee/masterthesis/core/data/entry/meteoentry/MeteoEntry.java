@@ -19,7 +19,7 @@ import java.time.Instant;
 @Table(name = "METEO_ENTRIES")
 public final class MeteoEntry extends EntryEntity {
 
-    @Column(name = "IDENTIFIER", unique = true, nullable = false, updatable = false)
+    @Column(name = "IDENTIFIER", updatable = false)
     private String identifier;
 
     @Column(name = "TEMPERATURE", updatable = false)

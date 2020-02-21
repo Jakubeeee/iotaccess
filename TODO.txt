@@ -9,6 +9,10 @@ Priority queue:
 8. Expand MandatoryEntityNotFound exceptions description - they have no message in service classes
 9. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
 10. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
+11. Add description column to process metadata and description filed to process config
+12. Add constant names for docker images
+13. Add options switching using rest
+14. Meteo persister commands that every property must be present - we should allow that some aren't and populate with null
 
 Drafts:
 1. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.

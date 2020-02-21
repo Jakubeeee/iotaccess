@@ -1,7 +1,7 @@
 package com.jakubeeee.masterthesis.meteoplugin;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.converter.ExternalDataParseException;
@@ -17,9 +17,9 @@ import java.util.List;
 
 import static com.jakubeeee.masterthesis.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 
-public class MeteoJsonConverter implements DataConverter {
+public class MeteoXmlConverter implements DataConverter {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final XmlMapper MAPPER = new XmlMapper();
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -29,9 +29,9 @@ public class MeteoJsonConverter implements DataConverter {
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
         var records = new ArrayList<FetchedRecord>();
-        MeteoJsonContainer[] containers;
+        MeteoXmlContainer[] containers;
         try {
-            containers = MAPPER.readValue(rawData, MeteoJsonContainer[].class);
+            containers = MAPPER.readValue(rawData, MeteoXmlContainer[].class);
         } catch (JsonProcessingException e) {
             throw getParseException(e);
         }
