@@ -1,7 +1,7 @@
 package com.jakubeeee.masterthesis.core.data.metadata.processmetadata;
 
 import com.jakubeeee.masterthesis.core.data.metadata.MetadataService;
-import com.jakubeeee.masterthesis.core.misc.MandatoryEntityNotFound;
+import com.jakubeeee.masterthesis.core.misc.MandatoryEntityNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +23,9 @@ public class ProcessMetadataService implements MetadataService<ProcessMetadata> 
         processMetadataRepository.save(processMetadata);
     }
 
-    public ProcessMetadata findByIdentifier(@NonNull String processIdentifier) {
-        return processMetadataRepository.findByIdentifier(processIdentifier).orElseThrow(MandatoryEntityNotFound::new);
+    public ProcessMetadata findByIdentifier(@NonNull String identifier) {
+        return processMetadataRepository.findByIdentifier(identifier).orElseThrow(
+                () -> new MandatoryEntityNotFoundException(ProcessMetadata.class, "identifier", identifier));
     }
 
     public Optional<ProcessMetadata> findOptionalByIdentifier(@NonNull String identifier) {

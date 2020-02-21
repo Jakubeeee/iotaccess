@@ -6,12 +6,11 @@ Priority queue:
 5. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
 6. Add unit tests for meteo converters (and maybe improve a bit the one in random number converter after last changes)
 7. Converters in plugins can be singletons. You don't need to create a new object every time. Add implNote that this class is a target for asynchronyus execution and should be thread safe
-8. Expand MandatoryEntityNotFound exceptions description - they have no message in service classes
-9. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
-10. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
-11. Add constant names for docker images
-12. Add options switching using rest
-13. Meteo persister commands that every property must be present - we should allow that some aren't and populate with null
+8. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
+9. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
+10. Add constant names for docker images
+11. Add options switching using rest
+12. Meteo persister commands that every property must be present - we should allow that some aren't and populate with null
 
 Drafts:
 1. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.

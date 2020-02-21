@@ -1,7 +1,7 @@
 package com.jakubeeee.masterthesis.core.data.metadata.deployermetadata;
 
 import com.jakubeeee.masterthesis.core.data.metadata.MetadataService;
-import com.jakubeeee.masterthesis.core.misc.MandatoryEntityNotFound;
+import com.jakubeeee.masterthesis.core.misc.MandatoryEntityNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,8 @@ public class DeployerMetadataService implements MetadataService<DeployerMetadata
 
     @Override
     public DeployerMetadata findByIdentifier(@NonNull String identifier) {
-        return deployerMetadataRepository.findByIdentifier(identifier).orElseThrow(MandatoryEntityNotFound::new);
+        return deployerMetadataRepository.findByIdentifier(identifier).orElseThrow(
+                () -> new MandatoryEntityNotFoundException(DeployerMetadata.class, "identifier", identifier));
     }
 
     @Override

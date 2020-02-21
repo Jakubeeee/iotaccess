@@ -1,7 +1,7 @@
 package com.jakubeeee.masterthesis.core.data.metadata.pluginmetadata;
 
 import com.jakubeeee.masterthesis.core.data.metadata.MetadataService;
-import com.jakubeeee.masterthesis.core.misc.MandatoryEntityNotFound;
+import com.jakubeeee.masterthesis.core.misc.MandatoryEntityNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,8 @@ public class PluginMetadataService implements MetadataService<PluginMetadata> {
     }
 
     public PluginMetadata findByIdentifier(@NonNull String identifier) {
-        return pluginMetadataRepository.findByIdentifier(identifier).orElseThrow(MandatoryEntityNotFound::new);
+        return pluginMetadataRepository.findByIdentifier(identifier).orElseThrow(
+                () -> new MandatoryEntityNotFoundException(PluginMetadata.class, "identifier", identifier));
     }
 
     public Optional<PluginMetadata> findOptionalByIdentifier(@NonNull String identifier) {
