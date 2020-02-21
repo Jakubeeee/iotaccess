@@ -19,6 +19,9 @@ import javax.persistence.*;
 @Table(name = "PROCESSES_METADATA")
 public final class ProcessMetadata extends MetadataEntity {
 
+    @Column(name = "DESCRIPTION", updatable = false)
+    private String description;
+
     @Column(name = "FETCH_URL", nullable = false, updatable = false)
     private String fetchUrl;
 
@@ -30,8 +33,9 @@ public final class ProcessMetadata extends MetadataEntity {
     @SuppressWarnings("unused") ProcessMetadata() {
     }
 
-    public ProcessMetadata(String identifier, String fetchUrl, PluginMetadata pluginMetadata) {
+    public ProcessMetadata(String identifier, String description, String fetchUrl, PluginMetadata pluginMetadata) {
         super(identifier);
+        this.description = description;
         this.fetchUrl = fetchUrl;
         this.pluginMetadata = pluginMetadata;
     }

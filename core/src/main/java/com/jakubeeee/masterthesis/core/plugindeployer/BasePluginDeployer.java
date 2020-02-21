@@ -75,9 +75,8 @@ abstract class BasePluginDeployer implements PluginDeployer {
     }
 
     private void saveProcessMetadata(ProcessConfig processConfig, PluginMetadata parentPluginMetadata) {
-        var processMetadata =
-                new ProcessMetadata(processConfig.getIdentifier(), processConfig.getFetchConfig().getUrl(),
-                        parentPluginMetadata);
+        var processMetadata = new ProcessMetadata(processConfig.getIdentifier(), processConfig.getDescription(),
+                processConfig.getFetchConfig().getUrl(), parentPluginMetadata);
         processMetadataService.save(processMetadata);
     }
 

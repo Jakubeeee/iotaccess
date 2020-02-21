@@ -12,6 +12,8 @@ public class ProcessConfig {
 
     private final String identifier;
 
+    private final String description;
+
     private final FetchConfig fetchConfig;
 
     private final ScheduleConfig scheduleConfig;

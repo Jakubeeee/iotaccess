@@ -25,16 +25,19 @@ public class RandomNumberPluginConnector implements PluginConnector {
     public PluginConfig getConfig() {
         var singleRandomNumberProcessConfig = ProcessConfig.of(
                 "Single random number fetch process (SPI)",
+                "",
                 FetchConfig.of(GET_RANDOM_NUMBER_PATH, JSON, STANDARD),
                 ScheduleConfig.of(30_000, 5_000));
 
         var threeRandomNumbersProcessConfig = ProcessConfig.of(
                 "Three random numbers fetch process (SPI)",
+                "",
                 FetchConfig.of(GET_3_RANDOM_NUMBERS_PATH, JSON, STANDARD),
                 ScheduleConfig.of(120_000, 10_000));
 
         var tenRandomNumbersProcessConfig = ProcessConfig.of(
                 "Ten random numbers fetch process (SPI)",
+                "",
                 FetchConfig.of(GET_10_RANDOM_NUMBERS_PATH, JSON, STANDARD),
                 ScheduleConfig.of(360_000, 20_000));
 

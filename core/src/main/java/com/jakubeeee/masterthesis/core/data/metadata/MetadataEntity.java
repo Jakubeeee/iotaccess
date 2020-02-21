@@ -17,5 +17,4 @@ public abstract class MetadataEntity extends DataEntity {
     @Column(name = "IDENTIFIER", unique = true, nullable = false, updatable = false)
     private String identifier;
 
-
 }
