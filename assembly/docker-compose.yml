@@ -11,6 +11,7 @@ services:
       args:
         CORE_ARGS:
     image: core-image
+    container_name: core
     ports:
       - "8080:8080"
       - "1044:1044"
@@ -26,6 +27,7 @@ services:
       args:
         RANDOM_NUMBER_WS_ARGS:
     image: random-number-ws-image
+    container_name: random-number-ws
     ports:
       - "8081:8080"
       - "1045:1044"
@@ -34,6 +36,11 @@ services:
 
   postgres12:
     image: postgres:12
+    container_name: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
     networks:
