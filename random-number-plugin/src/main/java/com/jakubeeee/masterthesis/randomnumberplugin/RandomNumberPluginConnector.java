@@ -18,7 +18,7 @@ public class RandomNumberPluginConnector implements PluginConnector {
 
     @Override
     public RandomNumberConverter getConverter() {
-        return new RandomNumberConverter();
+        return RandomNumberConverter.getInstance();
     }
 
     @Override

@@ -5,26 +5,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.converter.ExternalDataParseException;
-import com.jakubeeee.masterthesis.pluginapi.property.*;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedNumber;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedText;
 import lombok.NonNull;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.jakubeeee.masterthesis.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 
-public class MeteoJsonConverter implements DataConverter {
+public final class MeteoJsonConverter implements DataConverter {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     private static final String PARSE_EXCEPTION_MESSAGE =
             "Error during parsing of external data in Random Number Converter.";
+
+    private static final MeteoJsonConverter INSTANCE = new MeteoJsonConverter();
+
+    private MeteoJsonConverter() {
+    }
 
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
@@ -59,6 +61,10 @@ public class MeteoJsonConverter implements DataConverter {
     private ExternalDataParseException getParseException(Throwable cause) {
         return new ExternalDataParseException(PARSE_EXCEPTION_MESSAGE + " Details in underlying exception message.",
                 cause);
+    }
+
+    public static MeteoJsonConverter getInstance() {
+        return INSTANCE;
     }
 
 }

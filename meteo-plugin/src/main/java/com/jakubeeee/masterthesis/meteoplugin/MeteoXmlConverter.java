@@ -17,7 +17,7 @@ import java.util.List;
 
 import static com.jakubeeee.masterthesis.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 
-public class MeteoXmlConverter implements DataConverter {
+public final class MeteoXmlConverter implements DataConverter {
 
     private static final XmlMapper MAPPER = new XmlMapper();
 
@@ -25,6 +25,11 @@ public class MeteoXmlConverter implements DataConverter {
 
     private static final String PARSE_EXCEPTION_MESSAGE =
             "Error during parsing of external data in Random Number Converter.";
+
+    private static final MeteoXmlConverter INSTANCE = new MeteoXmlConverter();
+
+    private MeteoXmlConverter() {
+    }
 
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
@@ -65,6 +70,10 @@ public class MeteoXmlConverter implements DataConverter {
     private ExternalDataParseException getParseException(Throwable cause) {
         return new ExternalDataParseException(PARSE_EXCEPTION_MESSAGE + " Details in underlying exception message.",
                 cause);
+    }
+
+    public static MeteoXmlConverter getInstance() {
+        return INSTANCE;
     }
 
 }

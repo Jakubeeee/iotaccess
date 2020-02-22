@@ -1,14 +1,13 @@
 Priority queue:
-1. Converters in plugins can be singletons. You don't need to create a new object every time. Add implNote that this class is a target for asynchronyus execution and should be thread safe
-2. Improve meteo plugin by adding xml and txt support and add some test processes - works but refactoring is left
-3. Add unit tests for meteo converters (and maybe improve a bit the one in random number converter after last changes)
-4. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
-5. Add constant names for docker images
-6. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
-7. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
-8. Create versions of random-number-plugin for spi,db and fs testing
-9. Add support for database and filesystem plugins
-10. Write integration tests for saving various entries
+1. Improve meteo plugin by adding xml and txt support and add some test processes - works but refactoring is left
+2. Add unit tests for meteo converters (and maybe improve a bit the one in random number converter after last changes)
+3. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
+4. Add constant names for docker images
+5. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
+6. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
+7. Create versions of random-number-plugin for spi,db and fs testing
+8. Add support for database and filesystem plugins
+9. Write integration tests for saving various entries
 
 Drafts:
 1. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.

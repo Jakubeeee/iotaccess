@@ -22,12 +22,17 @@ import static java.text.MessageFormat.format;
 import static java.util.stream.Collectors.toUnmodifiableList;
 import static java.util.stream.StreamSupport.stream;
 
-public class RandomNumberConverter implements DataConverter {
+public final class RandomNumberConverter implements DataConverter {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final String PARSE_EXCEPTION_MESSAGE =
             "Error during parsing of external data in Random Number Converter.";
+
+    private static final RandomNumberConverter INSTANCE = new RandomNumberConverter();
+
+    private RandomNumberConverter() {
+    }
 
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
@@ -91,6 +96,10 @@ public class RandomNumberConverter implements DataConverter {
         return new ExternalDataParseException(
                 PARSE_EXCEPTION_MESSAGE + " " + messageExtension + " More details in underlying exception message.",
                 cause);
+    }
+
+    public static RandomNumberConverter getInstance() {
+        return INSTANCE;
     }
 
 }

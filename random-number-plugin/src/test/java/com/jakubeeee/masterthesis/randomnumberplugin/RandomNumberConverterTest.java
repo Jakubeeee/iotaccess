@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RandomNumberConverterTest {
 
-    private final RandomNumberConverter converter = new RandomNumberConverter();
+    private final RandomNumberConverter converter = RandomNumberConverter.getInstance();
 
     @ParameterizedTest
     @MethodSource("convertTestParams_correctData")

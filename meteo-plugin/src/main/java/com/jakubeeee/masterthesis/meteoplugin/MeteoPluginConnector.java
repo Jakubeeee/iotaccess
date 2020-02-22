@@ -19,7 +19,7 @@ public class MeteoPluginConnector implements PluginConnector {
 
     @Override
     public DataConverter getConverter() {
-        return new MeteoConverterProxy();
+        return MeteoConverterProxy.getInstance();
     }
 
     @Override

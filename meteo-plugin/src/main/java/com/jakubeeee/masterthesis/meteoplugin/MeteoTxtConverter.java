@@ -21,6 +21,11 @@ public class MeteoTxtConverter implements DataConverter {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    private static final MeteoTxtConverter INSTANCE = new MeteoTxtConverter();
+
+    private MeteoTxtConverter() {
+    }
+
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
 
@@ -64,5 +69,8 @@ public class MeteoTxtConverter implements DataConverter {
         return FetchedContainer.of(records);
     }
 
+    public static MeteoTxtConverter getInstance() {
+        return INSTANCE;
+    }
 
 }

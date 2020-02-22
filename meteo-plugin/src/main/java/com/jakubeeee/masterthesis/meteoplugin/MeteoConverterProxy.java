@@ -5,21 +5,24 @@ import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
 import lombok.NonNull;
 
-public class MeteoConverterProxy implements DataConverter {
+public final class MeteoConverterProxy implements DataConverter {
 
-    private final MeteoJsonConverter meteoJsonConverter = new MeteoJsonConverter();
+    private static final MeteoConverterProxy INSTANCE = new MeteoConverterProxy();
 
-    private final MeteoXmlConverter meteoXmlConverter = new MeteoXmlConverter();
-
-    private final MeteoTxtConverter meteoTxtConverter = new MeteoTxtConverter();
+    private MeteoConverterProxy() {
+    }
 
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
         return switch (dataFormat) {
-            case JSON -> meteoJsonConverter.convert(rawData, dataFormat);
-            case XML -> meteoXmlConverter.convert(rawData, dataFormat);
-            case TXT -> meteoTxtConverter.convert(rawData, dataFormat);
+            case JSON -> MeteoJsonConverter.getInstance().convert(rawData, dataFormat);
+            case XML -> MeteoXmlConverter.getInstance().convert(rawData, dataFormat);
+            case TXT -> MeteoTxtConverter.getInstance().convert(rawData, dataFormat);
         };
+    }
+
+    public static MeteoConverterProxy getInstance() {
+        return INSTANCE;
     }
 
 }
