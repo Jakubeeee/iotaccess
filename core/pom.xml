@@ -21,19 +21,19 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.jakubeeee.masterthesis</groupId>-->
-        <!--            <artifactId>random-number-plugin</artifactId>-->
-        <!--            <version>1.0-SNAPSHOT</version>-->
-        <!--            <scope>runtime</scope>-->
-        <!--        </dependency>-->
-
         <dependency>
             <groupId>com.jakubeeee.masterthesis</groupId>
-            <artifactId>meteo-plugin</artifactId>
+            <artifactId>random-number-plugin</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.jakubeeee.masterthesis</groupId>-->
+        <!--            <artifactId>meteo-plugin</artifactId>-->
+        <!--            <version>1.0-SNAPSHOT</version>-->
+        <!--            <scope>runtime</scope>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
