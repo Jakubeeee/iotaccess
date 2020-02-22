@@ -1,5 +1,6 @@
 package com.jakubeeee.masterthesis.meteoplugin;
 
+import com.jakubeeee.masterthesis.meteoplugin.converter.MeteoConverterProxy;
 import com.jakubeeee.masterthesis.pluginapi.PluginConnector;
 import com.jakubeeee.masterthesis.pluginapi.config.FetchConfig;
 import com.jakubeeee.masterthesis.pluginapi.config.PluginConfig;

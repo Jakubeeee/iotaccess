@@ -1,6 +1,7 @@
-package com.jakubeeee.masterthesis.meteoplugin;
+package com.jakubeeee.masterthesis.meteoplugin.converter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.Data;
 
@@ -8,42 +9,42 @@ import java.math.BigDecimal;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-final class MeteoXmlContainer {
+final class MeteoJsonExternalContainer {
 
-    @JacksonXmlProperty(localName = "ID")
+    @JsonProperty(value = "id")
     private String identifier;
 
-    @JacksonXmlProperty(localName = "TEMPERATURE")
+    @JsonProperty(value = "temperature")
     private BigDecimal temperature;
 
-    @JacksonXmlProperty(localName = "HUMIDITY")
+    @JsonProperty(value = "humidity")
     private BigDecimal humidity;
 
-    @JacksonXmlProperty(localName = "PRESSURE")
+    @JsonProperty(value = "pressure")
     private BigDecimal pressure;
 
-    @JacksonXmlProperty(localName = "LUMINANCE")
+    @JsonProperty(value = "luminance")
     private BigDecimal luminance;
 
-    @JacksonXmlProperty(localName = "RAIN_DIGITAL")
+    @JsonProperty(value = "rain(digital)")
     private BigDecimal rainDigital;
 
-    @JacksonXmlProperty(localName = "RAIN_ANALOG")
+    @JsonProperty(value = "rain(analog)")
     private BigDecimal rainAnalog;
 
-    @JacksonXmlProperty(localName = "WIND_POWER")
+    @JsonProperty(value = "wind power")
     private BigDecimal windPower;
 
-    @JacksonXmlProperty(localName = "WIND_DIRECTION")
+    @JsonProperty(value = "wind direction")
     private String windDirection;
 
-    @JacksonXmlProperty(localName = "GPS_ALTITUDE")
+    @JsonProperty(value = "gps altitude")
     private BigDecimal gpsAltitude;
 
-    @JacksonXmlProperty(localName = "GPS_LONGITUDE")
+    @JsonProperty(value = "gps longitude")
     private BigDecimal gpsLongitude;
 
-    @JacksonXmlProperty(localName = "GPS_LATITUDE")
+    @JsonProperty(value = "gps latitude")
     private BigDecimal gpsLatitude;
 
     @JacksonXmlProperty(localName = "MOMENT")

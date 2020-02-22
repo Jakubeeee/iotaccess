@@ -1,11 +1,12 @@
-package com.jakubeeee.masterthesis.meteoplugin;
+package com.jakubeeee.masterthesis.meteoplugin.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.converter.ExternalDataParseException;
-import com.jakubeeee.masterthesis.pluginapi.property.*;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
 import lombok.NonNull;
 
 import java.time.Instant;
@@ -16,15 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jakubeeee.masterthesis.pluginapi.meteo.MeteoPropertyKeyConstants.*;
+import static com.jakubeeee.masterthesis.meteoplugin.converter.FetchedPropertyHelper.*;
 
-public final class MeteoXmlConverter implements DataConverter {
+final class MeteoXmlConverter implements DataConverter {
 
     private static final XmlMapper MAPPER = new XmlMapper();
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private static final String PARSE_EXCEPTION_MESSAGE =
-            "Error during parsing of external data in Random Number Converter.";
+            "Error during parsing of external data in Meteo Xml Converter.";
 
     private static final MeteoXmlConverter INSTANCE = new MeteoXmlConverter();
 
@@ -34,33 +36,33 @@ public final class MeteoXmlConverter implements DataConverter {
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
         var records = new ArrayList<FetchedRecord>();
-        MeteoXmlContainer[] containers;
+        MeteoXmlExternalContainerWrapper wrapper;
         try {
-            containers = MAPPER.readValue(rawData, MeteoXmlContainer[].class);
+            wrapper = MAPPER.readValue(rawData, MeteoXmlExternalContainerWrapper.class);
         } catch (JsonProcessingException e) {
             throw getParseException(e);
         }
-        for (var container : containers) {
+        for (var container : wrapper.getContainers()) {
 
             String rawDateTime = container.getMoment();
-            Instant dateTime = null;
+            Instant moment = null;
             if (rawDateTime != null)
-                dateTime = LocalDateTime.parse(container.getMoment(), FORMATTER).atZone(ZoneId.of("+1")).toInstant();
+                moment = LocalDateTime.parse(container.getMoment(), FORMATTER).atZone(ZoneId.of("+1")).toInstant();
 
             var properties = List.of(
-                    new FetchedText(IDENTIFIER, container.getIdentifier()),
-                    new FetchedNumber(TEMPERATURE, container.getTemperature()),
-                    new FetchedNumber(HUMIDITY, container.getHumidity()),
-                    new FetchedNumber(PRESSURE, container.getPressure()),
-                    new FetchedNumber(LUMINANCE, container.getLuminance()),
-                    new FetchedNumber(RAIN_DIGITAL, container.getRainDigital()),
-                    new FetchedNumber(RAIN_ANALOG, container.getRainAnalog()),
-                    new FetchedNumber(WIND_POWER, container.getWindPower()),
-                    new FetchedText(WIND_DIRECTION, container.getWindDirection()),
-                    new FetchedNumber(GPS_ALTITUDE, container.getGpsAltitude()),
-                    new FetchedNumber(GPS_LONGITUDE, container.getGpsLongitude()),
-                    new FetchedNumber(GPS_LATITUDE, container.getGpsLatitude()),
-                    new FetchedDate(DATE_TIME, dateTime)
+                    createFetchedText(IDENTIFIER, container.getIdentifier()),
+                    createFetchedNumber(TEMPERATURE, container.getTemperature()),
+                    createFetchedNumber(HUMIDITY, container.getHumidity()),
+                    createFetchedNumber(PRESSURE, container.getPressure()),
+                    createFetchedNumber(LUMINANCE, container.getLuminance()),
+                    createFetchedNumber(RAIN_DIGITAL, container.getRainDigital()),
+                    createFetchedNumber(RAIN_ANALOG, container.getRainAnalog()),
+                    createFetchedNumber(WIND_POWER, container.getWindPower()),
+                    createFetchedText(WIND_DIRECTION, container.getWindDirection()),
+                    createFetchedNumber(GPS_ALTITUDE, container.getGpsAltitude()),
+                    createFetchedNumber(GPS_LONGITUDE, container.getGpsLongitude()),
+                    createFetchedNumber(GPS_LATITUDE, container.getGpsLatitude()),
+                    createFetchedDate(MOMENT, moment)
             );
             records.add(FetchedRecord.of(properties));
         }

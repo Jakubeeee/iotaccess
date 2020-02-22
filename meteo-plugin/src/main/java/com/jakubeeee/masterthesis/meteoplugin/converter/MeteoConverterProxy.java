@@ -1,4 +1,4 @@
-package com.jakubeeee.masterthesis.meteoplugin;
+package com.jakubeeee.masterthesis.meteoplugin.converter;
 
 import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;

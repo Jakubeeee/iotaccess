@@ -26,7 +26,7 @@ public final class MeteoPropertyKeyConstants {
 
     public static final String GPS_LATITUDE = "gpsLatitude";
 
-    public static final String DATE_TIME = "dateTime";
+    public static final String MOMENT = "moment";
 
     private MeteoPropertyKeyConstants() {
         throw new UnsupportedOperationException(this.getClass().getSimpleName() + " class cannot be initialized");

@@ -5,14 +5,13 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
 
-import java.time.Instant;
-
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class FetchedDate extends FetchedProperty<Instant> {
+@Value
+public final class FetchedNullNumber extends FetchedNumber {
 
-    public FetchedDate(@NonNull String key, Instant value) {
-        super(key, value);
+    public FetchedNullNumber(@NonNull String key) {
+        super(key, null);
     }
 
 }

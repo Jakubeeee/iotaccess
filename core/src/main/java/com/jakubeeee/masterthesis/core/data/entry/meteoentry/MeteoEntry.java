@@ -55,8 +55,8 @@ public final class MeteoEntry extends EntryEntity {
     @Column(name = "GPS_LATITUDE", updatable = false)
     private BigDecimal gpsLatitude;
 
-    @Column(name = "DATE_TIME", updatable = false)
-    private Instant dateTime;
+    @Column(name = "MOMENT", updatable = false)
+    private Instant moment;
 
     public MeteoEntry(ProcessMetadata processMetadata) {
         super(processMetadata);

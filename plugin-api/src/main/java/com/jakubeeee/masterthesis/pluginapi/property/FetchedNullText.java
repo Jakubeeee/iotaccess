@@ -8,9 +8,9 @@ import lombok.Value;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Value
-public class FetchedNull extends FetchedProperty<Void> {
+public final class FetchedNullText extends FetchedText {
 
-    public FetchedNull(@NonNull String key) {
+    public FetchedNullText(@NonNull String key) {
         super(key, null);
     }
 

@@ -1,6 +1,6 @@
 Priority queue:
 1. Improve meteo plugin by adding xml and txt support and add some test processes - works but refactoring is left
-2. Add unit tests for meteo converters
+2. Refactor packages in plugins - only connector should be public, rest should be in impl package
 3. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
 4. Add constant names for docker images
 5. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
