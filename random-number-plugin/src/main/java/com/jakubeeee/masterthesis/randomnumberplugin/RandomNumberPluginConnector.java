@@ -5,12 +5,13 @@ import com.jakubeeee.masterthesis.pluginapi.config.FetchConfig;
 import com.jakubeeee.masterthesis.pluginapi.config.PluginConfig;
 import com.jakubeeee.masterthesis.pluginapi.config.ProcessConfig;
 import com.jakubeeee.masterthesis.pluginapi.config.ScheduleConfig;
+import com.jakubeeee.masterthesis.randomnumberplugin.impl.RandomNumberConverter;
 
 import java.util.Set;
 
 import static com.jakubeeee.masterthesis.pluginapi.converter.DataFormat.JSON;
 import static com.jakubeeee.masterthesis.pluginapi.converter.DataType.STANDARD;
-import static com.jakubeeee.masterthesis.randomnumberplugin.RandomNumberClientConstants.*;
+import static com.jakubeeee.masterthesis.randomnumberplugin.impl.RandomNumberClientConstants.*;
 
 public class RandomNumberPluginConnector implements PluginConnector {
 

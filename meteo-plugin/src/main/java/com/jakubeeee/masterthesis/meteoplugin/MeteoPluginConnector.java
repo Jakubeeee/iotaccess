@@ -1,6 +1,8 @@
 package com.jakubeeee.masterthesis.meteoplugin;
 
-import com.jakubeeee.masterthesis.meteoplugin.converter.MeteoConverterProxy;
+import com.jakubeeee.masterthesis.meteoplugin.impl.converter.MeteoConverterProxy;
+import com.jakubeeee.masterthesis.meteoplugin.impl.url.CommandUrlParameter;
+import com.jakubeeee.masterthesis.meteoplugin.impl.url.ResultUrlParameter;
 import com.jakubeeee.masterthesis.pluginapi.PluginConnector;
 import com.jakubeeee.masterthesis.pluginapi.config.FetchConfig;
 import com.jakubeeee.masterthesis.pluginapi.config.PluginConfig;
@@ -12,7 +14,7 @@ import com.jakubeeee.masterthesis.pluginapi.converter.DataType;
 
 import java.util.Set;
 
-import static com.jakubeeee.masterthesis.meteoplugin.MeteoUrlHelper.getUrl;
+import static com.jakubeeee.masterthesis.meteoplugin.impl.url.MeteoUrlHelper.getUrl;
 
 public class MeteoPluginConnector implements PluginConnector {
 
