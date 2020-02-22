@@ -61,17 +61,22 @@ public class MeteoDataPersistStrategy extends BaseDataPersistStrategy<MeteoEntry
                 .map(type::cast)
                 .filter(property -> property.getKey().equals(filteredKey))
                 .collect(toUnmodifiableList());
-        validateExactlyOnePropertyFound(matchingProperties, filteredKey, type);
-        return matchingProperties.get(0);
+        validateAtMostOnePropertyFound(matchingProperties, filteredKey, type);
+        return matchingProperties.isEmpty() ? toNullObject(filteredKey) : matchingProperties.get(0);
     }
 
-    private <T extends FetchedProperty<?>> void validateExactlyOnePropertyFound(List<T> matchingProperties,
-                                                                                String filteredKey,
-                                                                                Class<T> type) {
+    @SuppressWarnings("unchecked") // since FetchedNull is always returned, we can safely suppress the unchecked warning
+    private static <T extends FetchedProperty<?>> T toNullObject(String filteredKey) {
+        return (T) new FetchedNull(filteredKey);
+    }
+
+    private <T extends FetchedProperty<?>> void validateAtMostOnePropertyFound(List<T> matchingProperties,
+                                                                               String filteredKey,
+                                                                               Class<T> type) {
         int matchingPropertiesSize = matchingProperties.size();
-        if (matchingPropertiesSize != 1)
+        if (matchingPropertiesSize > 1)
             throw new IllegalStateException(
-                    format("There must be exactly one property for key \"{0}\" and type \"{1}\". Instead found: \"{2}\"",
+                    format("There must be at most one property for key \"{0}\" and type \"{1}\". Instead found: \"{2}\"",
                             filteredKey, type.getSimpleName(), matchingPropertiesSize));
     }
 

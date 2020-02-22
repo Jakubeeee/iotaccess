@@ -46,7 +46,4 @@ final class MeteoJsonContainer {
     @JsonProperty(value = "gps latitude")
     private BigDecimal gpsLatitude;
 
-    @JsonProperty(value = "date/time")
-    private String moment;
-
 }

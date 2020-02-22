@@ -37,11 +37,6 @@ public class MeteoJsonConverter implements DataConverter {
         }
         for (var container : containers) {
 
-            String rawDateTime = container.getMoment();
-            Instant dateTime = null;
-            if (rawDateTime != null)
-                dateTime = LocalDateTime.parse(container.getMoment(), FORMATTER).atZone(ZoneId.of("+1")).toInstant();
-
             var properties = List.of(
                     new FetchedText(IDENTIFIER, container.getIdentifier()),
                     new FetchedNumber(TEMPERATURE, container.getTemperature()),
@@ -54,8 +49,7 @@ public class MeteoJsonConverter implements DataConverter {
                     new FetchedText(WIND_DIRECTION, container.getWindDirection()),
                     new FetchedNumber(GPS_ALTITUDE, container.getGpsAltitude()),
                     new FetchedNumber(GPS_LONGITUDE, container.getGpsLongitude()),
-                    new FetchedNumber(GPS_LATITUDE, container.getGpsLatitude()),
-                    new FetchedDate(DATE_TIME, dateTime)
+                    new FetchedNumber(GPS_LATITUDE, container.getGpsLatitude())
             );
             records.add(FetchedRecord.of(properties));
         }
