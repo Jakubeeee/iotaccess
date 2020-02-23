@@ -1,11 +1,10 @@
 Priority queue:
-1. Improve meteo plugin by adding xml and txt support and add some test processes - works but refactoring is left
-2. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
-3. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
-4. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
-5. Create versions of random-number-plugin for spi,db and fs testing
-6. Add support for database and filesystem plugins
-7. Write integration tests for saving various entries
+1. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
+2. Make a cleanup in javadocs. Remove useless javadocs in core etc. and add some extensive javadocs in plugin-api
+3. Create versions of random-number-plugin for spi,db and fs testing
+4. Add support for database and filesystem plugins
+5. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
+6. Write integration tests for saving various entries
 
 Drafts:
 1. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.

@@ -4,28 +4,23 @@ import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.converter.ExternalDataParseException;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedProperty;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
 import lombok.NonNull;
 
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static com.jakubeeee.masterthesis.meteoplugin.impl.converter.FetchedPropertyHelper.*;
+import static com.jakubeeee.masterthesis.meteoplugin.impl.converter.MeteoConverterHelper.*;
+import static com.jakubeeee.masterthesis.meteoplugin.impl.converter.txt.MeteoTxtConverterConstants.*;
 import static com.jakubeeee.masterthesis.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 import static java.text.MessageFormat.format;
+import static java.util.Arrays.stream;
 import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toUnmodifiableList;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public class MeteoTxtConverter implements DataConverter {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private static final MeteoTxtConverter INSTANCE = new MeteoTxtConverter();
 
@@ -34,67 +29,75 @@ public class MeteoTxtConverter implements DataConverter {
 
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
-
-        List<FetchedRecord> records = new ArrayList<>();
-
-        if (rawData.trim().equals(""))
+        if (isRawDataEmpty(rawData))
             return FetchedContainer.of(emptyList());
 
-        String[] fragments = rawData.split("\n\\s*\n");
-
-        for (var fragment : fragments) {
-
-            List<String> fragmentLines = fragment.lines()
-                    .filter(line -> !line.trim().equals(""))
-                    .filter(line -> !line.trim().equals("Current meteo conditions:"))
-                    .collect(Collectors.toUnmodifiableList());
-
-            boolean allLinesCorrect = fragmentLines.stream()
-                    .allMatch(line -> line.contains("="));
-
-            if (!allLinesCorrect)
-                throw new ExternalDataParseException(format("Text fragment could not be parsed: \"{0}\"", fragment));
-
-            Map<String, String> map = fragment.lines()
-                    .filter(line -> line.contains("="))
-                    .collect(toUnmodifiableMap(
-                            line -> line.substring(0, line.indexOf("=")).trim(),
-                            line -> line.substring(line.indexOf("=") + 1).trim())
-                    );
-
-            String rawDateTime = map.get("date/time");
-            Instant dateTime = null;
-            if (rawDateTime != null)
-                dateTime = LocalDateTime.parse(rawDateTime, FORMATTER).atZone(ZoneId.of("+1")).toInstant();
-
-            var record = FetchedRecord.of(List.of(
-                    createFetchedText(IDENTIFIER, map.get("id")),
-                    createFetchedNumber(TEMPERATURE,
-                            map.get("temperature") == null ? null : new BigDecimal(map.get("temperature"))),
-                    createFetchedNumber(HUMIDITY,
-                            map.get("humidity") == null ? null : new BigDecimal(map.get("humidity"))),
-                    createFetchedNumber(PRESSURE,
-                            map.get("pressure") == null ? null : new BigDecimal(map.get("pressure"))),
-                    createFetchedNumber(LUMINANCE,
-                            map.get("luminance") == null ? null : new BigDecimal(map.get("luminance"))),
-                    createFetchedNumber(RAIN_DIGITAL,
-                            map.get("rain(digital)") == null ? null : new BigDecimal(map.get("rain(digital)"))),
-                    createFetchedNumber(RAIN_ANALOG,
-                            map.get("rain(analog)") == null ? null : new BigDecimal(map.get("rain(analog)"))),
-                    createFetchedNumber(WIND_POWER,
-                            map.get("wind power") == null ? null : new BigDecimal(map.get("wind power"))),
-                    createFetchedText(WIND_DIRECTION, map.get("wind direction")),
-                    createFetchedNumber(GPS_ALTITUDE,
-                            map.get("gps altitude") == null ? null : new BigDecimal(map.get("gps altitude"))),
-                    createFetchedNumber(GPS_LONGITUDE,
-                            map.get("gps longitude") == null ? null : new BigDecimal(map.get("gps longitude"))),
-                    createFetchedNumber(GPS_LATITUDE,
-                            map.get("gps latitude") == null ? null : new BigDecimal(map.get("gps latitude"))),
-                    createFetchedDate(MOMENT, dateTime)
-            ));
-            records.add(record);
-        }
+        String[] fragments = splitOnNewLines(rawData);
+        List<FetchedRecord> records = createRecords(fragments);
         return FetchedContainer.of(records);
+    }
+
+    private boolean isRawDataEmpty(String rawData) {
+        return rawData.trim().equals("");
+    }
+
+    private String[] splitOnNewLines(String rawData) {
+        return rawData.split("\n\\s*\n");
+    }
+
+    private List<FetchedRecord> createRecords(String[] fragments) {
+        return stream(fragments)
+                .map(this::createRecord)
+                .collect(toUnmodifiableList());
+    }
+
+    private FetchedRecord createRecord(String fragment) {
+        List<String> propertyLines = extractPropertyLines(fragment);
+        validateAllPropertyLinesCorrect(propertyLines);
+        Map<String, String> rawProperties = extractProperties(propertyLines);
+        List<FetchedProperty<?>> properties = transformToFetchedProperties(rawProperties);
+        return FetchedRecord.of(properties);
+    }
+
+    private List<String> extractPropertyLines(String fragment) {
+        return fragment.lines()
+                .filter(line -> !line.trim().equals(""))
+                .filter(line -> !line.trim().equals("Current meteo conditions:"))
+                .collect(toUnmodifiableList());
+    }
+
+    private void validateAllPropertyLinesCorrect(List<String> propertyLines) {
+        boolean allLinesCorrect = propertyLines.stream()
+                .allMatch(line -> line.contains("="));
+        if (!allLinesCorrect)
+            throw new ExternalDataParseException(
+                    format("One of given property lines is not correct: \"{0}\"", propertyLines));
+    }
+
+    private Map<String, String> extractProperties(List<String> propertyLines) {
+        return propertyLines.stream()
+                .collect(toUnmodifiableMap(
+                        line -> line.substring(0, line.indexOf('=')).trim(),
+                        line -> line.substring(line.indexOf('=') + 1).trim())
+                );
+    }
+
+    private List<FetchedProperty<?>> transformToFetchedProperties(Map<String, String> rawProperties) {
+        return List.of(
+                createFetchedText(IDENTIFIER, rawProperties.get(ID_KEY)),
+                createFetchedNumber(TEMPERATURE, rawProperties.get(TEMPERATURE_KEY)),
+                createFetchedNumber(HUMIDITY, rawProperties.get(HUMIDITY_KEY)),
+                createFetchedNumber(PRESSURE, rawProperties.get(PRESSURE_KEY)),
+                createFetchedNumber(LUMINANCE, rawProperties.get(LUMINANCE_KEY)),
+                createFetchedNumber(RAIN_DIGITAL, rawProperties.get(RAIN_DIGITAL_KEY)),
+                createFetchedNumber(RAIN_ANALOG, rawProperties.get(RAIN_ANALOG_KEY)),
+                createFetchedNumber(WIND_POWER, rawProperties.get(WIND_POWER_KEY)),
+                createFetchedText(WIND_DIRECTION, rawProperties.get(WIND_DIRECTION_KEY)),
+                createFetchedNumber(GPS_ALTITUDE, rawProperties.get(GPS_ALTITUDE_KEY)),
+                createFetchedNumber(GPS_LONGITUDE, rawProperties.get(GPS_LONGITUDE_KEY)),
+                createFetchedNumber(GPS_LATITUDE, rawProperties.get(GPS_LATITUDE_KEY)),
+                createFetchedDate(MOMENT, rawProperties.get(MOMENT_KEY))
+        );
     }
 
     public static MeteoTxtConverter getInstance() {

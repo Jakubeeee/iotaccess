@@ -47,7 +47,7 @@ final class MeteoJsonExternalContainer {
     @JsonProperty(value = "gps latitude")
     private BigDecimal gpsLatitude;
 
-    @JacksonXmlProperty(localName = "MOMENT")
+    @JacksonXmlProperty(localName = "moment")
     private String moment;
 
 }

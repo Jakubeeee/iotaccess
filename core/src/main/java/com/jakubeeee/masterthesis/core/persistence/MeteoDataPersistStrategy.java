@@ -66,8 +66,8 @@ public class MeteoDataPersistStrategy extends BaseDataPersistStrategy<MeteoEntry
     }
 
     private <T extends FetchedProperty<?>> void validateExactlyOnePropertyFound(List<T> matchingProperties,
-                                                                               String filteredKey,
-                                                                               Class<T> type) {
+                                                                                String filteredKey,
+                                                                                Class<T> type) {
         int matchingPropertiesSize = matchingProperties.size();
         if (matchingPropertiesSize != 1)
             throw new IllegalStateException(
