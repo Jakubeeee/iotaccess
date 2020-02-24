@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 /**
- * Configuration value object used for specifying the way that the fetching process shall be scheduled.
+ * Configuration value object used for specifying the way that the fetching process is scheduled.
  */
 @RequiredArgsConstructor(staticName = "of")
 @Value
