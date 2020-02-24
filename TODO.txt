@@ -1,17 +1,17 @@
 Priority queue:
-1. Create versions of random-number-plugin for spi,db and fs testing
+1. Create versions of random-number-plugin for spi,db and fs for testing purposes
 2. Add support for database and filesystem plugins
 3. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
 4. Write integration tests for saving various entries
 
 Drafts:
-1. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.
-    Validator type - structural and logical(?). If the first doesn't pass do not launch the second one. Always collect all the errors.
-2. Add versioning for plugins. If there is plugin available for deployer with non-unique identifier, check it's version. If it higher then replace existing one.
-3. Add new "SweepConfig" to plugin. It would be a configuration of removing old unnecessary data using a scheduled job.
-4. Add rest endpoints for switching options (enabling/disabling deployers and plugins, changing intervals of scheduled jobs etc.)
-5. Add testutils module used by all other modules for plain java test utilities - I can move the container class and base class for integration tests
-6. Add common module used by all other modules for plain java utilities (don't have lots of common code for now, though)
-7. Add java 9 module system. It's cool but there are issues with testcontainers library (auto module name conflicts, split packages)
-8. Add metadata of scheduled jobs to database
-9. Add spring aop for logging. Some places (eg. data services) have common pattern for logging - it could be extracted to aspects.
+1. Add metadata of scheduled jobs to database (Status: It's for validation only, not really needed that much, nice to have though)
+2. Add spring aop for logging. Some places (eg. data services) have common pattern for logging - it could be extracted to aspects. (Status: Not a big improvement but nice to have)
+3. Add rest endpoints for switching options (enabling/disabling deployers and plugins, changing intervals of scheduled jobs etc.) (Status: Big effort, but nice to have)
+4. Add testutils module used by all other modules for plain java test utilities - I can move the container class and base class for integration tests (Status: Nice idea, but for now it would have ony 2 classes and only used by core module)
+5. Add common module used by all other modules for plain java utilities (Status: Nice idea, but there is not much common code for now)
+6. Add java 9 module system. (Status: Very nice to have but there are problems with testcontainers library: auto module name conflicts, split packages etc. And there is problem with java 13 + surefire plugin)
+7. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.
+    Validator type - structural and logical(?). If the first doesn't pass do not launch the second one. Always collect all the errors. (Status: Big effort and not needed that much right now)
+8. Add versioning for plugins. If there is plugin available for deployer with non-unique identifier, check it's version. If it higher then replace existing one. (Status: not needed right now, maybe later it will be more useful)
+9. Add new "SweepConfig" to plugin. It would be a configuration of removing old unnecessary data using a scheduled job. (Status: not needed right now, maybe later it will be more useful)
