@@ -6,7 +6,7 @@ import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedNumber;
-import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedVector;
 import lombok.NonNull;
 
 import java.math.BigDecimal;
@@ -33,7 +33,7 @@ public final class RandomNumberConverter implements DataConverter {
         RandomNumberContainer container = parseToExternalContainer(rawData);
         List<BigDecimal> values = container.getValues();
         List<FetchedNumber> fetchedNumbers = rawValuesToFetchedNumbers(values);
-        return FetchedContainer.of(List.of(FetchedRecord.of(fetchedNumbers)));
+        return FetchedContainer.of(List.of(FetchedVector.of(fetchedNumbers)));
     }
 
     private RandomNumberContainer parseToExternalContainer(String rawData) {

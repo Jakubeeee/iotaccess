@@ -28,14 +28,14 @@ public class StandardDataPersistStrategy extends BaseDataPersistStrategy<Standar
     }
 
     @Override
-    protected StandardEntry generateEntry(FetchedRecord record, ProcessMetadata processMetadata) {
+    protected StandardEntry generateEntry(FetchedVector vector, ProcessMetadata processMetadata) {
         var newEntry = new StandardEntry(processMetadata);
-        populateEntryFields(newEntry, record);
+        populateEntryFields(newEntry, vector);
         return newEntry;
     }
 
-    private void populateEntryFields(StandardEntry entry, FetchedRecord record) {
-        for (var property : record.getFetchedProperties())
+    private void populateEntryFields(StandardEntry entry, FetchedVector vector) {
+        for (var property : vector.getFetchedProperties())
             populateEntryField(entry, property);
     }
 

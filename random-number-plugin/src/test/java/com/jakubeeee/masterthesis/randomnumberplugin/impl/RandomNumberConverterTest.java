@@ -3,7 +3,7 @@ package com.jakubeeee.masterthesis.randomnumberplugin.impl;
 import com.jakubeeee.masterthesis.pluginapi.converter.ExternalDataParseException;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedNumber;
-import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedVector;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -72,7 +72,7 @@ class RandomNumberConverterTest {
                 .range(0, values.length)
                 .mapToObj(i -> new FetchedNumber(format("random_value_{0}", i + 1), new BigDecimal(values[i])))
                 .collect(toUnmodifiableList());
-        return FetchedContainer.of(singletonList(FetchedRecord.of(fetchedNumbers)));
+        return FetchedContainer.of(singletonList(FetchedVector.of(fetchedNumbers)));
     }
 
 }

@@ -1,9 +1,7 @@
 package com.jakubeeee.masterthesis.pluginapi.property;
 
 import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
-import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import lombok.Value;
 
 import java.util.List;
@@ -16,6 +14,6 @@ import java.util.List;
 @Value
 public final class FetchedContainer {
 
-    private final List<FetchedRecord> fetchedRecords;
+    private final List<FetchedVector> fetchedVectors;
 
 }

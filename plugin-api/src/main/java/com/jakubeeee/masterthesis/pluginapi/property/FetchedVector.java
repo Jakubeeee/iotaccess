@@ -7,7 +7,7 @@ import java.util.List;
 
 @RequiredArgsConstructor(staticName = "of")
 @Value
-public final class FetchedRecord {
+public final class FetchedVector {
 
     private final List<? extends FetchedProperty> fetchedProperties;
 

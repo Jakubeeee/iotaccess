@@ -4,7 +4,7 @@ import com.jakubeeee.masterthesis.core.data.entry.EntryEntity;
 import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMetadata;
 import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMetadataService;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
-import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedVector;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,22 +16,22 @@ public abstract class BaseDataPersistStrategy<T extends EntryEntity> implements 
 
     @Override
     public void persist(FetchedContainer container, String processIdentifier) {
-        List<FetchedRecord> records = container.getFetchedRecords();
+        List<FetchedVector> vectors = container.getFetchedVectors();
         ProcessMetadata processMetadata = processMetadataService.findByIdentifier(processIdentifier);
-        processRecords(records, processMetadata);
+        processVectors(vectors, processMetadata);
     }
 
-    private void processRecords(List<FetchedRecord> records, ProcessMetadata metadata) {
-        for (var record : records)
-            processRecord(record, metadata);
+    private void processVectors(List<FetchedVector> vectors, ProcessMetadata metadata) {
+        for (var vector : vectors)
+            processVector(vector, metadata);
     }
 
-    private void processRecord(FetchedRecord record, ProcessMetadata metadata) {
-        T newEntry = generateEntry(record, metadata);
+    private void processVector(FetchedVector vector, ProcessMetadata metadata) {
+        T newEntry = generateEntry(vector, metadata);
         persistEntry(newEntry);
     }
 
-    protected abstract T generateEntry(FetchedRecord record, ProcessMetadata metadata);
+    protected abstract T generateEntry(FetchedVector vector, ProcessMetadata metadata);
 
     protected abstract void persistEntry(T newEntry);
 

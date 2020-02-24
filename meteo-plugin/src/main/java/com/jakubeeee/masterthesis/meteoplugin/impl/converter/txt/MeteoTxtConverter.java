@@ -5,7 +5,7 @@ import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.converter.ExternalDataParseException;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedProperty;
-import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedVector;
 import lombok.NonNull;
 
 import java.util.List;
@@ -33,8 +33,8 @@ public class MeteoTxtConverter implements DataConverter {
             return FetchedContainer.of(emptyList());
 
         String[] fragments = splitOnNewLines(rawData);
-        List<FetchedRecord> records = createRecords(fragments);
-        return FetchedContainer.of(records);
+        List<FetchedVector> vectors = createVectors(fragments);
+        return FetchedContainer.of(vectors);
     }
 
     private boolean isRawDataEmpty(String rawData) {
@@ -45,18 +45,18 @@ public class MeteoTxtConverter implements DataConverter {
         return rawData.split("\n\\s*\n");
     }
 
-    private List<FetchedRecord> createRecords(String[] fragments) {
+    private List<FetchedVector> createVectors(String[] fragments) {
         return stream(fragments)
-                .map(this::createRecord)
+                .map(this::createVector)
                 .collect(toUnmodifiableList());
     }
 
-    private FetchedRecord createRecord(String fragment) {
+    private FetchedVector createVector(String fragment) {
         List<String> propertyLines = extractPropertyLines(fragment);
         validateAllPropertyLinesCorrect(propertyLines);
         Map<String, String> rawProperties = extractProperties(propertyLines);
         List<FetchedProperty<?>> properties = transformToFetchedProperties(rawProperties);
-        return FetchedRecord.of(properties);
+        return FetchedVector.of(properties);
     }
 
     private List<String> extractPropertyLines(String fragment) {

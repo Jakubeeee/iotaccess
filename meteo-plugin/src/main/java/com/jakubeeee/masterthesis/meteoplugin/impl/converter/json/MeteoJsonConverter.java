@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataFormat;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
-import com.jakubeeee.masterthesis.pluginapi.property.FetchedRecord;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedVector;
 import lombok.NonNull;
 
 import java.util.List;
@@ -27,8 +27,8 @@ public final class MeteoJsonConverter implements DataConverter {
     @Override
     public FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat) {
         MeteoJsonExternalContainer[] containers = getExternalContainers(rawData);
-        List<FetchedRecord> records = createRecords(containers);
-        return FetchedContainer.of(records);
+        List<FetchedVector> vectors = createVectors(containers);
+        return FetchedContainer.of(vectors);
     }
 
     private MeteoJsonExternalContainer[] getExternalContainers(String rawData) {
@@ -39,14 +39,14 @@ public final class MeteoJsonConverter implements DataConverter {
         }
     }
 
-    private List<FetchedRecord> createRecords(MeteoJsonExternalContainer[] containers) {
+    private List<FetchedVector> createVectors(MeteoJsonExternalContainer[] containers) {
         return stream(containers)
-                .map(this::createRecord)
+                .map(this::createVector)
                 .collect(toUnmodifiableList());
     }
 
-    private FetchedRecord createRecord(MeteoJsonExternalContainer container) {
-        return FetchedRecord.of(List.of(
+    private FetchedVector createVector(MeteoJsonExternalContainer container) {
+        return FetchedVector.of(List.of(
                 createFetchedText(IDENTIFIER, container.getIdentifier()),
                 createFetchedNumber(TEMPERATURE, container.getTemperature()),
                 createFetchedNumber(HUMIDITY, container.getHumidity()),

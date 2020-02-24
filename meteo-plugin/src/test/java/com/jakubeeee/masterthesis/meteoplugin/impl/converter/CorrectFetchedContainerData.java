@@ -60,7 +60,7 @@ public class CorrectFetchedContainerData {
     static {
         CORRECT_MULTIPLE_FRAGMENT_SINGLE_VALUE_CONTAINER =
                 container(
-                        FetchedRecord.of(
+                        FetchedVector.of(
                                 List.of(
                                         new FetchedNullText("identifier"),
                                         new FetchedNullNumber("temperature"),
@@ -77,7 +77,7 @@ public class CorrectFetchedContainerData {
                                         new FetchedNullDate("moment")
                                 )
                         ),
-                        FetchedRecord.of(
+                        FetchedVector.of(
                                 List.of(
                                         new FetchedNullText("identifier"),
                                         new FetchedNullNumber("temperature"),
@@ -94,7 +94,7 @@ public class CorrectFetchedContainerData {
                                         new FetchedNullDate("moment")
                                 )
                         ),
-                        FetchedRecord.of(
+                        FetchedVector.of(
                                 List.of(
                                         new FetchedNullText("identifier"),
                                         new FetchedNullNumber("temperature"),
@@ -119,7 +119,7 @@ public class CorrectFetchedContainerData {
     static {
         CORRECT_MULTIPLE_FRAGMENT_ALL_VALUES_CONTAINER =
                 container(
-                        FetchedRecord.of(
+                        FetchedVector.of(
                                 List.of(
                                         new FetchedText("identifier", "SNG15767123017980008"),
                                         new FetchedNumber("temperature", new BigDecimal("21.1")),
@@ -136,7 +136,7 @@ public class CorrectFetchedContainerData {
                                         new FetchedDate("moment", Instant.parse("2020-02-14T07:55:30Z"))
                                 )
                         ),
-                        FetchedRecord.of(
+                        FetchedVector.of(
                                 List.of(
                                         new FetchedText("identifier", "SNG15767123017980007"),
                                         new FetchedNumber("temperature", new BigDecimal("21.05")),
@@ -153,7 +153,7 @@ public class CorrectFetchedContainerData {
                                         new FetchedDate("moment", Instant.parse("2020-02-14T07:55:30Z"))
                                 )
                         ),
-                        FetchedRecord.of(
+                        FetchedVector.of(
                                 List.of(
                                         new FetchedText("identifier", "SNG157671230179800011"),
                                         new FetchedNumber("temperature", new BigDecimal("20.8")),
@@ -177,12 +177,12 @@ public class CorrectFetchedContainerData {
         return FetchedContainer.of(emptyList());
     }
 
-    private static FetchedContainer container(FetchedRecord... records) {
-        return FetchedContainer.of(List.of(records));
+    private static FetchedContainer container(FetchedVector... vectors) {
+        return FetchedContainer.of(List.of(vectors));
     }
 
     private static FetchedContainer container(FetchedProperty<?>... properties) {
-        return FetchedContainer.of(singletonList(FetchedRecord.of(List.of(properties))));
+        return FetchedContainer.of(singletonList(FetchedVector.of(List.of(properties))));
     }
 
 }

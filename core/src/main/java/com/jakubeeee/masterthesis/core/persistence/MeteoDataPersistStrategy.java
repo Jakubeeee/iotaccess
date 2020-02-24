@@ -28,34 +28,34 @@ public class MeteoDataPersistStrategy extends BaseDataPersistStrategy<MeteoEntry
     }
 
     @Override
-    protected MeteoEntry generateEntry(FetchedRecord record, ProcessMetadata processMetadata) {
+    protected MeteoEntry generateEntry(FetchedVector vector, ProcessMetadata processMetadata) {
         var newEntry = new MeteoEntry(processMetadata);
-        setEntryField(newEntry::setIdentifier, record, IDENTIFIER, FetchedText.class);
-        setEntryField(newEntry::setTemperature, record, TEMPERATURE, FetchedNumber.class);
-        setEntryField(newEntry::setHumidity, record, HUMIDITY, FetchedNumber.class);
-        setEntryField(newEntry::setPressure, record, PRESSURE, FetchedNumber.class);
-        setEntryField(newEntry::setLuminance, record, LUMINANCE, FetchedNumber.class);
-        setEntryField(newEntry::setRainDigital, record, RAIN_DIGITAL, FetchedNumber.class);
-        setEntryField(newEntry::setRainAnalog, record, RAIN_ANALOG, FetchedNumber.class);
-        setEntryField(newEntry::setWindPower, record, WIND_POWER, FetchedNumber.class);
-        setEntryField(newEntry::setWindDirection, record, WIND_DIRECTION, FetchedText.class);
-        setEntryField(newEntry::setGpsAltitude, record, GPS_ALTITUDE, FetchedNumber.class);
-        setEntryField(newEntry::setGpsLongitude, record, GPS_LONGITUDE, FetchedNumber.class);
-        setEntryField(newEntry::setGpsLatitude, record, GPS_LATITUDE, FetchedNumber.class);
-        setEntryField(newEntry::setMoment, record, MOMENT, FetchedDate.class);
+        setEntryField(newEntry::setIdentifier, vector, IDENTIFIER, FetchedText.class);
+        setEntryField(newEntry::setTemperature, vector, TEMPERATURE, FetchedNumber.class);
+        setEntryField(newEntry::setHumidity, vector, HUMIDITY, FetchedNumber.class);
+        setEntryField(newEntry::setPressure, vector, PRESSURE, FetchedNumber.class);
+        setEntryField(newEntry::setLuminance, vector, LUMINANCE, FetchedNumber.class);
+        setEntryField(newEntry::setRainDigital, vector, RAIN_DIGITAL, FetchedNumber.class);
+        setEntryField(newEntry::setRainAnalog, vector, RAIN_ANALOG, FetchedNumber.class);
+        setEntryField(newEntry::setWindPower, vector, WIND_POWER, FetchedNumber.class);
+        setEntryField(newEntry::setWindDirection, vector, WIND_DIRECTION, FetchedText.class);
+        setEntryField(newEntry::setGpsAltitude, vector, GPS_ALTITUDE, FetchedNumber.class);
+        setEntryField(newEntry::setGpsLongitude, vector, GPS_LONGITUDE, FetchedNumber.class);
+        setEntryField(newEntry::setGpsLatitude, vector, GPS_LATITUDE, FetchedNumber.class);
+        setEntryField(newEntry::setMoment, vector, MOMENT, FetchedDate.class);
         return newEntry;
     }
 
     private <T> void setEntryField(Consumer<T> entrySetter,
-                                   FetchedRecord record,
+                                   FetchedVector vector,
                                    String propertyKey,
                                    Class<? extends FetchedProperty<T>> propertyType) {
-        var property = findByKey(record, propertyKey, propertyType);
+        var property = findByKey(vector, propertyKey, propertyType);
         entrySetter.accept(property.getValue());
     }
 
-    private <T extends FetchedProperty<?>> T findByKey(FetchedRecord record, String filteredKey, Class<T> type) {
-        List<T> matchingProperties = record.getFetchedProperties()
+    private <T extends FetchedProperty<?>> T findByKey(FetchedVector vector, String filteredKey, Class<T> type) {
+        List<T> matchingProperties = vector.getFetchedProperties()
                 .stream()
                 .filter(type::isInstance)
                 .map(type::cast)
