@@ -3,6 +3,7 @@ package com.jakubeeee.masterthesis.randomnumberplugin.impl;
 import com.jakubeeee.masterthesis.pluginapi.converter.ExternalDataParseException;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedContainer;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedNumber;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedProperty;
 import com.jakubeeee.masterthesis.pluginapi.property.FetchedVector;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -68,7 +69,7 @@ class RandomNumberConverterTest {
     }
 
     private static FetchedContainer container(String... values) {
-        List<FetchedNumber> fetchedNumbers = IntStream
+        List<FetchedProperty> fetchedNumbers = IntStream
                 .range(0, values.length)
                 .mapToObj(i -> new FetchedNumber(format("random_value_{0}", i + 1), new BigDecimal(values[i])))
                 .collect(toUnmodifiableList());

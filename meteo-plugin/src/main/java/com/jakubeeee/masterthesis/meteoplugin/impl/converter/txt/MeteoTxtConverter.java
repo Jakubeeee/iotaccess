@@ -55,7 +55,7 @@ public class MeteoTxtConverter implements DataConverter {
         List<String> propertyLines = extractPropertyLines(fragment);
         validateAllPropertyLinesCorrect(propertyLines);
         Map<String, String> rawProperties = extractProperties(propertyLines);
-        List<FetchedProperty<?>> properties = transformToFetchedProperties(rawProperties);
+        List<FetchedProperty> properties = transformToFetchedProperties(rawProperties);
         return FetchedVector.of(properties);
     }
 
@@ -82,7 +82,7 @@ public class MeteoTxtConverter implements DataConverter {
                 );
     }
 
-    private List<FetchedProperty<?>> transformToFetchedProperties(Map<String, String> rawProperties) {
+    private List<FetchedProperty> transformToFetchedProperties(Map<String, String> rawProperties) {
         return List.of(
                 createFetchedText(IDENTIFIER, rawProperties.get(ID_KEY)),
                 createFetchedNumber(TEMPERATURE, rawProperties.get(TEMPERATURE_KEY)),
