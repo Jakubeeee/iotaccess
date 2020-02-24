@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**
- * Default service related to operations on {@link ProcessMetadata} objects.
- */
 @Slf4j
 @RequiredArgsConstructor
 @Service

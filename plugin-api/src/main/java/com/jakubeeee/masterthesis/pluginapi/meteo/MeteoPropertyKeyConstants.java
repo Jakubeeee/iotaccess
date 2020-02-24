@@ -1,5 +1,11 @@
 package com.jakubeeee.masterthesis.pluginapi.meteo;
 
+import com.jakubeeee.masterthesis.pluginapi.converter.DataType;
+import com.jakubeeee.masterthesis.pluginapi.property.FetchedProperty;
+
+/**
+ * Constants used as keys of {@link FetchedProperty} objects for data of {@link DataType#METEO} type.
+ */
 public final class MeteoPropertyKeyConstants {
 
     public static final String IDENTIFIER = "identifier";

@@ -7,9 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**
- * Spring data jpa repository for crud operations on {@link DeployerMetadata} objects.
- */
 @Repository
 interface DeployerMetadataRepository extends CrudRepository<DeployerMetadata, Long> {
 

@@ -6,9 +6,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * Service bean used for rest communication using configuration specified by plugins.
- */
 @Slf4j
 @Service
 public class FetchPluginRestClient {

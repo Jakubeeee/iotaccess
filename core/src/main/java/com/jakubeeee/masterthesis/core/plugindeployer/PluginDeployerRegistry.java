@@ -15,9 +15,6 @@ import java.util.Set;
 import static com.jakubeeee.masterthesis.core.plugindeployer.RegistrationStrategiesResolveHelper.resolveRegistrationStrategiesFromArgs;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
-/**
- * Component invoked at application startup registers and schedules all applicable{@link PluginDeployer deployers}.
- */
 @Slf4j
 @RequiredArgsConstructor
 @Component

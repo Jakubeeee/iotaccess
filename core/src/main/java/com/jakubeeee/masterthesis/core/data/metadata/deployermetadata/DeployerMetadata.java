@@ -13,9 +13,6 @@ import javax.persistence.Table;
 
 import static javax.persistence.EnumType.STRING;
 
-/**
- * Represents information about deployers that were properly registered by this application.
- */
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

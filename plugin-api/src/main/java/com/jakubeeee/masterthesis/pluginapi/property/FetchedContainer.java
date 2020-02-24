@@ -1,7 +1,6 @@
 package com.jakubeeee.masterthesis.pluginapi.property;
 
 import com.jakubeeee.masterthesis.pluginapi.converter.DataConverter;
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 import java.util.List;
@@ -10,8 +9,8 @@ import static java.util.Collections.unmodifiableList;
 import static java.util.List.copyOf;
 
 /**
- * Internal container specifying a common format for incoming data. {@link DataConverter Converters} are used for
- * transforming fetched external data into instances of this class.
+ * Container specifying a common format for data incoming from web services. Created by {@link DataConverter converters}
+ * from raw data. Aggregates multiple {@link FetchedVector vectors}.
  */
 @Value
 public final class FetchedContainer {

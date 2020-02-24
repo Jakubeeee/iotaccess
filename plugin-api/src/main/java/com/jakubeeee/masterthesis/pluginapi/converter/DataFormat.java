@@ -1,7 +1,7 @@
 package com.jakubeeee.masterthesis.pluginapi.converter;
 
 /**
- * Constants that represent formats of data fetched from web services supported by given plugin.
+ * Constants that represent supported formats of data fetched from web services.
  */
 public enum DataFormat {
 

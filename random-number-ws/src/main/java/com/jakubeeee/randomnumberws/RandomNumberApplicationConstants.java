@@ -1,8 +1,5 @@
 package com.jakubeeee.randomnumberws;
 
-/**
- * Global constants used by <code>Random number web service</code> standalone module.
- */
 final class RandomNumberApplicationConstants {
 
     static final String ROOT_PACKAGE = "com.jakubeeee.randomnumberws";

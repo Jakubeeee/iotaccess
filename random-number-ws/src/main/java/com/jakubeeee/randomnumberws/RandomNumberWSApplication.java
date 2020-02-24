@@ -5,9 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import static com.jakubeeee.randomnumberws.RandomNumberApplicationConstants.ROOT_PACKAGE;
 
-/**
- * Entry point of the <code>Random number web service</code> standalone module.
- */
 @SpringBootApplication(scanBasePackages = ROOT_PACKAGE)
 public class RandomNumberWSApplication {
 

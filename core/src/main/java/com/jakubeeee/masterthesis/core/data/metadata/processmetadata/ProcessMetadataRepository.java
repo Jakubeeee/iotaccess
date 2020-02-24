@@ -5,9 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**
- * Spring data jpa repository for crud operations on {@link ProcessMetadata} objects.
- */
 @Repository
 interface ProcessMetadataRepository extends CrudRepository<ProcessMetadata, Long> {
 

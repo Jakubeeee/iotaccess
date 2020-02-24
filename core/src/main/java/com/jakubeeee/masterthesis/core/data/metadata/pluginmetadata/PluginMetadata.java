@@ -9,9 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-/**
- * Represents information about plugins that were properly registered by this application..
- */
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

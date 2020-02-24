@@ -1,8 +1,5 @@
 package com.jakubeeee.randomnumberws;
 
-/**
- * Constants related to REST API published by this standalone web service module.
- */
 final class RandomNumberRestAPIConstants {
 
     static final String GET_RANDOM_NUMBER_ENDPOINT = "/random-number";

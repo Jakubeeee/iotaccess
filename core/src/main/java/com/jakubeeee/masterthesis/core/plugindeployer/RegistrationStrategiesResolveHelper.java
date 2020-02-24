@@ -10,10 +10,6 @@ import static com.jakubeeee.masterthesis.core.CoreApplicationConstants.CL_ARGUME
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
-/**
- * Helper class used by {@link PluginDeployerRegistry} for deciding which registration strategies should be invoked
- * after application startup.
- */
 @Slf4j
 final class RegistrationStrategiesResolveHelper {
 

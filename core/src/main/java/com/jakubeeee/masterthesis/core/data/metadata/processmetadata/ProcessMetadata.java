@@ -8,10 +8,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-/**
- * Represents information about processes specified by registered plugins. Every process metadata entity is associated
- * with it's parent {@link PluginMetadata plugin metadata} object.
- */
 @Getter
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

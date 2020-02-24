@@ -7,6 +7,9 @@ import java.util.List;
 import static java.util.Collections.unmodifiableList;
 import static java.util.List.copyOf;
 
+/**
+ * Represents a single vector of ordered data in form of {@link FetchedProperty properties}.
+ */
 @Value
 public final class FetchedVector {
 
