@@ -1,14 +1,27 @@
 package com.jakubeeee.masterthesis.pluginapi.property;
 
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 import java.util.List;
 
-@RequiredArgsConstructor(staticName = "of")
+import static java.util.Collections.unmodifiableList;
+import static java.util.List.copyOf;
+
 @Value
 public final class FetchedVector {
 
-    private final List<? extends FetchedProperty> fetchedProperties;
+    private final List<FetchedProperty> fetchedProperties;
+
+    private FetchedVector(List<FetchedProperty> fetchedProperties) {
+        this.fetchedProperties = copyOf(fetchedProperties);
+    }
+
+    public static FetchedVector of(List<FetchedProperty> fetchedProperties) {
+        return new FetchedVector(fetchedProperties);
+    }
+
+    public List<FetchedProperty> getFetchedProperties() {
+        return unmodifiableList(fetchedProperties);
+    }
 
 }
