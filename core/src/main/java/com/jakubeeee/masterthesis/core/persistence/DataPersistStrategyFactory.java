@@ -2,6 +2,7 @@ package com.jakubeeee.masterthesis.core.persistence;
 
 import com.jakubeeee.masterthesis.pluginapi.converter.DataType;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
@@ -11,6 +12,7 @@ import java.util.Set;
 import static java.text.MessageFormat.format;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
+@Slf4j
 @Component
 public class DataPersistStrategyFactory {
 
@@ -19,6 +21,7 @@ public class DataPersistStrategyFactory {
     public DataPersistStrategyFactory(Set<DataPersistStrategy> strategies) {
         this.strategies = strategies;
         validateInjectedStrategies(strategies);
+        LOG.debug("Data persist strategies resolved by \"{}\": \"{}\"", this.getClass().getSimpleName(), strategies);
     }
 
     public DataPersistStrategy getStrategy(@NonNull DataType dataType) {

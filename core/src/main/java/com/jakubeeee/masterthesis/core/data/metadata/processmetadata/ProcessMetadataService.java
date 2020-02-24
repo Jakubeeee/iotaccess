@@ -18,6 +18,7 @@ public class ProcessMetadataService implements MetadataService<ProcessMetadata> 
 
     public void save(@NonNull ProcessMetadata processMetadata) {
         processMetadataRepository.save(processMetadata);
+        LOG.trace("New \"{}\" saved: \"{}\"", processMetadata.getClass().getSimpleName(), processMetadata);
     }
 
     public ProcessMetadata findByIdentifier(@NonNull String identifier) {

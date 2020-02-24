@@ -15,7 +15,7 @@ public class StandardEntryService implements EntryService<StandardEntry> {
 
     public void save(@NonNull StandardEntry entry) {
         standardEntryRepository.save(entry);
-        LOG.debug("New standard entry saved: " + entry);
+        LOG.trace("New \"{}\" saved: \"{}\"", entry.getClass().getSimpleName(), entry);
     }
 
 }

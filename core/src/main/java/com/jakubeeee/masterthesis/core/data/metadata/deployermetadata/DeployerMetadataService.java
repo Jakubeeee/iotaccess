@@ -18,6 +18,7 @@ public class DeployerMetadataService implements MetadataService<DeployerMetadata
 
     public void save(@NonNull DeployerMetadata deployerMetadata) {
         deployerMetadataRepository.save(deployerMetadata);
+        LOG.trace("New \"{}\" saved: \"{}\"", deployerMetadata.getClass().getSimpleName(), deployerMetadata);
     }
 
     @Override

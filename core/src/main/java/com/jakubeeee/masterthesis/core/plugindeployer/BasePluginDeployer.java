@@ -35,8 +35,11 @@ abstract class BasePluginDeployer implements PluginDeployer {
 
     @Transactional
     public void deploy() {
-        LOG.debug("Invoked execution of \"{}\" plugin deployer", getIdentifier());
+        LOG.trace("Invoked execution of \"{}\" with identifier \"{}\"", this.getClass().getSimpleName(),
+                getIdentifier());
         Set<PluginConnector> connectors = scanForPlugins();
+        connectors.forEach(
+                connector -> LOG.trace("Found plugin with identifier \"{}\"", connector.getConfig().getIdentifier()));
         deployPluginsIfApplicable(connectors);
     }
 
@@ -54,7 +57,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
             savePluginMetadata(pluginConfig);
             deployPlugin(connector);
         } else {
-            LOG.debug("Plugin \"{}\" already deployed. Skipping.", pluginIdentifier);
+            LOG.trace("Plugin with identifier \"{}\" already deployed. Skipping.", pluginIdentifier);
         }
     }
 
@@ -86,6 +89,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
         DataConverter converter = connector.getConverter();
         deployProcesses(processConfigs, converter);
         pluginMetadataService.setDeployedTrue(pluginConfig.getIdentifier());
+        LOG.info("Successfully deployed plugin with identifier \"{}\"", pluginConfig.getIdentifier());
     }
 
     private void deployProcesses(Set<ProcessConfig> processConfigs, DataConverter converter) {
@@ -97,6 +101,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
         ScheduleConfig scheduleConfig = processConfig.getScheduleConfig();
         ScheduledJob job = new ProcessScheduledJob(processConfig, converter, restClient, dataPersistStrategyFactory);
         scheduleProcess(job, scheduleConfig);
+        LOG.debug("Successfully deployed process with identifier \"{}\"", processConfig.getIdentifier());
     }
 
     private void scheduleProcess(ScheduledJob job, ScheduleConfig scheduleConfig) {

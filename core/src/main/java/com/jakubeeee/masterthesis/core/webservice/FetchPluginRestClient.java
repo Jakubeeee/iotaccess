@@ -17,7 +17,6 @@ public class FetchPluginRestClient {
     }
 
     public String fetchData(FetchConfig config) {
-        LOG.debug("Fetching data from \"{}\"", config.getUrl());
         return restTemplate.getForObject(config.getUrl(), String.class);
     }
 

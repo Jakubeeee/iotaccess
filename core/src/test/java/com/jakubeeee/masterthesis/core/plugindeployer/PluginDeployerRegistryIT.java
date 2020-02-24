@@ -95,7 +95,7 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
                 return false;
             }
             if (!deployerMetadata.isRegistered()) {
-                LOG.info("\"{}\" not registered yet. Aborting this attempt.", deployerIdentifier);
+                LOG.debug("\"{}\" not registered yet. Aborting this attempt.", deployerIdentifier);
                 return false;
             }
             assertThat(deployerMetadata.getIdentifier(), is(equalTo(deployerIdentifier)));
@@ -112,7 +112,7 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
             if (pluginMetadata == null)
                 return false;
             if (!pluginMetadata.isDeployed()) {
-                LOG.info("\"{}\" not registered yet. Aborting this attempt.", pluginIdentifier);
+                LOG.debug("\"{}\" not registered yet. Aborting this attempt.", pluginIdentifier);
                 return false;
             }
             assertThat(pluginMetadata.getIdentifier(), is(equalTo(pluginIdentifier)));
@@ -131,13 +131,13 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
     }
 
     private <T extends MetadataEntity> T fetchMetadata(String metadataIdentifier, MetadataService<T> metadataService) {
-        LOG.info("Searching for \"{}\" metadata in the database...", metadataIdentifier);
+        LOG.debug("Searching for \"{}\" metadata in the database...", metadataIdentifier);
         Optional<T> metadataO = metadataService.findOptionalByIdentifier(metadataIdentifier);
         if (metadataO.isEmpty()) {
-            LOG.info("\"{}\" not found yet. Aborting this attempt.", metadataIdentifier);
+            LOG.debug("\"{}\" not found yet. Aborting this attempt.", metadataIdentifier);
             return null;
         }
-        LOG.info("\"{}\" found successfully.", metadataIdentifier);
+        LOG.debug("\"{}\" found successfully.", metadataIdentifier);
         return metadataO.get();
     }
 

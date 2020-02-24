@@ -1,9 +1,8 @@
 Priority queue:
-1. Logging - add more log messages, change levels (more trace and debug, less info). Add entries in application.properties
-2. Create versions of random-number-plugin for spi,db and fs testing
-3. Add support for database and filesystem plugins
-4. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
-5. Write integration tests for saving various entries
+1. Create versions of random-number-plugin for spi,db and fs testing
+2. Add support for database and filesystem plugins
+3. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
+4. Write integration tests for saving various entries
 
 Drafts:
 1. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.
@@ -15,3 +14,4 @@ Drafts:
 6. Add common module used by all other modules for plain java utilities (don't have lots of common code for now, though)
 7. Add java 9 module system. It's cool but there are issues with testcontainers library (auto module name conflicts, split packages)
 8. Add metadata of scheduled jobs to database
+9. Add spring aop for logging. Some places (eg. data services) have common pattern for logging - it could be extracted to aspects.

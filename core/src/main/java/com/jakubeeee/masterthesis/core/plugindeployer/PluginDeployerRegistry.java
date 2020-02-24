@@ -63,10 +63,10 @@ public class PluginDeployerRegistry implements ApplicationRunner {
 
     private void registerDeployers(Set<PluginDeployer> applicableDeployers) {
         for (var deployer : applicableDeployers) {
-            LOG.info("Registered plugin deployer: \"{}\"", deployer.getIdentifier());
             jobScheduleService.scheduleContinuingAsyncJob(deployer::deploy, resolveDeployerInterval(deployer),
                     resolveDeployerInitialDelay(deployer));
             deployerMetadataService.setRegisteredTrue(deployer.getIdentifier());
+            LOG.trace("Registered plugin deployer with identifier: \"{}\"", deployer.getIdentifier());
         }
     }
 

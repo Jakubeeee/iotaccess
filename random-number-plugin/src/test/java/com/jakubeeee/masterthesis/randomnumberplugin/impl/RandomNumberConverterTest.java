@@ -31,7 +31,7 @@ class RandomNumberConverterTest {
     @ParameterizedTest
     @MethodSource("convertTestParams_correctData")
     void convertTest_correctData_shouldPass(String rawData, FetchedContainer expectedResult) {
-        LOG.info("Converting correct data \"{}\" into fetched container: \"{}\"", rawData, expectedResult);
+        LOG.debug("Converting correct data \"{}\" into fetched container: \"{}\"", rawData, expectedResult);
         FetchedContainer resultContainer = converter.convert(rawData, JSON);
         assertThat(resultContainer, equalTo(expectedResult));
     }
@@ -39,7 +39,7 @@ class RandomNumberConverterTest {
     @ParameterizedTest
     @MethodSource("convertTestParams_incorrectData")
     void convertTest_correctData_shouldThrowException(String rawData) {
-        LOG.info("Converting incorrect data \"{}\"", rawData);
+        LOG.debug("Converting incorrect data \"{}\"", rawData);
         assertThrows(ExternalDataParseException.class, () -> converter.convert(rawData, JSON));
     }
 

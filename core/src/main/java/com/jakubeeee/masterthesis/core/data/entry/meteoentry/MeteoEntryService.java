@@ -15,7 +15,7 @@ public class MeteoEntryService implements EntryService<MeteoEntry> {
 
     public void save(@NonNull MeteoEntry entry) {
         meteoEntryRepository.save(entry);
-        LOG.debug("New meteo entry saved: " + entry);
+        LOG.trace("New \"{}\" saved: \"{}\"", entry.getClass().getSimpleName(), entry);
     }
 
 }

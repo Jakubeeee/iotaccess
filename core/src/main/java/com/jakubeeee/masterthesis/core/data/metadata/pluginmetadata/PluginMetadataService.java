@@ -18,6 +18,7 @@ public class PluginMetadataService implements MetadataService<PluginMetadata> {
 
     public void save(@NonNull PluginMetadata pluginMetadata) {
         pluginMetadataRepository.save(pluginMetadata);
+        LOG.trace("New \"{}\" saved: \"{}\"", pluginMetadata.getClass().getSimpleName(), pluginMetadata);
     }
 
     public PluginMetadata findByIdentifier(@NonNull String identifier) {

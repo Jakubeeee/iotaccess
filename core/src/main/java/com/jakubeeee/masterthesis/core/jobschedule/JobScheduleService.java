@@ -19,6 +19,7 @@ public class JobScheduleService {
         validateScheduleJobParameters(interval, initialDelay);
         ScheduledExecutorService executor = newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(task, initialDelay, interval, MILLISECONDS);
+        LOG.trace("Scheduled a new job with \"{}\" interval and \"{}\" initial delay", interval, initialDelay);
     }
 
     private TimerTask constructTimerTask(ScheduledJob job) {
