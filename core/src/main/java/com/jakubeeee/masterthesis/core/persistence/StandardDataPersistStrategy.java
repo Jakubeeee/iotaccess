@@ -40,12 +40,12 @@ public class StandardDataPersistStrategy extends BaseDataPersistStrategy<Standar
     }
 
     private void populateEntryField(StandardEntry entry, FetchedProperty<?> property) {
-        if (property instanceof FetchedText)
-            tryInsertTextProperty(entry, (FetchedText) property);
-        else if (property instanceof FetchedNumber)
-            tryInsertNumberProperty(entry, (FetchedNumber) property);
-        else if (property instanceof FetchedDate)
-            tryInsertDateProperty(entry, (FetchedDate) property);
+        if (property instanceof FetchedText textProperty)
+            tryInsertTextProperty(entry, textProperty);
+        else if (property instanceof FetchedNumber numberProperty)
+            tryInsertNumberProperty(entry, numberProperty);
+        else if (property instanceof FetchedDate dateProperty)
+            tryInsertDateProperty(entry, dateProperty);
         else
             throw new UnsupportedOperationException(format("Property type \"{0}\" is not supported by \"{1}\"",
                     property.getClass().getSimpleName(), this.getClass().getSimpleName()));
