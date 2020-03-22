@@ -1,4 +1,4 @@
-FROM adoptopenjdk:13-jre-hotspot
+FROM adoptopenjdk/openjdk14
 RUN mkdir /opt/app
 COPY target/random-number-ws-1.0-SNAPSHOT.jar /opt/app/random-number-ws.jar
 EXPOSE 8081 1045

@@ -36,7 +36,7 @@
     </developers>
 
     <properties>
-        <java.version>13</java.version>
+        <java.version>14</java.version>
         <project.encoding>UTF-8</project.encoding>
 
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -96,7 +96,7 @@
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy</artifactId>
-                <version>2.5.9</version>
+                <version>3.0.2</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

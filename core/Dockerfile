@@ -1,4 +1,4 @@
-FROM adoptopenjdk:13-jre-hotspot
+FROM adoptopenjdk/openjdk14
 RUN mkdir /opt/app
 COPY target/core-1.0-SNAPSHOT.jar /opt/app/core.jar
 EXPOSE 8080 1044
