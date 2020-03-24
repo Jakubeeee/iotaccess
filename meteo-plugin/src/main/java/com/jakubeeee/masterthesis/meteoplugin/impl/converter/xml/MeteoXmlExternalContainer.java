@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 final class MeteoXmlExternalContainer {
@@ -14,37 +12,37 @@ final class MeteoXmlExternalContainer {
     private String identifier;
 
     @JacksonXmlProperty(localName = "TEMPERATURE")
-    private BigDecimal temperature;
+    private String temperature;
 
     @JacksonXmlProperty(localName = "HUMIDITY")
-    private BigDecimal humidity;
+    private String humidity;
 
     @JacksonXmlProperty(localName = "PRESSURE")
-    private BigDecimal pressure;
+    private String pressure;
 
     @JacksonXmlProperty(localName = "LUMINANCE")
-    private BigDecimal luminance;
+    private String luminance;
 
     @JacksonXmlProperty(localName = "RAIN_DIGITAL")
-    private BigDecimal rainDigital;
+    private String rainDigital;
 
     @JacksonXmlProperty(localName = "RAIN_ANALOG")
-    private BigDecimal rainAnalog;
+    private String rainAnalog;
 
     @JacksonXmlProperty(localName = "WIND_POWER")
-    private BigDecimal windPower;
+    private String windPower;
 
     @JacksonXmlProperty(localName = "WIND_DIRECTION")
     private String windDirection;
 
     @JacksonXmlProperty(localName = "GPS_ALTITUDE")
-    private BigDecimal gpsAltitude;
+    private String gpsAltitude;
 
     @JacksonXmlProperty(localName = "GPS_LONGITUDE")
-    private BigDecimal gpsLongitude;
+    private String gpsLongitude;
 
     @JacksonXmlProperty(localName = "GPS_LATITUDE")
-    private BigDecimal gpsLatitude;
+    private String gpsLatitude;
 
     @JacksonXmlProperty(localName = "MOMENT")
     private String moment;
