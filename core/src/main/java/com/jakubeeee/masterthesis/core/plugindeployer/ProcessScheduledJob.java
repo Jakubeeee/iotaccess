@@ -44,6 +44,7 @@ final class ProcessScheduledJob implements ScheduledJob {
         String rawFetchedData = fetchData(fetchConfig);
         FetchedContainer convertedData = convertData(rawFetchedData, dataFormat);
         persistData(convertedData, dataType, identifier);
+        LOG.debug("Successfully ended the execution of process with identifier: \"{}\"", identifier);
     }
 
     private String fetchData(FetchConfig config) {
