@@ -18,7 +18,9 @@
     <modules>
         <module>random-number-ws</module>
         <module>plugin-api</module>
-        <module>random-number-plugin</module>
+        <module>random-number-plugin-spi</module>
+        <module>random-number-plugin-fs</module>
+        <module>random-number-plugin-db</module>
         <module>meteo-plugin</module>
         <module>core</module>
         <module>assembly</module>
