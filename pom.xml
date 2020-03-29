@@ -157,6 +157,8 @@
                     </executions>
                     <configuration>
                         <effort>Max</effort>
+                        <failOnError>false</failOnError>
+                        <includeTests>true</includeTests>
                     </configuration>
                 </plugin>
 
