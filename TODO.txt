@@ -1,17 +1,17 @@
-Priority queue:
-1. Create versions of random-number-plugin for spi,db and fs for testing purposes
-2. Add support for database and filesystem plugins
-3. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
-4. Write integration tests for saving various entries
+Priority queue for version 1.0:
+1. Add support for database plugin deployer
 
 Drafts:
-1. Add metadata of scheduled jobs to database (Status: It's for validation only, not really needed that much, nice to have though)
-2. Add spring aop for logging. Some places (eg. data services) have common pattern for logging - it could be extracted to aspects. (Status: Not a big improvement but nice to have)
-3. Add rest endpoints for switching options (enabling/disabling deployers and plugins, changing intervals of scheduled jobs etc.) (Status: Big effort, but nice to have)
-4. Add testutils module used by all other modules for plain java test utilities - I can move the container class and base class for integration tests (Status: Nice idea, but for now it would have ony 2 classes and only used by core module)
-5. Add common module used by all other modules for plain java utilities (Status: Nice idea, but there is not much common code for now)
-6. Add java 9 module system. (Status: Very nice to have but there are problems with testcontainers library: auto module name conflicts, split packages etc. And there is problem with java 13 + surefire plugin)
-7. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.
+1. Add rest endpoints for switching options (enabling/disabling deployers and plugins, changing intervals of scheduled jobs etc.) (Status: Big effort, but nice to have) (Proposal: property table in database)
+2. Add metadata of scheduled jobs to database (Status: It's for validation only, not really needed that much, nice to have though)
+3. Add a pom module to be plugins parent. It would aggregate available libraries and their versions supported in the core runtime. (I can even add additional parent for dependency versions only)
+4. Write integration tests for saving various entry types (standard entries, meteo entries and any future entry types)
+5. Create a common base module for random number plugins used for testing purposes. Purpose: avoid code duplication (the modules are small and for testing only so not critical)
+6. Add spring aop for logging. Some places (eg. data services) have common pattern for logging - it could be extracted to aspects. (Status: Not a big improvement but nice to have)
+7. Add testutils module used by all other modules for plain java test utilities - I can move the container class and base class for integration tests (Status: Nice idea, but for now it would have ony 2 classes and only used by core module)
+8. Add common module used by all other modules for plain java utilities (Status: Nice idea, but there is not much common code for now)
+9. Add java 9 module system. (Status: Very nice to have but there are problems with testcontainers library: auto module name conflicts, split packages etc. And there is problem with java 13 + surefire plugin)
+10. Validation api for plugins. Plugins would write custom validation rules. It would be invoked in core, after fetching and before persisting.
     Validator type - structural and logical(?). If the first doesn't pass do not launch the second one. Always collect all the errors. (Status: Big effort and not needed that much right now)
-8. Add versioning for plugins. If there is plugin available for deployer with non-unique identifier, check it's version. If it higher then replace existing one. (Status: not needed right now, maybe later it will be more useful)
-9. Add new "SweepConfig" to plugin. It would be a configuration of removing old unnecessary data using a scheduled job. (Status: not needed right now, maybe later it will be more useful)
+11. Add versioning for plugins. If there is plugin available for deployer with non-unique identifier, check it's version. If it higher then replace existing one. (Status: not needed right now, maybe later it will be more useful)
+12. Add new "SweepConfig" to plugin config. It would be a configuration of removing old unnecessary data using a scheduled job. (Status: not needed right now, maybe later it will be more useful)
