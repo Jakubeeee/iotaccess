@@ -6,7 +6,6 @@ import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMeta
 import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMetadataService;
 import com.jakubeeee.masterthesis.pluginapi.converter.DataType;
 import com.jakubeeee.masterthesis.pluginapi.property.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -128,11 +127,9 @@ public class StandardDataPersistStrategy extends BaseDataPersistStrategy<Standar
         return new EntryFieldDelegate<>(keyGetter, keySetter, valueSetter);
     }
 
-    @RequiredArgsConstructor
-    private static class EntryFieldDelegate<T> {
-        private final Supplier<String> keyGetter;
-        private final Consumer<String> keySetter;
-        private final Consumer<T> valueSetter;
+    private static record EntryFieldDelegate<T>(Supplier<String>keyGetter,
+                                                Consumer<String>keySetter,
+                                                Consumer<T>valueSetter) {
     }
 
 }
