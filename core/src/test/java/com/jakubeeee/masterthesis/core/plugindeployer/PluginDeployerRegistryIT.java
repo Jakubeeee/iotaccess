@@ -10,13 +10,17 @@ import com.jakubeeee.masterthesis.core.data.metadata.pluginmetadata.PluginMetada
 import com.jakubeeee.masterthesis.core.data.metadata.pluginmetadata.PluginMetadataService;
 import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMetadata;
 import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMetadataService;
+import com.jakubeeee.masterthesis.core.data.plugindeployment.PluginDeploymentCandidate;
+import com.jakubeeee.masterthesis.core.data.plugindeployment.PluginDeploymentCandidateService;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.io.FileInputStream;
 import java.util.Optional;
 import java.util.Set;
 
@@ -51,6 +55,9 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
     private static final String FS_TEN_RANDOM_NUMBERS_FETCH_PROCESS = "Ten random numbers fetch process (FS)";
 
     @Autowired
+    private PluginDeploymentCandidateService pluginDeploymentCandidateService;
+
+    @Autowired
     private DeployerMetadataService deployerMetadataService;
 
     @Autowired
@@ -58,6 +65,9 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
 
     @Autowired
     private ProcessMetadataService processMetadataService;
+
+    @Value("${deployer.db.test.plugin.location}")
+    private String dbDeployerTestPluginLocation;
 
     @BeforeAll
     static void setUp() {
@@ -75,9 +85,9 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
                         SPI_TEN_RANDOM_NUMBERS_FETCH_PROCESS));
     }
 
-    @Disabled("Database deployer not implemented yet")
     @Test
     void databaseDeployerRegistrationIntegrationTest() {
+        insertTestPluginIntoDatabase();
         validateDeployerRegistered(DB_PLUGIN_DEPLOYER_IDENTIFIER, RegistrationStrategy.DATABASE);
         validatePluginDeployed(
                 DB_RANDOM_NUMBER_PLUGIN_IDENTIFIER,
@@ -147,6 +157,17 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
         }
         LOG.debug("\"{}\" found successfully.", metadataIdentifier);
         return metadataO.get();
+    }
+
+    @SneakyThrows
+    private void insertTestPluginIntoDatabase() {
+        try (var inputStream = new FileInputStream(dbDeployerTestPluginLocation)) {
+            var testCandidate = new PluginDeploymentCandidate();
+            testCandidate.setDeployed(false);
+            testCandidate.setJarName("test_db_random_number_plugin.jar");
+            testCandidate.setBinaryData(inputStream.readAllBytes());
+            pluginDeploymentCandidateService.save(testCandidate);
+        }
     }
 
 }

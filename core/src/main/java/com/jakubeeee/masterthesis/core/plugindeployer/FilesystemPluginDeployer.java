@@ -50,7 +50,7 @@ class FilesystemPluginDeployer extends BasePluginDeployer {
             JobScheduleService jobScheduleService) {
         super(pluginMetadataService, processMetadataService, restClient, dataPersistStrategyFactory,
                 jobScheduleService);
-        classLoader = new DynamicPluginClassLoader(FilesystemPluginDeployer.class.getClassLoader());
+        classLoader = new DynamicPluginClassLoader(this.getClass().getClassLoader());
     }
 
     @Override

@@ -34,7 +34,7 @@
                                     <arguments>
                                         <argument>build</argument>
                                         <argument>--build-arg</argument>
-                                        <argument>CORE_ARGS= --regstrat=spi --regstrat=fs</argument>
+                                        <argument>CORE_ARGS= --regstrat=spi --regstrat=fs --regstrat=db</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
