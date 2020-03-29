@@ -1,6 +1,4 @@
-package com.jakubeeee.masterthesis.core.misc;
-
-import com.jakubeeee.masterthesis.core.data.DataEntity;
+package com.jakubeeee.masterthesis.core.data;
 
 import static java.text.MessageFormat.format;
 import static org.apache.commons.lang3.ArrayUtils.insert;

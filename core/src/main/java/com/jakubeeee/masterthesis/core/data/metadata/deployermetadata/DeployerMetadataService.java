@@ -1,7 +1,7 @@
 package com.jakubeeee.masterthesis.core.data.metadata.deployermetadata;
 
 import com.jakubeeee.masterthesis.core.data.metadata.MetadataService;
-import com.jakubeeee.masterthesis.core.misc.MandatoryEntityNotFoundException;
+import com.jakubeeee.masterthesis.core.data.MandatoryEntityNotFoundException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
