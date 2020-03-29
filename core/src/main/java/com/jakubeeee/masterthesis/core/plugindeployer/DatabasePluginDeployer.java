@@ -6,7 +6,6 @@ import com.jakubeeee.masterthesis.core.jobschedule.JobScheduleService;
 import com.jakubeeee.masterthesis.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.masterthesis.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.masterthesis.pluginapi.PluginConnector;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import static java.util.Collections.emptySet;
 @Component
 class DatabasePluginDeployer extends BasePluginDeployer {
 
-    private static final String IDENTIFICATION = "Database Plugin Deployer";
+    private static final String IDENTIFIER = "Database Plugin Deployer";
 
     @Value("${deployer.db.interval:-1}")
     private long dbDeployerInterval;
@@ -46,7 +45,7 @@ class DatabasePluginDeployer extends BasePluginDeployer {
 
     @Override
     public String getIdentifier() {
-        return IDENTIFICATION;
+        return IDENTIFIER;
     }
 
     @Override

@@ -11,6 +11,8 @@ import com.jakubeeee.masterthesis.core.data.metadata.pluginmetadata.PluginMetada
 import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMetadata;
 import com.jakubeeee.masterthesis.core.data.metadata.processmetadata.ProcessMetadataService;
 import lombok.extern.slf4j.Slf4j;
+import org.awaitility.Awaitility;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.DELETE_ALL;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -56,6 +59,12 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
     @Autowired
     private ProcessMetadataService processMetadataService;
 
+    @BeforeAll
+    static void setUp() {
+        Awaitility.setDefaultPollInterval(1, SECONDS);
+        Awaitility.setDefaultTimeout(15, SECONDS);
+    }
+
     @Test
     void spiDeployerRegistrationIntegrationTest() {
         validateDeployerRegistered(SPI_PLUGIN_DEPLOYER_IDENTIFIER, RegistrationStrategy.SPI);
@@ -77,7 +86,6 @@ class PluginDeployerRegistryIT extends BaseIntegrationTest {
                         DB_TEN_RANDOM_NUMBERS_FETCH_PROCESS));
     }
 
-    @Disabled("Filesystem deployer not implemented yet")
     @Test
     void filesystemDeployerRegistrationIntegrationTest() {
         validateDeployerRegistered(FS_PLUGIN_DEPLOYER_IDENTIFIER, RegistrationStrategy.FILESYSTEM);
