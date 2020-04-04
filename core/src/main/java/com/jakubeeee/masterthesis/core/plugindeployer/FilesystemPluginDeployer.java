@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.stream.Stream;
@@ -109,12 +108,9 @@ class FilesystemPluginDeployer extends BasePluginDeployer {
     }
 
     private Set<PluginConnector> processPluginJars(Set<Path> jarPaths) {
-        var connectors = new HashSet<PluginConnector>();
-        for (var jarPath : jarPaths) {
-            PluginConnector connector = processPluginJar(jarPath);
-            connectors.add(connector);
-        }
-        return connectors;
+        return jarPaths.stream()
+                .map(this::processPluginJar)
+                .collect(toUnmodifiableSet());
     }
 
     private PluginConnector processPluginJar(Path jarPath) {

@@ -8,17 +8,18 @@ import com.jakubeeee.masterthesis.core.jobschedule.JobScheduleService;
 import com.jakubeeee.masterthesis.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.masterthesis.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.masterthesis.pluginapi.PluginConnector;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.*;
-import java.util.HashSet;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Set;
 import java.util.jar.JarFile;
 
 import static java.text.MessageFormat.format;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @Slf4j
 @Component
@@ -60,12 +61,9 @@ class DatabasePluginDeployer extends BasePluginDeployer {
     }
 
     private Set<PluginConnector> processCandidates(Set<PluginDeploymentCandidate> candidates) {
-        var connectors = new HashSet<PluginConnector>();
-        for (var pluginDeployment : candidates) {
-            PluginConnector connector = processCandidate(pluginDeployment);
-            connectors.add(connector);
-        }
-        return connectors;
+        return candidates.stream()
+                .map(this::processCandidate)
+                .collect(toUnmodifiableSet());
     }
 
     private PluginConnector processCandidate(PluginDeploymentCandidate candidate) {
@@ -87,17 +85,11 @@ class DatabasePluginDeployer extends BasePluginDeployer {
 
     private JarFile extractJarFileFromPluginDeployment(PluginDeploymentCandidate candidate)
             throws IOException {
-        File jarFile = new File(candidate.getJarName());
+        var jarFile = new File(candidate.getJarName());
         byte[] binaryData = candidate.getBinaryData();
-        try (var binaryInputStream = new ByteArrayInputStream(binaryData)) {
-            try (var fileOutputStream = new FileOutputStream(jarFile)) {
-                int readByte = binaryInputStream.read();
-                while (readByte != -1) {
-                    fileOutputStream.write(readByte);
-                    readByte = binaryInputStream.read();
-                }
-                return new JarFile(jarFile);
-            }
+        try (var fileOutputStream = new FileOutputStream(jarFile)) {
+            fileOutputStream.write(binaryData);
+            return new JarFile(jarFile);
         }
     }
 

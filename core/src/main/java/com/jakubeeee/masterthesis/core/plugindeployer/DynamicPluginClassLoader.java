@@ -2,11 +2,9 @@ package com.jakubeeee.masterthesis.core.plugindeployer;
 
 import com.jakubeeee.masterthesis.pluginapi.PluginConnector;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -31,12 +29,9 @@ class DynamicPluginClassLoader extends ClassLoader {
 
     private Set<LoadCandidate> createLoadCandidates(JarFile jarFile) {
         Set<JarEntry> classEntries = extractClassEntries(jarFile);
-        var loadCandidates = new HashSet<LoadCandidate>();
-        for (var classEntry : classEntries) {
-            LoadCandidate candidate = createLoadCandidate(jarFile, classEntry);
-            loadCandidates.add(candidate);
-        }
-        return loadCandidates;
+        return classEntries.stream()
+                .map(classEntry -> createLoadCandidate(jarFile, classEntry))
+                .collect(toUnmodifiableSet());
     }
 
     private Set<JarEntry> extractClassEntries(JarFile jarFile) {
@@ -75,7 +70,8 @@ class DynamicPluginClassLoader extends ClassLoader {
         try {
             findSystemClass(className);
         } catch (ClassNotFoundException e) {
-            // using the exception handling for control flow is not the best practice, but the ClassLoader API does not allow to perform this check in any other way
+            // using the exception handling for flow control is not the best practice,
+            // but the ClassLoader API doesn't seem to allow to perform this check in any other way
             return;
         }
         throw new PluginClassAlreadyLoadedException(
@@ -91,12 +87,9 @@ class DynamicPluginClassLoader extends ClassLoader {
     }
 
     private Set<Class<?>> defineClasses(Set<LoadCandidate> candidates) {
-        var definedClasses = new HashSet<Class<?>>();
-        for (var candidate : candidates) {
-            Class<?> loadedClass = defineClass(candidate);
-            definedClasses.add(loadedClass);
-        }
-        return definedClasses;
+        return candidates.stream()
+                .map(this::defineClass)
+                .collect(toUnmodifiableSet());
     }
 
     private Class<?> defineClass(LoadCandidate candidate) {
@@ -115,14 +108,8 @@ class DynamicPluginClassLoader extends ClassLoader {
     }
 
     private byte[] readBinaryClassData(LoadCandidate candidate) throws IOException {
-        var classInputStream = candidate.inputStream();
-        var buffer = new ByteArrayOutputStream();
-        int data = classInputStream.read();
-        while (data != -1) {
-            buffer.write(data);
-            data = classInputStream.read();
-        }
-        return buffer.toByteArray();
+        InputStream classInputStream = candidate.inputStream();
+        return classInputStream.readAllBytes();
     }
 
     private Class<?> findPluginConnectorClass(Set<Class<?>> definedClasses) {
