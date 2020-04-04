@@ -6,7 +6,7 @@ public final class RandomNumberClientConstants {
 
     private static final String HOST = "random-number-ws";
 
-    private static final String PORT = "8080";
+    private static final String PORT = "8081";
 
     private static final String URL_PREFIX = PROTOCOL + "://" + HOST + ":" + PORT;
 
