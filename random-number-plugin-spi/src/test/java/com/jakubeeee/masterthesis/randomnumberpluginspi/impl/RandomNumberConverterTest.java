@@ -69,7 +69,7 @@ class RandomNumberConverterTest {
     }
 
     private static FetchedContainer container(String... values) {
-        List<FetchedProperty> fetchedNumbers = IntStream
+        List<FetchedProperty<?>> fetchedNumbers = IntStream
                 .range(0, values.length)
                 .mapToObj(i -> new FetchedNumber(format("random_value_{0}", i + 1), new BigDecimal(values[i])))
                 .collect(toUnmodifiableList());

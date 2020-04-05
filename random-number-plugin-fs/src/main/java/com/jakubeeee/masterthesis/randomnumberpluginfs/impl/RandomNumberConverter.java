@@ -33,7 +33,7 @@ public final class RandomNumberConverter implements DataConverter {
         VALIDATOR.validate(rawData, dataFormat);
         RandomNumberContainer container = parseToExternalContainer(rawData);
         List<BigDecimal> values = container.getValues();
-        List<FetchedProperty> fetchedNumbers = rawValuesToFetchedNumbers(values);
+        List<FetchedProperty<?>> fetchedNumbers = rawValuesToFetchedNumbers(values);
         return FetchedContainer.of(List.of(FetchedVector.of(fetchedNumbers)));
     }
 
@@ -45,7 +45,7 @@ public final class RandomNumberConverter implements DataConverter {
         }
     }
 
-    private List<FetchedProperty> rawValuesToFetchedNumbers(List<BigDecimal> values) {
+    private List<FetchedProperty<?>> rawValuesToFetchedNumbers(List<BigDecimal> values) {
         return IntStream
                 .range(0, values.size())
                 .mapToObj(i -> rawValueToFetchedNumber(values.get(i), i))
