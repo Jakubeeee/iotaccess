@@ -23,9 +23,6 @@ class SPIPluginDeployer extends BasePluginDeployer {
     @Value("${deployer.spi.interval:-1}")
     private long spiDeployerInterval;
 
-    @Value("${deployer.spi.delay:-1}")
-    private long spiDeployerDelay;
-
     public SPIPluginDeployer(
             PluginMetadataService pluginMetadataService,
             ProcessMetadataService processMetadataService,
@@ -56,11 +53,6 @@ class SPIPluginDeployer extends BasePluginDeployer {
     @Override
     public long getInterval() {
         return spiDeployerInterval;
-    }
-
-    @Override
-    public long getInitialDelay() {
-        return spiDeployerDelay;
     }
 
 }

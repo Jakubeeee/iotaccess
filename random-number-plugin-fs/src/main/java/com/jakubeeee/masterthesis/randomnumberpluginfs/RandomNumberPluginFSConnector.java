@@ -28,19 +28,19 @@ public class RandomNumberPluginFSConnector implements PluginConnector {
                 "Single random number fetch process (FS)",
                 "",
                 FetchConfig.of(GET_RANDOM_NUMBER_PATH, JSON, STANDARD),
-                ScheduleConfig.of(30_000, 5_000));
+                ScheduleConfig.of(30_000));
 
         var threeRandomNumbersProcessConfig = ProcessConfig.of(
                 "Three random numbers fetch process (FS)",
                 "",
                 FetchConfig.of(GET_3_RANDOM_NUMBERS_PATH, JSON, STANDARD),
-                ScheduleConfig.of(120_000, 10_000));
+                ScheduleConfig.of(120_000));
 
         var tenRandomNumbersProcessConfig = ProcessConfig.of(
                 "Ten random numbers fetch process (FS)",
                 "",
                 FetchConfig.of(GET_10_RANDOM_NUMBERS_PATH, JSON, STANDARD),
-                ScheduleConfig.of(360_000, 20_000));
+                ScheduleConfig.of(360_000));
 
         var processConfigs =
                 Set.of(singleRandomNumberProcessConfig, threeRandomNumbersProcessConfig, tenRandomNumbersProcessConfig);

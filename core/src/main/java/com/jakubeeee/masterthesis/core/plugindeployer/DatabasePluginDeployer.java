@@ -34,9 +34,6 @@ class DatabasePluginDeployer extends BasePluginDeployer {
     @Value("${deployer.db.interval:-1}")
     private long dbDeployerInterval;
 
-    @Value("${deployer.db.delay:-1}")
-    private long dbDeployerDelay;
-
     public DatabasePluginDeployer(
             PluginMetadataService pluginMetadataService,
             ProcessMetadataService processMetadataService,
@@ -106,11 +103,6 @@ class DatabasePluginDeployer extends BasePluginDeployer {
     @Override
     public long getInterval() {
         return dbDeployerInterval;
-    }
-
-    @Override
-    public long getInitialDelay() {
-        return dbDeployerDelay;
     }
 
 }

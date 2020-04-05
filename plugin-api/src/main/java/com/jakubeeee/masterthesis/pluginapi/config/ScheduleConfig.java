@@ -12,6 +12,4 @@ public class ScheduleConfig {
 
     private final long interval;
 
-    private final long initialDelay;
-
 }

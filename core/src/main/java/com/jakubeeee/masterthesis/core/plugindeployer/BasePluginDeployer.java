@@ -106,8 +106,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
 
     private void scheduleProcess(ScheduledJob job, ScheduleConfig scheduleConfig) {
         long interval = scheduleConfig.getInterval();
-        long initialDelay = scheduleConfig.getInitialDelay();
-        jobScheduleService.scheduleContinuingAsyncJob(job, interval, initialDelay);
+        jobScheduleService.schedule(job, interval);
     }
 
 }

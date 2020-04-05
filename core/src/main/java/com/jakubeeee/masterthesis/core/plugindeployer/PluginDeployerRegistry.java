@@ -20,10 +20,6 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 @Component
 public class PluginDeployerRegistry implements ApplicationRunner {
 
-    private static final long DEFAULT_DEPLOYER_INTERVAL = 120_000;
-
-    private static final long DEFAULT_DEPLOYER_INITIAL_DELAY = 5_000;
-
     private final DeployerMetadataService deployerMetadataService;
 
     private final JobScheduleService jobScheduleService;
@@ -63,19 +59,10 @@ public class PluginDeployerRegistry implements ApplicationRunner {
 
     private void registerDeployers(Set<PluginDeployer> applicableDeployers) {
         for (var deployer : applicableDeployers) {
-            jobScheduleService.scheduleContinuingAsyncJob(deployer::deploy, resolveDeployerInterval(deployer),
-                    resolveDeployerInitialDelay(deployer));
+            jobScheduleService.schedule(deployer::deploy, deployer.getInterval());
             deployerMetadataService.setRegisteredTrue(deployer.getIdentifier());
             LOG.trace("Registered plugin deployer with identifier: \"{}\"", deployer.getIdentifier());
         }
-    }
-
-    private long resolveDeployerInterval(PluginDeployer deployer) {
-        return deployer.getInterval() == -1 ? DEFAULT_DEPLOYER_INTERVAL : deployer.getInterval();
-    }
-
-    private long resolveDeployerInitialDelay(PluginDeployer deployer) {
-        return deployer.getInitialDelay() == -1 ? DEFAULT_DEPLOYER_INITIAL_DELAY : deployer.getInitialDelay();
     }
 
 }

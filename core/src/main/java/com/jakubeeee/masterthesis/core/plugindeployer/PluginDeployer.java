@@ -10,6 +10,4 @@ public interface PluginDeployer {
 
     long getInterval();
 
-    long getInitialDelay();
-
 }

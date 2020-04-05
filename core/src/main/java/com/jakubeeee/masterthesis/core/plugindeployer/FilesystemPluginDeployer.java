@@ -35,9 +35,6 @@ class FilesystemPluginDeployer extends BasePluginDeployer {
     @Value("${deployer.fs.interval:-1}")
     private long fsDeployerInterval;
 
-    @Value("${deployer.fs.delay:-1}")
-    private long fsDeployerDelay;
-
     @Value("${deployer.fs.location}")
     private String fsDeployerLocation;
 
@@ -153,11 +150,6 @@ class FilesystemPluginDeployer extends BasePluginDeployer {
     @Override
     public long getInterval() {
         return fsDeployerInterval;
-    }
-
-    @Override
-    public long getInitialDelay() {
-        return fsDeployerDelay;
     }
 
 }
