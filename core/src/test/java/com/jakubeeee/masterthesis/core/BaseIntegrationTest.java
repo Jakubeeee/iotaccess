@@ -1,6 +1,9 @@
 package com.jakubeeee.masterthesis.core;
 
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import lombok.extern.slf4j.Slf4j;
+import org.awaitility.Awaitility;
+import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
@@ -9,8 +12,10 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+@Slf4j
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = CoreApplicationEntryPoint.class
 )
 @TestExecutionListeners({
@@ -28,6 +33,12 @@ public abstract class BaseIntegrationTest {
     static {
         if (AUTOCONFIGURE_TEST_DATABASE)
             CustomPostgreSQL12Container.getInstance().start();
+    }
+
+    @BeforeAll
+    static void setUp() {
+        Awaitility.setDefaultPollInterval(1, SECONDS);
+        Awaitility.setDefaultTimeout(30, SECONDS);
     }
 
 }
