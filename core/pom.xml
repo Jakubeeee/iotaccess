@@ -106,6 +106,7 @@
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -128,6 +129,23 @@
     <profiles>
         <profile>
             <id>integrationtest</id>
+
+            <properties>
+                <!--//@formatter:off-->
+                <random-number-plugin-spi-output-dir>${project.basedir}/src/test/resources/generated/spi</random-number-plugin-spi-output-dir>
+                <random-number-plugin-spi-initial-dir>${project.root}/random-number-plugin-spi/target</random-number-plugin-spi-initial-dir>
+                <random-number-plugin-spi-jar-name>random-number-plugin-spi-${project.version}.jar</random-number-plugin-spi-jar-name>
+
+                <random-number-plugin-db-output-dir>${project.basedir}/src/test/resources/generated/db</random-number-plugin-db-output-dir>
+                <random-number-plugin-db-initial-dir>${project.root}/random-number-plugin-db/target</random-number-plugin-db-initial-dir>
+                <random-number-plugin-db-jar-name>random-number-plugin-db-${project.version}.jar</random-number-plugin-db-jar-name>
+
+                <random-number-plugin-fs-output-dir>${project.basedir}/src/test/resources/generated/fs</random-number-plugin-fs-output-dir>
+                <random-number-plugin-fs-initial-dir>${project.root}/random-number-plugin-fs/target</random-number-plugin-fs-initial-dir>
+                <random-number-plugin-fs-jar-name>random-number-plugin-fs-${project.version}.jar</random-number-plugin-fs-jar-name>
+                <!--//@formatter:on-->
+            </properties>
+
             <dependencies>
                 <dependency>
                     <groupId>com.jakubeeee.masterthesis</groupId>
@@ -136,6 +154,83 @@
                     <scope>test</scope>
                 </dependency>
             </dependencies>
+
+            <build>
+
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                        <filtering>true</filtering>
+                    </testResource>
+                </testResources>
+
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-random-number-plugin-spi-artifact</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${random-number-plugin-spi-output-dir}</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${random-number-plugin-spi-initial-dir}</directory>
+                                            <includes>
+                                                <include>${random-number-plugin-spi-jar-name}</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-random-number-plugin-db-artifact</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${random-number-plugin-db-output-dir}</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${random-number-plugin-db-initial-dir}</directory>
+                                            <includes>
+                                                <include>${random-number-plugin-db-jar-name}</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-random-number-plugin-fs-artifact</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${random-number-plugin-fs-output-dir}</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${random-number-plugin-fs-initial-dir}</directory>
+                                            <includes>
+                                                <include>${random-number-plugin-fs-jar-name}</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+
+            </build>
+
         </profile>
     </profiles>
 

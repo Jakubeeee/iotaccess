@@ -42,8 +42,8 @@ class PluginDeployerPackageITHelper {
     @Autowired
     private PluginDeploymentCandidateService pluginDeploymentCandidateService;
 
-    @Value("${deployer.db.test.plugin.location}")
-    private String dbDeployerTestPluginLocation;
+    @Value("${deployer.db.artifact.location}")
+    private String deployerDBArtifactLocation;
 
     void validateDeployerRegistered(String deployerIdentifier, RegistrationStrategy registrationStrategy) {
         await().until(() -> {
@@ -101,7 +101,7 @@ class PluginDeployerPackageITHelper {
 
     @SneakyThrows
     void insertTestPluginIntoDatabase() {
-        try (var inputStream = new FileInputStream(dbDeployerTestPluginLocation)) {
+        try (var inputStream = new FileInputStream(deployerDBArtifactLocation)) {
             var testCandidate = new PluginDeploymentCandidate();
             testCandidate.setDeployed(false);
             testCandidate.setJarName("test_db_random_number_plugin.jar");
