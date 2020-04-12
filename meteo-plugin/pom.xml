@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>parent</artifactId>
-        <groupId>com.jakubeeee.masterthesis</groupId>
+        <groupId>com.jakubeeee.iotaccess</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>meteo-plugin</artifactId>
@@ -16,7 +16,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.jakubeeee.masterthesis</groupId>
+            <groupId>com.jakubeeee.iotaccess</groupId>
             <artifactId>plugin-api</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>

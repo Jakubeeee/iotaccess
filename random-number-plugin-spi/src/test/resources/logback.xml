@@ -8,5 +8,5 @@
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
-    <logger name="com.jakubeeee.masterthesis" level="INFO"/>
+    <logger name="com.jakubeeee.iotaccess" level="INFO"/>
 </configuration>

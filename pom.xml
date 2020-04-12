@@ -9,7 +9,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.6.RELEASE</version>
     </parent>
-    <groupId>com.jakubeeee.masterthesis</groupId>
+    <groupId>com.jakubeeee.iotaccess</groupId>
     <artifactId>parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>Parent module for aggregation of common configuration and dependencies</description>
@@ -185,6 +185,8 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
                         <compilerArgs>--enable-preview</compilerArgs>
                         <annotationProcessorPaths>
                             <path>
@@ -312,7 +314,7 @@
             <properties>
                 <environment.profile>local-machine-env</environment.profile>
                 <core.host>localhost</core.host>
-                <core.reserved.host.dir>C:\masterthesis</core.reserved.host.dir>
+                <core.reserved.host.dir>C:\iotaccess</core.reserved.host.dir>
                 <postgres.host>localhost</postgres.host>
                 <random.number.ws>localhost</random.number.ws>
             </properties>
@@ -326,7 +328,7 @@
             <properties>
                 <environment.profile>docker-env</environment.profile>
                 <core.host>core</core.host>
-                <core.reserved.host.dir>opt/masterthesis</core.reserved.host.dir>
+                <core.reserved.host.dir>opt/iotaccess</core.reserved.host.dir>
                 <postgres.host>postgres12</postgres.host>
                 <random.number.ws>random-number-ws</random.number.ws>
             </properties>

@@ -1,11 +1,11 @@
-module com.jakubeeee.masterthesis.pluginapi {
+module com.jakubeeee.iotaccess.pluginapi {
 
     requires static lombok;
 
-    exports com.jakubeeee.masterthesis.pluginapi;
-    exports com.jakubeeee.masterthesis.pluginapi.config;
-    exports com.jakubeeee.masterthesis.pluginapi.converter;
-    exports com.jakubeeee.masterthesis.pluginapi.meteo;
-    exports com.jakubeeee.masterthesis.pluginapi.property;
+    exports com.jakubeeee.iotaccess.pluginapi;
+    exports com.jakubeeee.iotaccess.pluginapi.config;
+    exports com.jakubeeee.iotaccess.pluginapi.converter;
+    exports com.jakubeeee.iotaccess.pluginapi.meteo;
+    exports com.jakubeeee.iotaccess.pluginapi.property;
 
 }

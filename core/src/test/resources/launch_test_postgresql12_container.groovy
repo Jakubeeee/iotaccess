@@ -1,4 +1,4 @@
-import com.jakubeeee.masterthesis.core.CustomPostgreSQL12Container
+import com.jakubeeee.iotaccess.core.CustomPostgreSQL12Container
 import groovy.transform.Field
 import groovy.transform.SourceURI
 import org.springframework.util.DefaultPropertiesPersister

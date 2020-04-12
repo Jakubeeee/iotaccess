@@ -1,2 +1,2 @@
-Masterthesis application <br>
+iotaccess application <br>
 Author: Jakub Bereźnicki 

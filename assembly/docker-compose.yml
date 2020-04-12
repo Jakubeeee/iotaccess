@@ -1,7 +1,7 @@
 version: "3.7"
 
 networks:
-  masterthesis-network:
+  iotaccess-network:
 
 services:
 
@@ -16,7 +16,7 @@ services:
       - "8080:8080"
       - "1044:1044"
     networks:
-      - masterthesis-network
+      - iotaccess-network
     depends_on:
       - postgres12
 
@@ -30,4 +30,4 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - masterthesis-network
+      - iotaccess-network
