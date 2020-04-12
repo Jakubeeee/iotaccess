@@ -5,6 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+
+import static java.time.Instant.now;
+import static java.time.temporal.ChronoUnit.MILLIS;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -16,7 +21,7 @@ public class JobScheduleService {
         if (interval == 0)
             scheduler.execute(job);
         else
-            scheduler.scheduleAtFixedRate(job, interval);
+            scheduler.scheduleAtFixedRate(job, now().plus(interval, MILLIS), Duration.of(interval, MILLIS));
     }
 
 }
