@@ -1,4 +1,4 @@
-package com.jakubeeee.randomnumberws;
+package com.jakubeeee.iotaccess.randomnumberws;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.RequiredArgsConstructor;

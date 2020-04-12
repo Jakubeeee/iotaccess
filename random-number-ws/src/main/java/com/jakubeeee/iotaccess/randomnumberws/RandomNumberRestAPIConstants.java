@@ -1,4 +1,4 @@
-package com.jakubeeee.randomnumberws;
+package com.jakubeeee.iotaccess.randomnumberws;
 
 final class RandomNumberRestAPIConstants {
 
