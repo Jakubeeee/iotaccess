@@ -5,21 +5,6 @@ networks:
 
 services:
 
-  core:
-    build:
-      context: ../core
-      args:
-        CORE_ARGS:
-    image: core-image
-    container_name: core
-    ports:
-      - "8080:8080"
-      - "1044:1044"
-    networks:
-      - masterthesis-network
-    depends_on:
-      - postgres12
-
   postgres12:
     image: postgres:12
     container_name: postgres

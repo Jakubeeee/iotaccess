@@ -1,0 +1,19 @@
+version: "3.7"
+
+networks:
+  masterthesis-network:
+
+services:
+
+  core:
+    build:
+      context: ../core
+      args:
+        CORE_ARGS:
+    image: core-image
+    container_name: core
+    ports:
+      - "8080:8080"
+      - "1044:1044"
+    networks:
+      - masterthesis-network

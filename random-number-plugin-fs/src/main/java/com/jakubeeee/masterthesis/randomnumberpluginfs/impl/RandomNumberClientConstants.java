@@ -4,7 +4,7 @@ public final class RandomNumberClientConstants {
 
     private static final String PROTOCOL = "http";
 
-    private static final String HOST = "random-number-ws";
+    private static final String HOST = "localhost";
 
     private static final String PORT = "8081";
 

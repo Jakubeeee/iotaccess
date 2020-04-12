@@ -19,6 +19,20 @@ services:
       - masterthesis-network
     depends_on:
       - postgres12
+      - random-number-ws
+
+  random-number-ws:
+    build:
+      context: ../random-number-ws
+      args:
+        RANDOM_NUMBER_WS_ARGS:
+    image: random-number-ws-image
+    container_name: random-number-ws
+    ports:
+      - "8081:8081"
+      - "1045:1044"
+    networks:
+      - masterthesis-network
 
   postgres12:
     image: postgres:12

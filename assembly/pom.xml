@@ -15,7 +15,7 @@
 
     <profiles>
         <profile>
-            <id>run</id>
+            <id>docker-run</id>
             <build>
                 <plugins>
 

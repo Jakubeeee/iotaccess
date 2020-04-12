@@ -23,8 +23,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
         TransactionDbUnitTestExecutionListener.class
 })
 @AutoConfigureMockMvc
-@ActiveProfiles("integrationtest")
-@TestPropertySource(locations = "classpath:core-integrationtest.properties")
+@ActiveProfiles("integration-test")
+@TestPropertySource(locations = "classpath:core-integration-test.properties")
 @PropertySource(value = "classpath:generated/testdatabase-generated.properties", ignoreResourceNotFound = true)
 public abstract class BaseIntegrationTest {
 

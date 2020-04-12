@@ -16,12 +16,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>random-number-ws</module>
         <module>plugin-api</module>
-        <module>random-number-plugin-spi</module>
-        <module>random-number-plugin-fs</module>
-        <module>random-number-plugin-db</module>
-        <module>meteo-plugin</module>
         <module>core</module>
         <module>assembly</module>
     </modules>
@@ -126,6 +121,30 @@
     <build>
         <pluginManagement>
             <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>environment-profile-group-validation</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireProperty>
+                                        <property>environment.profile</property>
+                                        <message>You must launch maven build with at least one of following profiles:
+                                            local-machine-env or docker-env
+                                        </message>
+                                    </requireProperty>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 
                 <plugin>
                     <groupId>org.basepom.maven</groupId>
@@ -257,7 +276,15 @@
         </profile>
 
         <profile>
-            <id>integrationtest</id>
+            <id>integration-test</id>
+
+            <modules>
+                <module>random-number-ws</module>
+                <module>random-number-plugin-spi</module>
+                <module>random-number-plugin-db</module>
+                <module>random-number-plugin-fs</module>
+            </modules>
+
             <build>
                 <plugins>
                     <plugin>
@@ -267,6 +294,44 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>meteo-plugin</id>
+
+            <modules>
+                <module>meteo-plugin</module>
+            </modules>
+        </profile>
+
+        <!-- //BEGIN// PROFILE GROUP: ENVIRONMENT -->
+        <profile>
+            <id>local-machine-env</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment.profile>local-machine-env</environment.profile>
+                <core.host>localhost</core.host>
+                <core.reserved.host.dir>C:\masterthesis</core.reserved.host.dir>
+                <postgres.host>localhost</postgres.host>
+                <random.number.ws>localhost</random.number.ws>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>docker-env</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <environment.profile>docker-env</environment.profile>
+                <core.host>core</core.host>
+                <core.reserved.host.dir>opt/masterthesis</core.reserved.host.dir>
+                <postgres.host>postgres12</postgres.host>
+                <random.number.ws>random-number-ws</random.number.ws>
+            </properties>
+        </profile>
+        <!-- //END// PROFILE GROUP: ENVIRONMENT -->
 
     </profiles>
 

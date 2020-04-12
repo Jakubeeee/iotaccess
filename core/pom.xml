@@ -107,7 +107,30 @@
 
     <build>
 
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>environment-profile-group-validation</id>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -128,21 +151,27 @@
 
     <profiles>
         <profile>
-            <id>integrationtest</id>
+            <id>integration-test</id>
 
             <properties>
                 <!--//@formatter:off-->
-                <random-number-plugin-spi-output-dir>${project.basedir}/src/test/resources/generated/spi</random-number-plugin-spi-output-dir>
-                <random-number-plugin-spi-initial-dir>${project.root}/random-number-plugin-spi/target</random-number-plugin-spi-initial-dir>
-                <random-number-plugin-spi-jar-name>random-number-plugin-spi-${project.version}.jar</random-number-plugin-spi-jar-name>
+                <test.generated.dir>${project.basedir}/src/test/resources/generated</test.generated.dir>
 
-                <random-number-plugin-db-output-dir>${project.basedir}/src/test/resources/generated/db</random-number-plugin-db-output-dir>
-                <random-number-plugin-db-initial-dir>${project.root}/random-number-plugin-db/target</random-number-plugin-db-initial-dir>
-                <random-number-plugin-db-jar-name>random-number-plugin-db-${project.version}.jar</random-number-plugin-db-jar-name>
+                <random.number.plugin.spi.output.dir>${test.generated.dir}/integrationtest/plugin/spi</random.number.plugin.spi.output.dir>
+                <random.number.plugin.spi.initial.dir>${project.root}/random-number-plugin-spi/target</random.number.plugin.spi.initial.dir>
+                <random.number.plugin.spi.jar.name>random-number-plugin-spi-${project.version}.jar</random.number.plugin.spi.jar.name>
 
-                <random-number-plugin-fs-output-dir>${project.basedir}/src/test/resources/generated/fs</random-number-plugin-fs-output-dir>
-                <random-number-plugin-fs-initial-dir>${project.root}/random-number-plugin-fs/target</random-number-plugin-fs-initial-dir>
-                <random-number-plugin-fs-jar-name>random-number-plugin-fs-${project.version}.jar</random-number-plugin-fs-jar-name>
+                <random.number.plugin.db.output.dir>${test.generated.dir}/integrationtest/plugin/db</random.number.plugin.db.output.dir>
+                <random.number.plugin.db.initial.dir>${project.root}/random-number-plugin-db/target</random.number.plugin.db.initial.dir>
+                <random.number.plugin.db.jar.name>random-number-plugin-db-${project.version}.jar</random.number.plugin.db.jar.name>
+
+                <random.number.plugin.fs.output.dir>${test.generated.dir}/integrationtest/plugin/fs</random.number.plugin.fs.output.dir>
+                <random.number.plugin.fs.initial.dir>${project.root}/random-number-plugin-fs/target</random.number.plugin.fs.initial.dir>
+                <random.number.plugin.fs.jar.name>random-number-plugin-fs-${project.version}.jar</random.number.plugin.fs.jar.name>
+
+                <random.number.ws.output.dir>${test.generated.dir}/integrationtest/webservice</random.number.ws.output.dir>
+                <random.number.ws.initial.dir>${project.root}/random-number-ws/target</random.number.ws.initial.dir>
+                <random.number.ws.jar.name>random-number-ws-${project.version}.jar</random.number.ws.jar.name>
                 <!--//@formatter:on-->
             </properties>
 
@@ -156,15 +185,27 @@
             </dependencies>
 
             <build>
-
-                <testResources>
-                    <testResource>
-                        <directory>src/test/resources</directory>
-                        <filtering>true</filtering>
-                    </testResource>
-                </testResources>
-
                 <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>clean-generated-integrationtest-dir</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <delete dir="src\test\resources\generated\integrationtest" includeemptydirs="true"/>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <executions>
@@ -175,13 +216,13 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${random-number-plugin-spi-output-dir}</outputDirectory>
+                                    <outputDirectory>${random.number.plugin.spi.output.dir}</outputDirectory>
                                     <overwrite>true</overwrite>
                                     <resources>
                                         <resource>
-                                            <directory>${random-number-plugin-spi-initial-dir}</directory>
+                                            <directory>${random.number.plugin.spi.initial.dir}</directory>
                                             <includes>
-                                                <include>${random-number-plugin-spi-jar-name}</include>
+                                                <include>${random.number.plugin.spi.jar.name}</include>
                                             </includes>
                                         </resource>
                                     </resources>
@@ -194,13 +235,13 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${random-number-plugin-db-output-dir}</outputDirectory>
+                                    <outputDirectory>${random.number.plugin.db.output.dir}</outputDirectory>
                                     <overwrite>true</overwrite>
                                     <resources>
                                         <resource>
-                                            <directory>${random-number-plugin-db-initial-dir}</directory>
+                                            <directory>${random.number.plugin.db.initial.dir}</directory>
                                             <includes>
-                                                <include>${random-number-plugin-db-jar-name}</include>
+                                                <include>${random.number.plugin.db.jar.name}</include>
                                             </includes>
                                         </resource>
                                     </resources>
@@ -213,13 +254,32 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${random-number-plugin-fs-output-dir}</outputDirectory>
+                                    <outputDirectory>${random.number.plugin.fs.output.dir}</outputDirectory>
                                     <overwrite>true</overwrite>
                                     <resources>
                                         <resource>
-                                            <directory>${random-number-plugin-fs-initial-dir}</directory>
+                                            <directory>${random.number.plugin.fs.initial.dir}</directory>
                                             <includes>
-                                                <include>${random-number-plugin-fs-jar-name}</include>
+                                                <include>${random.number.plugin.fs.jar.name}</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-random-number-ws-artifact</id>
+                                <phase>generate-test-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${random.number.ws.output.dir}</outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${random.number.ws.initial.dir}</directory>
+                                            <includes>
+                                                <include>${random.number.ws.jar.name}</include>
                                             </includes>
                                         </resource>
                                     </resources>
@@ -227,11 +287,49 @@
                             </execution>
                         </executions>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>random-number-ws-integrationtest-run</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>java</executable>
+                                    <arguments>
+                                        <argument>-jar</argument>
+                                        <argument>--enable-preview</argument>
+                                        <argument>${random.number.ws.output.dir}/${random.number.ws.jar.name}</argument>
+                                    </arguments>
+                                    <async>true</async>
+                                    <asyncDestroyOnShutdown>true</asyncDestroyOnShutdown>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                 </plugins>
 
             </build>
-
         </profile>
+
+        <profile>
+            <id>meteo-plugin</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>com.jakubeeee.masterthesis</groupId>
+                    <artifactId>meteo-plugin</artifactId>
+                    <version>1.0-SNAPSHOT</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
     </profiles>
 
 </project>
