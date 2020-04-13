@@ -36,6 +36,7 @@ class DynamicPluginClassLoader extends ClassLoader {
 
     private Set<JarEntry> extractClassEntries(JarFile jarFile) {
         return jarFile.stream()
+                .filter(jarEntry -> !jarEntry.getName().equals("module-info.class"))
                 .filter(jarEntry -> jarEntry.getName().endsWith(".class"))
                 .collect(toUnmodifiableSet());
     }
