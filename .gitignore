@@ -15,6 +15,11 @@
 *.iml
 out/
 
+# Eclipse
+.settings/
+.classpath
+.project
+
 # Maven
 target/
 .mvn/wrapper/maven-wrapper.jar
