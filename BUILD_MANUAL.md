@@ -1,4 +1,5 @@
 This project is build via maven. The build is configurable using maven profiles.
+Look in /scripts folder for useful scripts that make using those profiles easier.
 
 Types of profiles:
 -
@@ -11,10 +12,13 @@ Existing profiles:
 -
 
 * Profile groups:
-    * Environmental group:
-        * local-machine-env - prepares project modules to be deployed on local machine.
-        * docker-env - prepares project modules to be deployed in separate docker containers. 
+    * Deployment type group:
+        * local-machine-deploy - prepares the project's modules to be deployed on a local machine.
+        * docker-deploy - prepares the project's modules to be deployed in separate docker containers. 
         This profile is enabled by default.
+    * Runtime environment group
+        * development - prepares the project to be run for development/testing/presentation
+        * production -  prepares the project to operate in production environment
 
 * Standalone profiles:
     * debug - enables additional project scanning and validation.

@@ -127,16 +127,33 @@
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <executions>
                         <execution>
-                            <id>environment-profile-group-validation</id>
+                            <id>deployment-type-profile-group-validation</id>
                             <goals>
                                 <goal>enforce</goal>
                             </goals>
                             <configuration>
                                 <rules>
                                     <requireProperty>
-                                        <property>environment.profile</property>
+                                        <property>deployment.type.profile</property>
                                         <message>You must launch maven build with at least one of following profiles:
-                                            local-machine-env or docker-env
+                                            local-machine-deploy or docker-deploy
+                                        </message>
+                                    </requireProperty>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>runtime-environment-profile-group-validation</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireProperty>
+                                        <property>runtime.environment.profile</property>
+                                        <message>You must launch maven build with at least one of following profiles:
+                                            development or production
                                         </message>
                                     </requireProperty>
                                 </rules>
@@ -304,14 +321,14 @@
             </modules>
         </profile>
 
-        <!-- //BEGIN// PROFILE GROUP: ENVIRONMENT -->
+        <!-- //BEGIN// PROFILE GROUP: DEPLOYMENT TYPE -->
         <profile>
-            <id>local-machine-env</id>
+            <id>local-machine-deploy</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <environment.profile>local-machine-env</environment.profile>
+                <deployment.type.profile>local-machine-deploy</deployment.type.profile>
                 <core.host>localhost</core.host>
                 <core.reserved.host.dir>C:\iotaccess</core.reserved.host.dir>
                 <postgres.host>localhost</postgres.host>
@@ -320,19 +337,43 @@
         </profile>
 
         <profile>
-            <id>docker-env</id>
+            <id>docker-deploy</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <environment.profile>docker-env</environment.profile>
+                <deployment.type.profile>docker-deploy</deployment.type.profile>
                 <core.host>core</core.host>
                 <core.reserved.host.dir>opt/iotaccess</core.reserved.host.dir>
                 <postgres.host>postgres12</postgres.host>
                 <random.number.ws>random-number-ws</random.number.ws>
             </properties>
         </profile>
-        <!-- //END// PROFILE GROUP: ENVIRONMENT -->
+        <!-- //END// PROFILE GROUP: DEPLOYMENT TYPE -->
+
+        <!-- //BEGIN// PROFILE GROUP: RUNTIME ENVIRONMENT -->
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <runtime.environment.profile>development</runtime.environment.profile>
+                <spring.jpa.hibernate.ddl-auto>create-drop</spring.jpa.hibernate.ddl-auto>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>production</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <runtime.environment.profile>production</runtime.environment.profile>
+                <spring.jpa.hibernate.ddl-auto>update</spring.jpa.hibernate.ddl-auto>
+            </properties>
+        </profile>
+        <!-- //END// PROFILE GROUP: RUNTIME ENVIRONMENT -->
 
     </profiles>
 
