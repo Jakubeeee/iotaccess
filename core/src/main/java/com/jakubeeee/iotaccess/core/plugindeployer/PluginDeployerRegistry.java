@@ -1,5 +1,6 @@
 package com.jakubeeee.iotaccess.core.plugindeployer;
 
+import com.jakubeeee.iotaccess.core.data.metadata.InitialMetadataSweeper;
 import com.jakubeeee.iotaccess.core.data.metadata.deployermetadata.DeployerMetadata;
 import com.jakubeeee.iotaccess.core.data.metadata.deployermetadata.DeployerMetadataService;
 import com.jakubeeee.iotaccess.core.jobschedule.JobScheduleService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,7 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @Slf4j
 @RequiredArgsConstructor
+@Order(InitialMetadataSweeper.INITIAL_METADATA_SWEEPER_ORDER + 1)
 @Component
 public class PluginDeployerRegistry implements ApplicationRunner {
 

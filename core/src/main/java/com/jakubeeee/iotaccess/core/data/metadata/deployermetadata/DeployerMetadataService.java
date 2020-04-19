@@ -1,11 +1,12 @@
 package com.jakubeeee.iotaccess.core.data.metadata.deployermetadata;
 
-import com.jakubeeee.iotaccess.core.data.metadata.MetadataService;
 import com.jakubeeee.iotaccess.core.data.MandatoryEntityNotFoundException;
+import com.jakubeeee.iotaccess.core.data.metadata.MetadataService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -38,6 +39,18 @@ public class DeployerMetadataService implements MetadataService<DeployerMetadata
 
     public void setRegisteredTrue(@NonNull String identifier) {
         deployerMetadataRepository.updateRegistered(true, identifier);
+    }
+
+    @Transactional
+    @Override
+    public void delete(DeployerMetadata deployerMetadata) {
+        deployerMetadataRepository.delete(deployerMetadata);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll() {
+        deployerMetadataRepository.deleteAll();
     }
 
 }

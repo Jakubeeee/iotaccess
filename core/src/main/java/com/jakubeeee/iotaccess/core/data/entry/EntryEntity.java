@@ -25,7 +25,7 @@ public abstract class EntryEntity extends DataEntity {
 
     @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "PROCESS_METADATA_ID", nullable = false, updatable = false)
+    @JoinColumn(name = "PROCESS_METADATA_ID")
     private ProcessMetadata processMetadata;
 
     public EntryEntity(ProcessMetadata processMetadata) {

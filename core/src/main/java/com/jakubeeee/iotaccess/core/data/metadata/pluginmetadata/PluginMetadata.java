@@ -19,7 +19,8 @@ public final class PluginMetadata extends MetadataEntity {
     @Column(name = "DEPLOYED", nullable = false)
     private boolean deployed;
 
-    @SuppressWarnings("unused") PluginMetadata() {
+    @SuppressWarnings("unused")
+    PluginMetadata() {
     }
 
     public PluginMetadata(String identifier) {

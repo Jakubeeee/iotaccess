@@ -1,11 +1,13 @@
 package com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata;
 
-import com.jakubeeee.iotaccess.core.data.metadata.MetadataService;
 import com.jakubeeee.iotaccess.core.data.MandatoryEntityNotFoundException;
+import com.jakubeeee.iotaccess.core.data.metadata.MetadataService;
+import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadataService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class PluginMetadataService implements MetadataService<PluginMetadata> {
 
     private final PluginMetadataRepository pluginMetadataRepository;
+
+    private final ProcessMetadataService processMetadataService;
 
     public void save(@NonNull PluginMetadata pluginMetadata) {
         pluginMetadataRepository.save(pluginMetadata);
@@ -36,6 +40,20 @@ public class PluginMetadataService implements MetadataService<PluginMetadata> {
 
     public void setDeployedTrue(@NonNull String identifier) {
         pluginMetadataRepository.updateDeployed(true, identifier);
+    }
+
+    @Transactional
+    @Override
+    public void delete(PluginMetadata pluginMetadata) {
+        processMetadataService.deleteAllByParent(pluginMetadata);
+        pluginMetadataRepository.delete(pluginMetadata);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll() {
+        for (var pluginMetadata : pluginMetadataRepository.findAll())
+            delete(pluginMetadata);
     }
 
 }

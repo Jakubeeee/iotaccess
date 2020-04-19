@@ -11,4 +11,8 @@ public interface MetadataService<T extends MetadataEntity> extends DataService<T
 
     Optional<T> findOptionalByIdentifier(@NonNull String identifier);
 
+    void delete(T metadata);
+
+    void deleteAll();
+
 }
