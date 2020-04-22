@@ -55,8 +55,10 @@ public class PluginDeployerRegistry implements ApplicationRunner {
     }
 
     private void saveMetadata(PluginDeployer pluginDeployer) {
-        var deployerMetadata =
-                new DeployerMetadata(pluginDeployer.getIdentifier(), pluginDeployer.getAssociatedStrategy());
+        var deployerMetadata = new DeployerMetadata(
+                pluginDeployer.getIdentifier(),
+                pluginDeployer.getAssociatedStrategy(),
+                pluginDeployer.getInterval());
         deployerMetadataService.save(deployerMetadata);
     }
 

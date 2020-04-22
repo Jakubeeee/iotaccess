@@ -21,6 +21,9 @@ public final class ProcessMetadata extends MetadataEntity {
     @Column(name = "FETCH_URL", nullable = false, updatable = false)
     private String fetchUrl;
 
+    @Column(name = "INTERVAL", nullable = false, updatable = false)
+    private long interval;
+
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "PLUGIN_METADATA_ID", nullable = false, updatable = false)
@@ -29,10 +32,12 @@ public final class ProcessMetadata extends MetadataEntity {
     @SuppressWarnings("unused") ProcessMetadata() {
     }
 
-    public ProcessMetadata(String identifier, String description, String fetchUrl, PluginMetadata pluginMetadata) {
+    public ProcessMetadata(String identifier, String description, String fetchUrl, long interval,
+                           PluginMetadata pluginMetadata) {
         super(identifier);
         this.description = description;
         this.fetchUrl = fetchUrl;
+        this.interval = interval;
         this.pluginMetadata = pluginMetadata;
     }
 

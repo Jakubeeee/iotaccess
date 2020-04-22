@@ -24,15 +24,19 @@ public final class DeployerMetadata extends MetadataEntity {
     @Column(name = "REGISTRATION_STRATEGY", nullable = false, updatable = false)
     private RegistrationStrategy registrationStrategy;
 
+    @Column(name = "INTERVAL", nullable = false, updatable = false)
+    private long interval;
+
     @Column(name = "DEPLOYED", nullable = false)
     private boolean registered;
 
     @SuppressWarnings("unused") DeployerMetadata() {
     }
 
-    public DeployerMetadata(String identifier, RegistrationStrategy registrationStrategy) {
+    public DeployerMetadata(String identifier, RegistrationStrategy registrationStrategy, long interval) {
         super(identifier);
         this.registrationStrategy = registrationStrategy;
+        this.interval = interval;
         this.registered = false;
     }
 
