@@ -1,0 +1,52 @@
+@startuml
+
+node "host machine" {
+
+  node "core container" {
+    [core]
+    [plugin-api]
+    [plugin 1]
+    [plugin 2]
+    [plugin 3]
+  }
+
+  node "database container" {
+    database "RDMS" {
+        [database schema]
+    }
+  }
+
+}
+
+cloud {
+  [IoT device 1]
+}
+cloud {
+  [IoT device 2]
+}
+cloud {
+  [IoT device 3]
+}
+cloud {
+  [IoT device 4]
+}
+cloud {
+  [IoT device 5]
+}
+cloud {
+  [IoT device 6]
+}
+
+ [core] -left-> [plugin-api]
+ [core] -down-> [database schema]
+ [plugin 1] -up-|> [plugin-api]
+ [plugin 2] -up-|> [plugin-api]
+ [plugin 3] -up-|> [plugin-api]
+ [plugin 1] -down-> [IoT device 1]
+ [plugin 2] -down-> [IoT device 2]
+ [plugin 2] -down-> [IoT device 3]
+ [plugin 3] -down-> [IoT device 4]
+ [plugin 3] -down-> [IoT device 5]
+ [plugin 3] -down-> [IoT device 6]
+
+@enduml
