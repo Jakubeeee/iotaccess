@@ -1,6 +1,6 @@
 package com.jakubeeee.iotaccess.core.plugindeployer;
 
-import com.jakubeeee.iotaccess.core.jobschedule.ScheduledJob;
+import com.jakubeeee.iotaccess.core.jobschedule.ScheduledTask;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategy;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Value
-final class ProcessScheduledJob implements ScheduledJob {
+final class ProcessScheduledTask implements ScheduledTask {
 
     private final ProcessConfig config;
 
@@ -28,7 +28,7 @@ final class ProcessScheduledJob implements ScheduledJob {
     private final DataPersistStrategyFactory persistStrategyFactory;
 
     @Override
-    public void run() {
+    public void execute() {
         String identifier = config.getIdentifier();
         FetchConfig fetchConfig = config.getFetchConfig();
         DataFormat dataFormat = fetchConfig.getDataFormat();

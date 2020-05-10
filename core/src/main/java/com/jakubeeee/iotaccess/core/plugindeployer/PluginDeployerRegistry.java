@@ -3,7 +3,8 @@ package com.jakubeeee.iotaccess.core.plugindeployer;
 import com.jakubeeee.iotaccess.core.data.metadata.InitialMetadataSweeper;
 import com.jakubeeee.iotaccess.core.data.metadata.deployermetadata.DeployerMetadata;
 import com.jakubeeee.iotaccess.core.data.metadata.deployermetadata.DeployerMetadataService;
-import com.jakubeeee.iotaccess.core.jobschedule.JobScheduleService;
+import com.jakubeeee.iotaccess.core.jobschedule.ScheduledTaskConfig;
+import com.jakubeeee.iotaccess.core.jobschedule.TaskScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -23,9 +24,11 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 @Component
 public class PluginDeployerRegistry implements ApplicationRunner {
 
+    private static final String PLUGIN_DEPLOYERS_TASK_GROUP_NAME = "Plugin Deployers Group";
+
     private final DeployerMetadataService deployerMetadataService;
 
-    private final JobScheduleService jobScheduleService;
+    private final TaskScheduleService taskScheduleService;
 
     private final Set<PluginDeployer> pluginDeployers;
 
@@ -64,7 +67,11 @@ public class PluginDeployerRegistry implements ApplicationRunner {
 
     private void registerDeployers(Set<PluginDeployer> applicableDeployers) {
         for (var deployer : applicableDeployers) {
-            jobScheduleService.schedule(deployer::deploy, deployer.getInterval());
+            var config = new ScheduledTaskConfig(
+                    "\"" + deployer.getIdentifier() + "\" scheduled task",
+                    PLUGIN_DEPLOYERS_TASK_GROUP_NAME,
+                    deployer.getInterval());
+            taskScheduleService.schedule(deployer::deploy, config);
             deployerMetadataService.setRegisteredTrue(deployer.getIdentifier());
             LOG.trace("Registered plugin deployer with identifier: \"{}\"", deployer.getIdentifier());
         }

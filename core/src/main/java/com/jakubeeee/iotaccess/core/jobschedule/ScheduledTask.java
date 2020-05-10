@@ -1,8 +1,8 @@
 package com.jakubeeee.iotaccess.core.jobschedule;
 
 @FunctionalInterface
-public interface ScheduledJob extends Runnable {
+public interface ScheduledTask {
 
-    void run();
+    void execute();
 
 }

@@ -2,7 +2,7 @@ package com.jakubeeee.iotaccess.core.plugindeployer;
 
 import com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata.PluginMetadataService;
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadataService;
-import com.jakubeeee.iotaccess.core.jobschedule.JobScheduleService;
+import com.jakubeeee.iotaccess.core.jobschedule.TaskScheduleService;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.iotaccess.pluginapi.PluginConnector;
@@ -28,9 +28,9 @@ class SPIPluginDeployer extends BasePluginDeployer {
             ProcessMetadataService processMetadataService,
             FetchPluginRestClient restClient,
             DataPersistStrategyFactory dataPersistStrategyFactory,
-            JobScheduleService jobScheduleService) {
+            TaskScheduleService taskScheduleService) {
         super(pluginMetadataService, processMetadataService, restClient, dataPersistStrategyFactory,
-                jobScheduleService);
+                taskScheduleService);
     }
 
     @Override

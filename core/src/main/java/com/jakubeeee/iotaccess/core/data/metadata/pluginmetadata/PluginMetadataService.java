@@ -25,11 +25,13 @@ public class PluginMetadataService implements MetadataService<PluginMetadata> {
         LOG.trace("New \"{}\" saved: \"{}\"", pluginMetadata.getClass().getSimpleName(), pluginMetadata);
     }
 
+    @Override
     public PluginMetadata findByIdentifier(@NonNull String identifier) {
         return pluginMetadataRepository.findByIdentifier(identifier).orElseThrow(
                 () -> new MandatoryEntityNotFoundException(PluginMetadata.class, "identifier", identifier));
     }
 
+    @Override
     public Optional<PluginMetadata> findOptionalByIdentifier(@NonNull String identifier) {
         return pluginMetadataRepository.findByIdentifier(identifier);
     }
@@ -44,7 +46,7 @@ public class PluginMetadataService implements MetadataService<PluginMetadata> {
 
     @Transactional
     @Override
-    public void delete(PluginMetadata pluginMetadata) {
+    public void delete(@NonNull PluginMetadata pluginMetadata) {
         processMetadataService.deleteAllByParent(pluginMetadata);
         pluginMetadataRepository.delete(pluginMetadata);
     }

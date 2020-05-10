@@ -43,7 +43,7 @@ public class DeployerMetadataService implements MetadataService<DeployerMetadata
 
     @Transactional
     @Override
-    public void delete(DeployerMetadata deployerMetadata) {
+    public void delete(@NonNull DeployerMetadata deployerMetadata) {
         deployerMetadataRepository.delete(deployerMetadata);
     }
 

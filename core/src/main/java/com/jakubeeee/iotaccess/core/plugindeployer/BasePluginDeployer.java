@@ -4,15 +4,14 @@ import com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata.PluginMetadata;
 import com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata.PluginMetadataService;
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadata;
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadataService;
-import com.jakubeeee.iotaccess.core.jobschedule.JobScheduleService;
-import com.jakubeeee.iotaccess.core.jobschedule.ScheduledJob;
+import com.jakubeeee.iotaccess.core.jobschedule.ScheduledTaskConfig;
+import com.jakubeeee.iotaccess.core.jobschedule.TaskScheduleService;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.iotaccess.pluginapi.PluginConnector;
 import com.jakubeeee.iotaccess.pluginapi.config.ConverterConfig;
 import com.jakubeeee.iotaccess.pluginapi.config.PluginConfig;
 import com.jakubeeee.iotaccess.pluginapi.config.ProcessConfig;
-import com.jakubeeee.iotaccess.pluginapi.config.ScheduleConfig;
 import com.jakubeeee.iotaccess.pluginapi.converter.DataConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +26,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 abstract class BasePluginDeployer implements PluginDeployer {
 
+    private static final String PLUGIN_PROCESSES_TASK_GROUP_NAME = "Plugin Processes Group";
+
     private final PluginMetadataService pluginMetadataService;
 
     private final ProcessMetadataService processMetadataService;
@@ -35,7 +36,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
 
     private final DataPersistStrategyFactory dataPersistStrategyFactory;
 
-    private final JobScheduleService jobScheduleService;
+    private final TaskScheduleService taskScheduleService;
 
     @Transactional
     public void deploy() {
@@ -129,15 +130,12 @@ abstract class BasePluginDeployer implements PluginDeployer {
     }
 
     private void deployProcess(ProcessConfig processConfig, DataConverter converter) {
-        ScheduledJob job = new ProcessScheduledJob(processConfig, converter, restClient, dataPersistStrategyFactory);
-        ScheduleConfig scheduleConfig = processConfig.getScheduleConfig();
-        scheduleProcess(job, scheduleConfig);
+        var job = new ProcessScheduledTask(processConfig, converter, restClient, dataPersistStrategyFactory);
+        long interval = processConfig.getScheduleConfig().getInterval();
+        var scheduledTaskConfig = new ScheduledTaskConfig(
+                "\"" + processConfig.getIdentifier() + "\" scheduled task", PLUGIN_PROCESSES_TASK_GROUP_NAME, interval);
+        taskScheduleService.schedule(job, scheduledTaskConfig);
         LOG.debug("Successfully deployed process with identifier \"{}\"", processConfig.getIdentifier());
-    }
-
-    private void scheduleProcess(ScheduledJob job, ScheduleConfig scheduleConfig) {
-        long interval = scheduleConfig.getInterval();
-        jobScheduleService.schedule(job, interval);
     }
 
 }

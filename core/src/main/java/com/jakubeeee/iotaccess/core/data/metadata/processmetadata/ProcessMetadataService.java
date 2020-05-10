@@ -27,6 +27,7 @@ public class ProcessMetadataService implements MetadataService<ProcessMetadata> 
         LOG.trace("New \"{}\" saved: \"{}\"", processMetadata.getClass().getSimpleName(), processMetadata);
     }
 
+    @Override
     public ProcessMetadata findByIdentifier(@NonNull String identifier) {
         return processMetadataRepository.findByIdentifier(identifier).orElseThrow(
                 () -> new MandatoryEntityNotFoundException(ProcessMetadata.class, "identifier", identifier));
@@ -38,14 +39,14 @@ public class ProcessMetadataService implements MetadataService<ProcessMetadata> 
 
     @Transactional
     @Override
-    public void delete(ProcessMetadata processMetadata) {
+    public void delete(@NonNull ProcessMetadata processMetadata) {
         for (var entryService : entryServices)
             entryService.disconnectFromProcessMetadata(processMetadata);
         processMetadataRepository.delete(processMetadata);
     }
 
     @Transactional
-    public void deleteAllByParent(PluginMetadata pluginMetadata) {
+    public void deleteAllByParent(@NonNull PluginMetadata pluginMetadata) {
         for (var processMetadata : processMetadataRepository.findAllByPluginMetadataId(pluginMetadata.getId()))
             delete(processMetadata);
     }

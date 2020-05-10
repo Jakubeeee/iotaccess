@@ -4,7 +4,7 @@ import com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata.PluginMetadataS
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadataService;
 import com.jakubeeee.iotaccess.core.data.plugindeployment.PluginDeploymentCandidate;
 import com.jakubeeee.iotaccess.core.data.plugindeployment.PluginDeploymentCandidateService;
-import com.jakubeeee.iotaccess.core.jobschedule.JobScheduleService;
+import com.jakubeeee.iotaccess.core.jobschedule.TaskScheduleService;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.iotaccess.pluginapi.PluginConnector;
@@ -39,10 +39,10 @@ class DatabasePluginDeployer extends BasePluginDeployer {
             ProcessMetadataService processMetadataService,
             FetchPluginRestClient restClient,
             DataPersistStrategyFactory dataPersistStrategyFactory,
-            JobScheduleService jobScheduleService,
+            TaskScheduleService taskScheduleService,
             PluginDeploymentCandidateService pluginDeploymentCandidateService) {
         super(pluginMetadataService, processMetadataService, restClient, dataPersistStrategyFactory,
-                jobScheduleService);
+                taskScheduleService);
         this.pluginDeploymentCandidateService = pluginDeploymentCandidateService;
         classLoader = new DynamicPluginClassLoader(this.getClass().getClassLoader());
     }
