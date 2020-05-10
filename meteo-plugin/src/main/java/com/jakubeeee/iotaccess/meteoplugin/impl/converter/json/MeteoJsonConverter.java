@@ -10,6 +10,7 @@ import lombok.NonNull;
 
 import java.util.List;
 
+import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterConstants.JSON_CONVERTER_IDENTIFIER;
 import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterHelper.*;
 import static com.jakubeeee.iotaccess.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 import static java.util.Arrays.stream;
@@ -61,6 +62,11 @@ public final class MeteoJsonConverter implements DataConverter {
                 createFetchedNumber(GPS_LATITUDE, container.getGpsLatitude()),
                 createFetchedDate(MOMENT, container.getMoment())
         ));
+    }
+
+    @Override
+    public String getIdentifier() {
+        return JSON_CONVERTER_IDENTIFIER;
     }
 
     public static MeteoJsonConverter getInstance() {

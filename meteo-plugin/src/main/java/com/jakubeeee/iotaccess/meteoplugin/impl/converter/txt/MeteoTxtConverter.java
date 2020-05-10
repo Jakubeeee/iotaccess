@@ -11,6 +11,7 @@ import lombok.NonNull;
 import java.util.List;
 import java.util.Map;
 
+import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterConstants.TXT_CONVERTER_IDENTIFIER;
 import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterHelper.*;
 import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.txt.MeteoTxtConverterConstants.*;
 import static com.jakubeeee.iotaccess.pluginapi.meteo.MeteoPropertyKeyConstants.*;
@@ -98,6 +99,11 @@ public class MeteoTxtConverter implements DataConverter {
                 createFetchedNumber(GPS_LATITUDE, rawProperties.get(GPS_LATITUDE_KEY)),
                 createFetchedDate(MOMENT, rawProperties.get(MOMENT_KEY))
         );
+    }
+
+    @Override
+    public String getIdentifier() {
+        return TXT_CONVERTER_IDENTIFIER;
     }
 
     public static MeteoTxtConverter getInstance() {

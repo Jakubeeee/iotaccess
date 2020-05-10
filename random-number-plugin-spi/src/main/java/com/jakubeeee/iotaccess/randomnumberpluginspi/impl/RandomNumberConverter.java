@@ -19,6 +19,8 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 public final class RandomNumberConverter implements DataConverter {
 
+    private static final String IDENTIFIER = "random_number_converter_spi";
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private static final RandomNumberDataValidator VALIDATOR = RandomNumberDataValidator.getInstance();
@@ -54,6 +56,11 @@ public final class RandomNumberConverter implements DataConverter {
 
     private FetchedNumber rawValueToFetchedNumber(BigDecimal value, int index) {
         return new FetchedNumber(format("random_value_{0}", index + 1), value);
+    }
+
+    @Override
+    public String getIdentifier() {
+        return IDENTIFIER;
     }
 
     public static RandomNumberConverter getInstance() {

@@ -8,7 +8,7 @@ import lombok.Value;
  */
 @RequiredArgsConstructor(staticName = "of")
 @Value
-public class ScheduleConfig {
+public final class ScheduleConfig {
 
     private final long interval;
 

@@ -11,7 +11,7 @@ import lombok.Value;
  */
 @RequiredArgsConstructor(staticName = "of")
 @Value
-public class FetchConfig {
+public final class FetchConfig {
 
     @NonNull
     private final String url;

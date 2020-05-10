@@ -9,7 +9,7 @@ import lombok.Value;
  */
 @RequiredArgsConstructor(staticName = "of")
 @Value
-public class ProcessConfig {
+public final class ProcessConfig {
 
     @NonNull
     private final String identifier;
@@ -19,6 +19,9 @@ public class ProcessConfig {
 
     @NonNull
     private final FetchConfig fetchConfig;
+
+    @NonNull
+    private final ConverterConfig converterConfig;
 
     @NonNull
     private final ScheduleConfig scheduleConfig;

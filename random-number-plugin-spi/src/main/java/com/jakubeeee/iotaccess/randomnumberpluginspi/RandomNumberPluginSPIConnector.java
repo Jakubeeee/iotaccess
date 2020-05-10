@@ -1,10 +1,8 @@
 package com.jakubeeee.iotaccess.randomnumberpluginspi;
 
 import com.jakubeeee.iotaccess.pluginapi.PluginConnector;
-import com.jakubeeee.iotaccess.pluginapi.config.FetchConfig;
-import com.jakubeeee.iotaccess.pluginapi.config.PluginConfig;
-import com.jakubeeee.iotaccess.pluginapi.config.ProcessConfig;
-import com.jakubeeee.iotaccess.pluginapi.config.ScheduleConfig;
+import com.jakubeeee.iotaccess.pluginapi.config.*;
+import com.jakubeeee.iotaccess.pluginapi.converter.DataConverter;
 import com.jakubeeee.iotaccess.randomnumberpluginspi.impl.RandomNumberConverter;
 
 import java.util.Set;
@@ -18,8 +16,8 @@ public class RandomNumberPluginSPIConnector implements PluginConnector {
     private static final String IDENTIFIER = "Random number plugin (SPI)";
 
     @Override
-    public RandomNumberConverter getConverter() {
-        return RandomNumberConverter.getInstance();
+    public Set<DataConverter> getConverters() {
+        return Set.of(RandomNumberConverter.getInstance());
     }
 
     @Override
@@ -28,18 +26,21 @@ public class RandomNumberPluginSPIConnector implements PluginConnector {
                 "Single random number fetch process (SPI)",
                 "",
                 FetchConfig.of(GET_RANDOM_NUMBER_PATH, JSON, STANDARD),
+                ConverterConfig.of(RandomNumberConverter.getInstance().getIdentifier()),
                 ScheduleConfig.of(30_000));
 
         var threeRandomNumbersProcessConfig = ProcessConfig.of(
                 "Three random numbers fetch process (SPI)",
                 "",
                 FetchConfig.of(GET_3_RANDOM_NUMBERS_PATH, JSON, STANDARD),
+                ConverterConfig.of(RandomNumberConverter.getInstance().getIdentifier()),
                 ScheduleConfig.of(120_000));
 
         var tenRandomNumbersProcessConfig = ProcessConfig.of(
                 "Ten random numbers fetch process (SPI)",
                 "",
                 FetchConfig.of(GET_10_RANDOM_NUMBERS_PATH, JSON, STANDARD),
+                ConverterConfig.of(RandomNumberConverter.getInstance().getIdentifier()),
                 ScheduleConfig.of(360_000));
 
         var processConfigs =

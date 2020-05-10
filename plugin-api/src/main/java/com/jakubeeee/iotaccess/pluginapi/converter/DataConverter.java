@@ -25,4 +25,6 @@ public interface DataConverter {
      */
     FetchedContainer convert(@NonNull String rawData, @NonNull DataFormat dataFormat);
 
+    String getIdentifier();
+
 }

@@ -9,6 +9,7 @@ import com.jakubeeee.iotaccess.core.jobschedule.ScheduledJob;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.iotaccess.pluginapi.PluginConnector;
+import com.jakubeeee.iotaccess.pluginapi.config.ConverterConfig;
 import com.jakubeeee.iotaccess.pluginapi.config.PluginConfig;
 import com.jakubeeee.iotaccess.pluginapi.config.ProcessConfig;
 import com.jakubeeee.iotaccess.pluginapi.config.ScheduleConfig;
@@ -17,7 +18,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -78,8 +82,11 @@ abstract class BasePluginDeployer implements PluginDeployer {
     }
 
     private void saveProcessMetadata(ProcessConfig processConfig, PluginMetadata parentPluginMetadata) {
-        var processMetadata = new ProcessMetadata(processConfig.getIdentifier(), processConfig.getDescription(),
-                processConfig.getFetchConfig().getUrl(), processConfig.getScheduleConfig().getInterval(),
+        var processMetadata = new ProcessMetadata(processConfig.getIdentifier(),
+                processConfig.getDescription(),
+                processConfig.getFetchConfig().getUrl(),
+                processConfig.getConverterConfig().getConverterIdentifier(),
+                processConfig.getScheduleConfig().getInterval(),
                 parentPluginMetadata);
         processMetadataService.save(processMetadata);
     }
@@ -87,20 +94,43 @@ abstract class BasePluginDeployer implements PluginDeployer {
     private void deployPlugin(PluginConnector connector) {
         PluginConfig pluginConfig = connector.getConfig();
         Set<ProcessConfig> processConfigs = pluginConfig.getProcessConfigs();
-        DataConverter converter = connector.getConverter();
-        deployProcesses(processConfigs, converter);
+        Set<DataConverter> dataConverters = connector.getConverters();
+        deployProcesses(processConfigs, dataConverters);
         pluginMetadataService.setDeployedTrue(pluginConfig.getIdentifier());
         LOG.info("Successfully deployed plugin with identifier \"{}\"", pluginConfig.getIdentifier());
     }
 
-    private void deployProcesses(Set<ProcessConfig> processConfigs, DataConverter converter) {
-        for (var processConfig : processConfigs)
-            deployProcess(processConfig, converter);
+    private void deployProcesses(Set<ProcessConfig> processConfigs, Set<DataConverter> dataConverters) {
+        for (var processConfig : processConfigs) {
+            ConverterConfig converterConfig = processConfig.getConverterConfig();
+            String converterIdentifier = converterConfig.getConverterIdentifier();
+            DataConverter dataConverter = getMatchingConverter(converterIdentifier, dataConverters);
+            deployProcess(processConfig, dataConverter);
+        }
+    }
+
+    private DataConverter getMatchingConverter(String identifier, Set<DataConverter> dataConverters) {
+        List<DataConverter> applicableConverters = dataConverters.stream()
+                .filter(converter -> converter.getIdentifier().equalsIgnoreCase(identifier.trim()))
+                .collect(toList());
+        ensureExactlyOneConverterMatched(identifier, applicableConverters);
+        return applicableConverters.get(0);
+    }
+
+    private void ensureExactlyOneConverterMatched(String identifier, List<DataConverter> applicableConverters) {
+        if (applicableConverters.isEmpty())
+            throw new InvalidConverterConfigException(
+                    "There is no matching converter with identifier \"{0}\" in given collection of converters: \"{1}\"",
+                    identifier, applicableConverters);
+        else if (applicableConverters.size() > 1)
+            throw new InvalidConverterConfigException(
+                    "There are multiple converters with identifier \"{0}\" in given collection of converters: \"{1}\"",
+                    identifier, applicableConverters);
     }
 
     private void deployProcess(ProcessConfig processConfig, DataConverter converter) {
-        ScheduleConfig scheduleConfig = processConfig.getScheduleConfig();
         ScheduledJob job = new ProcessScheduledJob(processConfig, converter, restClient, dataPersistStrategyFactory);
+        ScheduleConfig scheduleConfig = processConfig.getScheduleConfig();
         scheduleProcess(job, scheduleConfig);
         LOG.debug("Successfully deployed process with identifier \"{}\"", processConfig.getIdentifier());
     }
