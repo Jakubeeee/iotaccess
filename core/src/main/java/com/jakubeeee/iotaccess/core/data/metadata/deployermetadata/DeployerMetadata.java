@@ -24,7 +24,7 @@ public final class DeployerMetadata extends MetadataEntity {
     @Column(name = "REGISTRATION_STRATEGY", nullable = false, updatable = false)
     private RegistrationStrategy registrationStrategy;
 
-    @Column(name = "INTERVAL", nullable = false, updatable = false)
+    @Column(name = "DEFAULT_INTERVAL", nullable = false, updatable = false)
     private long interval;
 
     @Column(name = "DEPLOYED", nullable = false)

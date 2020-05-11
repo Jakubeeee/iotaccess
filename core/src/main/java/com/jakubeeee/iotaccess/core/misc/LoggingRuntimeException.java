@@ -8,7 +8,11 @@ import static java.text.MessageFormat.format;
 public class LoggingRuntimeException extends RuntimeException {
 
     public LoggingRuntimeException(String message, Object... parameters) {
-        super(format(message, parameters));
+        this(message, null, parameters);
+    }
+
+    public LoggingRuntimeException(String message, Throwable throwable, Object... parameters) {
+        super(format(message, parameters), throwable);
         LOG.error(format(message, parameters));
     }
 

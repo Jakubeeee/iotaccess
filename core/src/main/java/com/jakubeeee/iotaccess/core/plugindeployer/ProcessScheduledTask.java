@@ -1,6 +1,6 @@
 package com.jakubeeee.iotaccess.core.plugindeployer;
 
-import com.jakubeeee.iotaccess.core.jobschedule.ScheduledTask;
+import com.jakubeeee.iotaccess.core.taskschedule.ScheduledTask;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategy;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;

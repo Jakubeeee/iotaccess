@@ -33,8 +33,61 @@ public class ScheduledTaskMetadataService implements MetadataService<ScheduledTa
         return scheduledTaskMetadataRepository.findByIdentifier(identifier);
     }
 
-    public void setRunningTrue(@NonNull String identifier) {
-        scheduledTaskMetadataRepository.updateRunning(true, identifier);
+    @Transactional
+    public void updateInterval(@NonNull String taskIdentifier, @NonNull String groupIdentifier, long newInterval) {
+        scheduledTaskMetadataRepository.updateInterval(newInterval, taskIdentifier, groupIdentifier);
+    }
+
+    @Transactional
+    public void setRunningTrueForAll() {
+        for (var taskMetadata : scheduledTaskMetadataRepository.findAll()) {
+            scheduledTaskMetadataRepository
+                    .updateRunning(true, taskMetadata.getIdentifier(), taskMetadata.getGroupIdentifier());
+        }
+    }
+
+    @Transactional
+    public void setRunningFalseForAll() {
+        for (var taskMetadata : scheduledTaskMetadataRepository.findAll()) {
+            scheduledTaskMetadataRepository
+                    .updateRunning(false, taskMetadata.getIdentifier(), taskMetadata.getGroupIdentifier());
+        }
+    }
+
+    @Transactional
+    public void setRunningTrueForGroup(@NonNull String groupIdentifier) {
+        for (var taskMetadata : scheduledTaskMetadataRepository.findAllByGroupIdentifier(groupIdentifier)) {
+            scheduledTaskMetadataRepository
+                    .updateRunning(true, taskMetadata.getIdentifier(), taskMetadata.getGroupIdentifier());
+        }
+    }
+
+    @Transactional
+    public void setRunningFalseForGroup(@NonNull String groupIdentifier) {
+        for (var taskMetadata : scheduledTaskMetadataRepository.findAllByGroupIdentifier(groupIdentifier)) {
+            scheduledTaskMetadataRepository
+                    .updateRunning(false, taskMetadata.getIdentifier(), taskMetadata.getGroupIdentifier());
+        }
+    }
+
+    @Transactional
+    public void setRunningTrueForTask(@NonNull String taskIdentifier, @NonNull String groupIdentifier) {
+        scheduledTaskMetadataRepository.updateRunning(true, taskIdentifier, groupIdentifier);
+    }
+
+    @Transactional
+    public void setRunningFalseForTask(@NonNull String taskIdentifier, @NonNull String groupIdentifier) {
+        scheduledTaskMetadataRepository.updateRunning(false, taskIdentifier, groupIdentifier);
+    }
+
+    @Transactional
+    public void deleteAllOfGroup(@NonNull String groupIdentifier) {
+        scheduledTaskMetadataRepository.deleteByGroupIdentifier(groupIdentifier);
+    }
+
+    @Transactional
+    public void delete(@NonNull String taskIdentifier, @NonNull String groupIdentifier) {
+        scheduledTaskMetadataRepository.deleteByIdentifierAndGroupIdentifier(taskIdentifier, groupIdentifier);
     }
 
     @Transactional

@@ -1,4 +1,4 @@
-package com.jakubeeee.iotaccess.core.jobschedule;
+package com.jakubeeee.iotaccess.core.taskschedule;
 
 @FunctionalInterface
 public interface ScheduledTask {

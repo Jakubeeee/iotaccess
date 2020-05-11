@@ -24,7 +24,7 @@ public final class ProcessMetadata extends MetadataEntity {
     @Column(name = "CONVERTER_IDENTIFIER", nullable = false, updatable = false)
     private String converterIdentifier;
 
-    @Column(name = "INTERVAL", nullable = false, updatable = false)
+    @Column(name = "DEFAULT_INTERVAL", nullable = false, updatable = false)
     private long interval;
 
     @ToString.Exclude

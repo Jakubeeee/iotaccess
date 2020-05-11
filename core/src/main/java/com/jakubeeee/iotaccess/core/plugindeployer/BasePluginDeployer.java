@@ -4,9 +4,9 @@ import com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata.PluginMetadata;
 import com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata.PluginMetadataService;
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadata;
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadataService;
-import com.jakubeeee.iotaccess.core.jobschedule.ScheduledTaskConfig;
-import com.jakubeeee.iotaccess.core.jobschedule.TaskScheduleService;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
+import com.jakubeeee.iotaccess.core.taskschedule.ScheduledTaskConfig;
+import com.jakubeeee.iotaccess.core.taskschedule.TaskScheduleService;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.iotaccess.pluginapi.PluginConnector;
 import com.jakubeeee.iotaccess.pluginapi.config.ConverterConfig;
@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 abstract class BasePluginDeployer implements PluginDeployer {
 
-    private static final String PLUGIN_PROCESSES_TASK_GROUP_NAME = "Plugin Processes Group";
+    private static final String PLUGIN_PROCESSES_TASK_GROUP_NAME = "plugin_processes_group";
 
     private final PluginMetadataService pluginMetadataService;
 
@@ -133,7 +133,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
         var job = new ProcessScheduledTask(processConfig, converter, restClient, dataPersistStrategyFactory);
         long interval = processConfig.getScheduleConfig().getInterval();
         var scheduledTaskConfig = new ScheduledTaskConfig(
-                "\"" + processConfig.getIdentifier() + "\" scheduled task", PLUGIN_PROCESSES_TASK_GROUP_NAME, interval);
+                processConfig.getIdentifier().replaceAll("\\s", ""), PLUGIN_PROCESSES_TASK_GROUP_NAME, interval);
         taskScheduleService.schedule(job, scheduledTaskConfig);
         LOG.debug("Successfully deployed process with identifier \"{}\"", processConfig.getIdentifier());
     }

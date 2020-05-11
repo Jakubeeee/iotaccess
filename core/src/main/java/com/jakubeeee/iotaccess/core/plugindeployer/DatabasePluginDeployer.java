@@ -4,7 +4,7 @@ import com.jakubeeee.iotaccess.core.data.metadata.pluginmetadata.PluginMetadataS
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadataService;
 import com.jakubeeee.iotaccess.core.data.plugindeployment.PluginDeploymentCandidate;
 import com.jakubeeee.iotaccess.core.data.plugindeployment.PluginDeploymentCandidateService;
-import com.jakubeeee.iotaccess.core.jobschedule.TaskScheduleService;
+import com.jakubeeee.iotaccess.core.taskschedule.TaskScheduleService;
 import com.jakubeeee.iotaccess.core.persistence.DataPersistStrategyFactory;
 import com.jakubeeee.iotaccess.core.webservice.FetchPluginRestClient;
 import com.jakubeeee.iotaccess.pluginapi.PluginConnector;
