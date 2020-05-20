@@ -24,3 +24,6 @@ out/
 target/
 .mvn/wrapper/maven-wrapper.jar
 .mvn/wrapper/MavenWrapperDownloader.java
+
+# Project
+/core/src/test/resources/generated/integrationtest/dynamicconfig/generator/dynamic_config.properties
