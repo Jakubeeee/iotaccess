@@ -2,6 +2,8 @@ FROM adoptopenjdk/openjdk14
 RUN mkdir /opt/artifact
 RUN mkdir /opt/iotaccess
 RUN mkdir /opt/iotaccess/pluginimport
+RUN mkdir /opt/iotaccess/configimport
+RUN mkdir /opt/iotaccess/configexport
 COPY target/core-1.0-SNAPSHOT.jar /opt/artifact/core.jar
 EXPOSE 8080 1044
 ENV JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:1044"

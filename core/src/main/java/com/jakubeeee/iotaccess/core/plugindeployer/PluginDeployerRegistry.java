@@ -3,8 +3,9 @@ package com.jakubeeee.iotaccess.core.plugindeployer;
 import com.jakubeeee.iotaccess.core.data.metadata.InitialMetadataSweeper;
 import com.jakubeeee.iotaccess.core.data.metadata.deployermetadata.DeployerMetadata;
 import com.jakubeeee.iotaccess.core.data.metadata.deployermetadata.DeployerMetadataService;
-import com.jakubeeee.iotaccess.core.taskschedule.ScheduledTaskConfig;
+import com.jakubeeee.iotaccess.core.taskschedule.ScheduledTaskId;
 import com.jakubeeee.iotaccess.core.taskschedule.TaskScheduleService;
+import com.jakubeeee.iotaccess.core.taskschedule.UnmodifiableTaskContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -24,7 +25,7 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 @Component
 public class PluginDeployerRegistry implements ApplicationRunner {
 
-    private static final String PLUGIN_DEPLOYERS_TASK_GROUP_NAME = "plugin_deployers_group";
+    private static final String GROUP_IDENTIFIER = "plugin_deployers_group";
 
     private final DeployerMetadataService deployerMetadataService;
 
@@ -67,11 +68,12 @@ public class PluginDeployerRegistry implements ApplicationRunner {
 
     private void registerDeployers(Set<PluginDeployer> applicableDeployers) {
         for (var deployer : applicableDeployers) {
-            var config = new ScheduledTaskConfig(
-                    deployer.getIdentifier().replaceAll("\\s", ""),
-                    PLUGIN_DEPLOYERS_TASK_GROUP_NAME,
+            var taskIdentifier = new ScheduledTaskId(deployer.getIdentifier(), GROUP_IDENTIFIER);
+            var taskContext = new UnmodifiableTaskContext(
+                    taskIdentifier,
+                    deployer::deploy,
                     deployer.getInterval());
-            taskScheduleService.schedule(deployer::deploy, config);
+            taskScheduleService.schedule(taskContext);
             deployerMetadataService.setRegisteredTrue(deployer.getIdentifier());
             LOG.trace("Registered plugin deployer with identifier: \"{}\"", deployer.getIdentifier());
         }

@@ -164,6 +164,9 @@
 
                 <random.number.ws.output.dir>${test.generated.dir}/integrationtest/webservice</random.number.ws.output.dir>
                 <random.number.ws.jar.name>random-number-ws-${project.version}.jar</random.number.ws.jar.name>
+
+                <dynamic.config.reader.fs.dir>${test.generated.dir}/integrationtest/dynamicconfig/reader</dynamic.config.reader.fs.dir>
+                <dynamic.config.generator.fs.dir>${test.generated.dir}/integrationtest/dynamicconfig/generator</dynamic.config.generator.fs.dir>
                 <!--//@formatter:on-->
             </properties>
 
@@ -192,8 +195,7 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        <delete dir="src\test\resources\generated\integrationtest"
-                                                includeemptydirs="true"/>
+                                        <delete dir="src\test\resources\generated\integrationtest\plugin"/>
                                     </target>
                                 </configuration>
                             </execution>

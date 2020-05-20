@@ -1,6 +1,5 @@
 package com.jakubeeee.iotaccess.core.webservice;
 
-import com.jakubeeee.iotaccess.pluginapi.config.FetchConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
@@ -16,8 +15,8 @@ public class FetchPluginRestClient {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public String fetchData(FetchConfig config) {
-        return restTemplate.getForObject(config.getUrl(), String.class);
+    public String fetchData(String url) {
+        return restTemplate.getForObject(url, String.class);
     }
 
 }

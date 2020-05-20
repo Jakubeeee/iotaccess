@@ -18,7 +18,7 @@ import static java.util.stream.StreamSupport.stream;
 @Component
 class SPIPluginDeployer extends BasePluginDeployer {
 
-    private static final String IDENTIFIER = "SPI Plugin Deployer";
+    private static final String IDENTIFIER = "spi_plugin_deployer";
 
     @Value("${deployer.spi.interval:-1}")
     private long spiDeployerInterval;

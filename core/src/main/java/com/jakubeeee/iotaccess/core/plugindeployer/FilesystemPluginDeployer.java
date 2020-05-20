@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 @Component
 class FilesystemPluginDeployer extends BasePluginDeployer {
 
-    private static final String IDENTIFIER = "Filesystem Plugin Deployer";
+    private static final String IDENTIFIER = "filesystem_plugin_deployer";
 
     private static final String ARCHIVE_SUBDIRECTORY = "/archive/";
 

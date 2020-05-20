@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-public class DynamicConfigurationRestController {
+public class TaskScheduleRestController {
 
     private final TaskScheduleService scheduleService;
 
     @PostMapping("config/tasks/executetask")
-    public void pauseAllScheduledTasks(@RequestParam("taskid") String taskId, @RequestParam("groupid") String groupId) {
+    public void executeImmediately(@RequestParam("taskid") String taskId, @RequestParam("groupid") String groupId) {
         scheduleService.executeImmediately(taskId, groupId);
     }
 
@@ -60,7 +60,7 @@ public class DynamicConfigurationRestController {
     public void rescheduleTask(@RequestParam("taskid") String taskId,
                                @RequestParam("groupid") String groupId,
                                @RequestParam("interval") long newInterval) {
-        scheduleService.reschedule(new ScheduledTaskConfig(taskId, groupId, newInterval));
+        scheduleService.reschedule(new ScheduledTaskId(taskId, groupId), newInterval);
     }
 
 }

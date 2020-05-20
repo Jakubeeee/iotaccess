@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 @Component
 class DatabasePluginDeployer extends BasePluginDeployer {
 
-    private static final String IDENTIFIER = "Database Plugin Deployer";
+    private static final String IDENTIFIER = "database_plugin_deployer";
 
     private final PluginDeploymentCandidateService pluginDeploymentCandidateService;
 

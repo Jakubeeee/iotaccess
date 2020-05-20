@@ -13,7 +13,7 @@ import static com.jakubeeee.iotaccess.randomnumberpluginfs.impl.RandomNumberClie
 
 public class RandomNumberPluginFSConnector implements PluginConnector {
 
-    private static final String IDENTIFIER = "Random number plugin (FS)";
+    private static final String IDENTIFIER = "random_number_plugin_fs";
 
     @Override
     public Set<DataConverter> getConverters() {
@@ -23,22 +23,19 @@ public class RandomNumberPluginFSConnector implements PluginConnector {
     @Override
     public PluginConfig getConfig() {
         var singleRandomNumberProcessConfig = ProcessConfig.of(
-                "Single random number fetch process (FS)",
-                "",
+                "single_random_number_fetch_process_fs",
                 FetchConfig.of(GET_RANDOM_NUMBER_PATH, JSON, STANDARD),
                 ConverterConfig.of(RandomNumberConverter.getInstance().getIdentifier()),
                 ScheduleConfig.of(30_000));
 
         var threeRandomNumbersProcessConfig = ProcessConfig.of(
-                "Three random numbers fetch process (FS)",
-                "",
+                "three_random_numbers_fetch_process_fs",
                 FetchConfig.of(GET_3_RANDOM_NUMBERS_PATH, JSON, STANDARD),
                 ConverterConfig.of(RandomNumberConverter.getInstance().getIdentifier()),
                 ScheduleConfig.of(120_000));
 
         var tenRandomNumbersProcessConfig = ProcessConfig.of(
-                "Ten random numbers fetch process (FS)",
-                "",
+                "ten_random_numbers_fetch_process_fs",
                 FetchConfig.of(GET_10_RANDOM_NUMBERS_PATH, JSON, STANDARD),
                 ConverterConfig.of(RandomNumberConverter.getInstance().getIdentifier()),
                 ScheduleConfig.of(360_000));

@@ -18,7 +18,7 @@ import static com.jakubeeee.iotaccess.meteoplugin.impl.url.MeteoUrlHelper.getUrl
 
 public class MeteoPluginConnector implements PluginConnector {
 
-    private static final String IDENTIFIER = "Meteo plugin";
+    private static final String IDENTIFIER = "meteo_plugin";
 
     @Override
     public Set<DataConverter> getConverters() {
@@ -32,8 +32,7 @@ public class MeteoPluginConnector implements PluginConnector {
     public PluginConfig getConfig() {
 
         var testJsonSumMeteoConfig = ProcessConfig.of(
-                "Test json meteo process (SUM)",
-                "",
+                "test_json_meteo_process_sum",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.JSON),
                         DataFormat.JSON, DataType.METEO
@@ -42,8 +41,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(300_000));
 
         var testJsonGetMeteoConfig = ProcessConfig.of(
-                "Test json meteo process (GET)",
-                "",
+                "test_json_meteo_process_get",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.GET, ResultUrlParameter.JSON),
                         DataFormat.JSON, DataType.METEO
@@ -52,8 +50,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(3_600_000));
 
         var testJsonStandardSumMeteoConfig = ProcessConfig.of(
-                "Test json meteo process (SUM) standard data",
-                "",
+                "test_json_meteo_process_sum_standard_data",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.JSON),
                         DataFormat.JSON, DataType.STANDARD
@@ -62,8 +59,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(600_000));
 
         var testXmlSumMeteoConfig = ProcessConfig.of(
-                "Test xml meteo process (SUM)",
-                "",
+                "test_xml_meteo_process_sum",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.XML),
                         DataFormat.XML, DataType.METEO
@@ -72,8 +68,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(300_000));
 
         var testXmlGetMeteoConfig = ProcessConfig.of(
-                "Test xml meteo process (GET)",
-                "",
+                "test_xml_meteo_process_get",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.GET, ResultUrlParameter.XML),
                         DataFormat.XML, DataType.METEO
@@ -82,8 +77,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(3_600_000));
 
         var testXmlStandardSumMeteoConfig = ProcessConfig.of(
-                "Test xml meteo process (SUM) standard data",
-                "",
+                "test_xml_meteo_process_sum_standard_data",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.XML),
                         DataFormat.XML, DataType.STANDARD
@@ -92,8 +86,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(600_000));
 
         var testTxtSumMeteoConfig = ProcessConfig.of(
-                "Test txt meteo process (SUM)",
-                "",
+                "test_txt_meteo_process_sum",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.TXT),
                         DataFormat.TXT, DataType.METEO
@@ -102,8 +95,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(300_000));
 
         var testTxtGetMeteoConfig = ProcessConfig.of(
-                "Test txt meteo process (GET)",
-                "",
+                "test_txt_meteo_process_get",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.GET, ResultUrlParameter.TXT),
                         DataFormat.TXT, DataType.METEO
@@ -112,8 +104,7 @@ public class MeteoPluginConnector implements PluginConnector {
                 ScheduleConfig.of(3_600_000));
 
         var testTxtStandardSumMeteoConfig = ProcessConfig.of(
-                "Test txt meteo process (SUM) standard data",
-                "",
+                "test_txt_meteo_process_sum_standard_data",
                 FetchConfig.of(
                         getUrl(CommandUrlParameter.SUM, ResultUrlParameter.TXT),
                         DataFormat.TXT, DataType.STANDARD

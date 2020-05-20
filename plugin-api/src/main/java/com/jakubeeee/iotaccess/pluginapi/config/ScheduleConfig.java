@@ -1,15 +1,23 @@
 package com.jakubeeee.iotaccess.pluginapi.config;
 
-import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 /**
  * Configuration value object used for specifying the way that the fetching process is scheduled.
  */
-@RequiredArgsConstructor(staticName = "of")
 @Value
 public final class ScheduleConfig {
 
     private final long interval;
+
+    private final boolean running;
+
+    public static ScheduleConfig of(long interval, boolean running) {
+        return new ScheduleConfig(interval, running);
+    }
+
+    public static ScheduleConfig of(long interval) {
+        return new ScheduleConfig(interval, true);
+    }
 
 }
