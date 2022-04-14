@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk14
+FROM openjdk:18
 RUN mkdir /opt/artifact
 RUN mkdir /opt/iotaccess
 RUN mkdir /opt/iotaccess/pluginimport

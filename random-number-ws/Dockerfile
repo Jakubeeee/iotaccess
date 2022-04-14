@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk14
+FROM openjdk:18
 RUN mkdir /opt/artifact
 COPY target/random-number-ws-1.0-SNAPSHOT.jar /opt/artifact/random-number-ws.jar
 EXPOSE 8081 1045
