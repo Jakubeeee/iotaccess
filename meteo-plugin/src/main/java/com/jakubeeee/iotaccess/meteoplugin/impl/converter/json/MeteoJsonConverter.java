@@ -14,7 +14,6 @@ import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterC
 import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterHelper.*;
 import static com.jakubeeee.iotaccess.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toUnmodifiableList;
 
 public final class MeteoJsonConverter implements DataConverter {
 
@@ -43,7 +42,7 @@ public final class MeteoJsonConverter implements DataConverter {
     private List<FetchedVector> createVectors(MeteoJsonExternalContainer[] containers) {
         return stream(containers)
                 .map(this::createVector)
-                .collect(toUnmodifiableList());
+                .toList();
     }
 
     private FetchedVector createVector(MeteoJsonExternalContainer container) {

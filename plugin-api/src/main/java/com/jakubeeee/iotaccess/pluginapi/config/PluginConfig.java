@@ -5,7 +5,6 @@ import lombok.Value;
 
 import java.util.Set;
 
-import static java.util.Collections.unmodifiableSet;
 import static java.util.Set.copyOf;
 
 /**
@@ -29,7 +28,7 @@ public final class PluginConfig {
     }
 
     public Set<ProcessConfig> getProcessConfigs() {
-        return unmodifiableSet(processConfigs);
+        return processConfigs;
     }
 
 }

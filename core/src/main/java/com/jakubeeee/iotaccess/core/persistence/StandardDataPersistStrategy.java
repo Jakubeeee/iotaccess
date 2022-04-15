@@ -39,15 +39,11 @@ public class StandardDataPersistStrategy extends BaseDataPersistStrategy<Standar
     }
 
     private void populateEntryField(StandardEntry entry, FetchedProperty<?> property) {
-        if (property instanceof FetchedText textProperty)
-            tryInsertTextProperty(entry, textProperty);
-        else if (property instanceof FetchedNumber numberProperty)
-            tryInsertNumberProperty(entry, numberProperty);
-        else if (property instanceof FetchedDate dateProperty)
-            tryInsertDateProperty(entry, dateProperty);
-        else
-            throw new UnsupportedOperationException(format("Property type \"{0}\" is not supported by \"{1}\"",
-                    property.getClass().getSimpleName(), this.getClass().getSimpleName()));
+        switch (property) {
+            case FetchedText textProperty -> tryInsertTextProperty(entry, textProperty);
+            case FetchedNumber numberProperty -> tryInsertNumberProperty(entry, numberProperty);
+            case FetchedDate dateProperty -> tryInsertDateProperty(entry, dateProperty);
+        }
     }
 
     private void tryInsertTextProperty(StandardEntry entry, FetchedText property) {
@@ -127,9 +123,9 @@ public class StandardDataPersistStrategy extends BaseDataPersistStrategy<Standar
         return new EntryFieldDelegate<>(keyGetter, keySetter, valueSetter);
     }
 
-    private static record EntryFieldDelegate<T>(Supplier<String>keyGetter,
-                                                Consumer<String>keySetter,
-                                                Consumer<T>valueSetter) {
+    private record EntryFieldDelegate<T>(Supplier<String> keyGetter,
+                                         Consumer<String> keySetter,
+                                         Consumer<T> valueSetter) {
     }
 
 }

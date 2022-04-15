@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 
 import static java.text.MessageFormat.format;
-import static java.util.stream.Collectors.toUnmodifiableList;
 
 @Slf4j
 @Component
@@ -47,7 +46,7 @@ public class DataPersistStrategyFactory {
     private List<DataType> extractDataTypes(Set<DataPersistStrategy> strategies) {
         return strategies.stream()
                 .map(DataPersistStrategy::getSupportedDataType)
-                .collect(toUnmodifiableList());
+                .toList();
     }
 
 }

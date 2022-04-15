@@ -19,7 +19,6 @@ import java.util.Set;
 import static java.text.MessageFormat.format;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.singleton;
-import static java.util.stream.Collectors.toList;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.JobKey.jobKey;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
@@ -57,7 +56,7 @@ public class TaskScheduleService {
         return scheduler.getJobKeys(anyGroup()).stream()
                 .map(this::toTriggerKey)
                 .map(this::getSingleTaskDetails)
-                .collect(toList());
+                .toList();
     }
 
     private TriggerKey toTriggerKey(JobKey jobKey) {
@@ -108,10 +107,12 @@ public class TaskScheduleService {
 
         var jobDataMap = new JobDataMap();
         jobDataMap.put(SCHEDULED_TASK_DATA_MAP_KEY, context.task());
-        if (context instanceof ParameterizedTaskContext parameterizedContext)
-            jobDataMap.put(TASK_PARAMETERS_DATA_MAP_KEY, parameterizedContext.taskProperties());
-        else if (context instanceof UnmodifiableTaskContext)
-            jobDataMap.put(TASK_PARAMETERS_DATA_MAP_KEY, new TaskParametersContainer(emptySet()));
+        switch (context) {
+            case ParameterizedTaskContext parameterizedContext ->
+                    jobDataMap.put(TASK_PARAMETERS_DATA_MAP_KEY, parameterizedContext.taskProperties());
+            case UnmodifiableTaskContext ignored ->
+                    jobDataMap.put(TASK_PARAMETERS_DATA_MAP_KEY, new TaskParametersContainer(emptySet()));
+        }
 
         return newJob(QuartzJobDelegate.class)
                 .withIdentity(identifier.taskId(), identifier.groupId())
@@ -269,10 +270,10 @@ public class TaskScheduleService {
             JobDataMap dataMap = context.getJobDetail().getJobDataMap();
             var task = (ScheduledTask) dataMap.get(SCHEDULED_TASK_DATA_MAP_KEY);
             var properties = (TaskParametersContainer) dataMap.get(TASK_PARAMETERS_DATA_MAP_KEY);
-            if (task instanceof ParameterizedTask parameterizedTask)
-                parameterizedTask.execute(properties);
-            else if (task instanceof UnmodifiableTask unmodifiableTask)
-                unmodifiableTask.execute();
+            switch (task) {
+                case ParameterizedTask parameterizedTask -> parameterizedTask.execute(properties);
+                case UnmodifiableTask unmodifiableTask -> unmodifiableTask.execute();
+            }
         }
 
     }

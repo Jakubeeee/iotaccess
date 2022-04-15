@@ -13,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-
 @Slf4j
 @RequiredArgsConstructor
 abstract class BaseDynamicConfigGenerator implements DynamicConfigGenerator {
@@ -40,7 +38,7 @@ abstract class BaseDynamicConfigGenerator implements DynamicConfigGenerator {
         List<DynamicConfigEntry> entries = tasksDetails.stream()
                 .flatMap(this::taskDetailsToEntryStream)
                 .sorted()
-                .collect(toList());
+                .toList();
         return new DynamicConfigContainer(entries);
     }
 

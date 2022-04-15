@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 @Getter
 @RequiredArgsConstructor
-public abstract class FetchedProperty<T> {
+public sealed abstract class FetchedProperty<T> permits FetchedDate, FetchedNumber, FetchedText {
 
     @NonNull
     private final String key;

@@ -54,8 +54,7 @@ public class PluginDeployerRegistry implements ApplicationRunner {
     }
 
     private void saveMetadataSet(Set<PluginDeployer> pluginDeployers) {
-        for (var pluginDeployer : pluginDeployers)
-            saveMetadata(pluginDeployer);
+        pluginDeployers.forEach(this::saveMetadata);
     }
 
     private void saveMetadata(PluginDeployer pluginDeployer) {

@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 import static com.jakubeeee.iotaccess.pluginapi.converter.DataType.METEO;
 import static com.jakubeeee.iotaccess.pluginapi.meteo.MeteoPropertyKeyConstants.*;
 import static java.text.MessageFormat.format;
-import static java.util.stream.Collectors.toUnmodifiableList;
 
 @Component
 public class MeteoDataPersistStrategy extends BaseDataPersistStrategy<MeteoEntry> {
@@ -60,7 +59,7 @@ public class MeteoDataPersistStrategy extends BaseDataPersistStrategy<MeteoEntry
                 .filter(type::isInstance)
                 .map(type::cast)
                 .filter(property -> property.getKey().equals(filteredKey))
-                .collect(toUnmodifiableList());
+                .toList();
         validateExactlyOnePropertyFound(matchingProperties, filteredKey, type);
         return matchingProperties.get(0);
     }

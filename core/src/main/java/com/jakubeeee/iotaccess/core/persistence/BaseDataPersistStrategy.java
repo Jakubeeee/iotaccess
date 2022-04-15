@@ -5,6 +5,7 @@ import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadat
 import com.jakubeeee.iotaccess.core.data.metadata.processmetadata.ProcessMetadataService;
 import com.jakubeeee.iotaccess.pluginapi.property.FetchedContainer;
 import com.jakubeeee.iotaccess.pluginapi.property.FetchedVector;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +18,7 @@ public abstract class BaseDataPersistStrategy<T extends EntryEntity> implements 
     private final ProcessMetadataService processMetadataService;
 
     @Override
-    public void persist(FetchedContainer container, String processIdentifier) {
+    public void persist(@NonNull FetchedContainer container, @NonNull String processIdentifier) {
         LOG.trace("Invoked execution of \"{}\" for data fetched by process with identifier \"{}\"",
                 this.getClass().getSimpleName(), processIdentifier);
         List<FetchedVector> vectors = container.getFetchedVectors();
@@ -26,8 +27,7 @@ public abstract class BaseDataPersistStrategy<T extends EntryEntity> implements 
     }
 
     private void processVectors(List<FetchedVector> vectors, ProcessMetadata metadata) {
-        for (var vector : vectors)
-            processVector(vector, metadata);
+        vectors.forEach(vector -> processVector(vector, metadata));
     }
 
     private void processVector(FetchedVector vector, ProcessMetadata metadata) {

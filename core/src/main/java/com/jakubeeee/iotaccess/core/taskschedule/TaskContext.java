@@ -1,6 +1,6 @@
 package com.jakubeeee.iotaccess.core.taskschedule;
 
-public interface TaskContext<T extends ScheduledTask> {
+public sealed interface TaskContext<T extends ScheduledTask> permits ParameterizedTaskContext, UnmodifiableTaskContext {
 
     ScheduledTaskId identifier();
 

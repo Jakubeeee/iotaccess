@@ -18,7 +18,6 @@ import static com.jakubeeee.iotaccess.pluginapi.meteo.MeteoPropertyKeyConstants.
 import static java.text.MessageFormat.format;
 import static java.util.Arrays.stream;
 import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toUnmodifiableList;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public class MeteoTxtConverter implements DataConverter {
@@ -49,7 +48,7 @@ public class MeteoTxtConverter implements DataConverter {
     private List<FetchedVector> createVectors(String[] fragments) {
         return stream(fragments)
                 .map(this::createVector)
-                .collect(toUnmodifiableList());
+                .toList();
     }
 
     private FetchedVector createVector(String fragment) {
@@ -64,7 +63,7 @@ public class MeteoTxtConverter implements DataConverter {
         return fragment.lines()
                 .filter(line -> !line.trim().equals(""))
                 .filter(line -> !line.trim().equals("Current meteo conditions:"))
-                .collect(toUnmodifiableList());
+                .toList();
     }
 
     private void validateAllPropertyLinesCorrect(List<String> propertyLines) {

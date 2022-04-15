@@ -12,8 +12,7 @@ public class MetadataServiceFacade {
     private final Set<MetadataService<?>> metadataServices;
 
     public void deleteAll() {
-        for (var metadataService : metadataServices)
-            metadataService.deleteAll();
+        metadataServices.forEach(MetadataService::deleteAll);
     }
 
 }

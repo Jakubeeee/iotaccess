@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.jakubeeee.iotaccess.core.plugindeployer.ProcessTaskParameterConstants.*;
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -54,8 +53,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
     abstract Set<PluginConnector> scanForPlugins();
 
     private void deployPluginsIfApplicable(Set<PluginConnector> connectors) {
-        for (var connector : connectors)
-            deployPluginIfApplicable(connector);
+        connectors.forEach(this::deployPluginIfApplicable);
     }
 
     private void deployPluginIfApplicable(PluginConnector connector) {
@@ -105,8 +103,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
     }
 
     private void deployProcesses(Set<ProcessConfig> processConfigs, Set<DataConverter> dataConverters) {
-        for (var processConfig : processConfigs)
-            deployProcess(processConfig, dataConverters);
+        processConfigs.forEach(processConfig -> deployProcess(processConfig, dataConverters));
     }
 
     private void ensureExactlyOneConverterMatched(String identifier, List<DataConverter> applicableConverters) {
@@ -171,7 +168,7 @@ abstract class BasePluginDeployer implements PluginDeployer {
     private DataConverter getMatchingConverter(String identifier, Set<DataConverter> dataConverters) {
         List<DataConverter> applicableConverters = dataConverters.stream()
                 .filter(converter -> converter.getIdentifier().equalsIgnoreCase(identifier.trim()))
-                .collect(toList());
+                .toList();
         ensureExactlyOneConverterMatched(identifier, applicableConverters);
         return applicableConverters.get(0);
     }

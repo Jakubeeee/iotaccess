@@ -4,5 +4,5 @@ import lombok.NonNull;
 
 import java.util.List;
 
-public record DynamicConfigContainer(@NonNull List<DynamicConfigEntry>entries) {
+public record DynamicConfigContainer(@NonNull List<DynamicConfigEntry> entries) {
 }

@@ -4,7 +4,6 @@ import lombok.Value;
 
 import java.util.List;
 
-import static java.util.Collections.unmodifiableList;
 import static java.util.List.copyOf;
 
 /**
@@ -24,7 +23,7 @@ public final class FetchedVector {
     }
 
     public List<FetchedProperty<?>> getFetchedProperties() {
-        return unmodifiableList(fetchedProperties);
+        return fetchedProperties;
     }
 
 }

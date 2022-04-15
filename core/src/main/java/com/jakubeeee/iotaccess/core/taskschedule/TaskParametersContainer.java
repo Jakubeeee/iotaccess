@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import static java.text.MessageFormat.format;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
-public record TaskParametersContainer(Set<TaskParameter<?>>parameters) {
+public record TaskParametersContainer(Set<TaskParameter<?>> parameters) {
 
     public String get(@NonNull String fullName) {
         return get(fullName, String.class);
@@ -24,14 +23,14 @@ public record TaskParametersContainer(Set<TaskParameter<?>>parameters) {
         return get(groupName, name, String.class);
     }
 
-    public <T> T get(@NonNull String groupName, @NonNull String name, Class<T> valueType) {
+    public <T> T get(@NonNull String groupName, @NonNull String name, @NonNull Class<T> valueType) {
         List<T> matchingParameters = parameters.stream()
                 .filter(parameter -> parameter.groupName().equals(groupName))
                 .filter(parameter -> parameter.name().equals(name))
                 .filter(parameter -> valueType.isAssignableFrom(parameter.value().getClass()))
                 .map(TaskParameter::value)
                 .map(valueType::cast)
-                .collect(toList());
+                .toList();
 
         if (matchingParameters.size() == 0)
             throw new IllegalStateException(format(
@@ -55,7 +54,7 @@ public record TaskParametersContainer(Set<TaskParameter<?>>parameters) {
                 .map(DynamicTaskParameter.class::cast)
                 .filter(dynamicParameter -> dynamicParameter.groupName().equals(groupName))
                 .filter(dynamicParameter -> dynamicParameter.name().equals(name))
-                .collect(toList());
+                .toList();
 
         if (matchingParameters.size() == 0)
             throw new IllegalStateException(format(

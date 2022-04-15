@@ -13,7 +13,6 @@ import java.util.List;
 import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterConstants.XML_CONVERTER_IDENTIFIER;
 import static com.jakubeeee.iotaccess.meteoplugin.impl.converter.MeteoConverterHelper.*;
 import static com.jakubeeee.iotaccess.pluginapi.meteo.MeteoPropertyKeyConstants.*;
-import static java.util.stream.Collectors.toUnmodifiableList;
 
 public final class MeteoXmlConverter implements DataConverter {
 
@@ -42,7 +41,7 @@ public final class MeteoXmlConverter implements DataConverter {
     private List<FetchedVector> createVectors(MeteoXmlExternalContainerWrapper wrapper) {
         return wrapper.getContainers().stream()
                 .map(this::createVector)
-                .collect(toUnmodifiableList());
+                .toList();
     }
 
     private FetchedVector createVector(MeteoXmlExternalContainer container) {

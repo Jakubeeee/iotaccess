@@ -40,8 +40,7 @@ public class ProcessMetadataService implements MetadataService<ProcessMetadata> 
     @Transactional
     @Override
     public void delete(@NonNull ProcessMetadata processMetadata) {
-        for (var entryService : entryServices)
-            entryService.disconnectFromProcessMetadata(processMetadata);
+        entryServices.forEach(service -> service.disconnectFromProcessMetadata(processMetadata));
         processMetadataRepository.delete(processMetadata);
     }
 

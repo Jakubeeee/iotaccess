@@ -38,8 +38,7 @@ public class DynamicConfigGeneratorRegistry implements ApplicationRunner {
     }
 
     private void saveMetadataSet(Set<DynamicConfigGenerator> configGenerators) {
-        for (var configGenerator : configGenerators)
-            saveMetadata(configGenerator);
+        configGenerators.forEach(this::saveMetadata);
     }
 
     private void saveMetadata(DynamicConfigGenerator configGenerator) {

@@ -19,7 +19,6 @@ import java.util.stream.Stream;
 import static java.nio.file.Files.*;
 import static java.text.MessageFormat.format;
 import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toUnmodifiableList;
 
 @Slf4j
 @Component
@@ -75,7 +74,7 @@ class FilesystemDynamicConfigReader extends BaseDynamicConfigReader {
         try (Stream<Path> allPathsStream = walk(importLocationPath, 1)) {
             List<Path> foundPropertyFilesPaths = allPathsStream
                     .filter(path -> path.toString().endsWith(".properties"))
-                    .collect(toUnmodifiableList());
+                    .toList();
             if (foundPropertyFilesPaths.isEmpty())
                 return Optional.empty();
             else if (foundPropertyFilesPaths.size() > 1)
@@ -106,7 +105,7 @@ class FilesystemDynamicConfigReader extends BaseDynamicConfigReader {
     DynamicConfigContainer constructContainer(Properties properties) {
         List<DynamicConfigEntry> entries = properties.stringPropertyNames().stream()
                 .map(propertyName -> new DynamicConfigEntry(propertyName, properties.getProperty(propertyName)))
-                .collect(toUnmodifiableList());
+                .toList();
         return new DynamicConfigContainer(entries);
     }
 

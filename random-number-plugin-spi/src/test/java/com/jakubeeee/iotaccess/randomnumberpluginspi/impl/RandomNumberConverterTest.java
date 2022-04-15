@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.jakubeeee.iotaccess.pluginapi.converter.DataFormat.JSON;
@@ -18,7 +19,7 @@ import static com.jakubeeee.iotaccess.randomnumberpluginspi.impl.CorrectTestFetc
 import static com.jakubeeee.iotaccess.randomnumberpluginspi.impl.IncorrectTestFetchedData.*;
 import static java.text.MessageFormat.format;
 import static java.util.Collections.singletonList;
-import static java.util.stream.Collectors.toUnmodifiableList;
+import static java.util.stream.Collectors.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -38,8 +38,7 @@ public class DynamicConfigReaderRegistry implements ApplicationRunner {
     }
 
     private void saveMetadataSet(Set<DynamicConfigReader> configReaders) {
-        for (var configReader : configReaders)
-            saveMetadata(configReader);
+        configReaders.forEach(this::saveMetadata);
     }
 
     private void saveMetadata(DynamicConfigReader configReader) {
